@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Okdesk Score Rules — сводка для продолжения работы</title>
+  <style>
+    :root {
+      --bg: #f4f5f7; --surface: #fff; --text: #1a1d23; --muted: #5c6570; --faint: #8b939e;
+      --line: #e2e5ea; --accent: #1f4b7a; --warn-bg: #fff6e8; --warn-border: #e6b35c;
+      --info-bg: #eef5fb; --info-border: #7aa7d0; --ok-bg: #eef8f1; --bar: #1f4b7a; --bar2: #3d7ab0;
+      --step: #1f4b7a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 1.2rem; font-weight: 650; margin: 0 0 10px; padding-top: 8px; }
+    h3 { font-size: 1rem; font-weight: 650; margin: 16px 0 8px; }
+    .lead { color: var(--muted); margin: 0 0 16px; max-width: 75ch; }
+    .caption { color: var(--faint); font-size: 0.8rem; margin-top: 6px; }
+    .handoff {
+      background: #1f4b7a; color: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+    }
+    .handoff a { color: #cfe3ff; }
+    .handoff code { background: rgba(255,255,255,.15); padding: 1px 6px; border-radius: 4px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+    .nav a {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line);
+      background: var(--surface); padding: 6px 10px; border-radius: 8px;
+    }
+    .nav a:hover { border-color: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+    @media (max-width: 800px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .two { grid-template-columns: 1fr !important; }
+    }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+    .stat .v { font-size: 1.35rem; font-weight: 700; color: var(--accent); }
+    .stat.warn .v { color: #9a6700; }
+    .stat.info .v { color: #2a5f8f; }
+    .stat .l { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 12px 0; border: 1px solid var(--line); background: var(--surface); }
+    .callout.warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .callout.info { background: var(--info-bg); border-color: var(--info-border); }
+    .callout.ok { background: var(--ok-bg); border-color: #9bc9a8; }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0; overflow: hidden; }
+    .card-h { padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 650; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .card-b { padding: 0; }
+    .card-b.pad { padding: 14px 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; background: #fafbfc; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eef2f6; color: var(--muted); }
+    .pill.ok { background: var(--ok-bg); color: #1f6b3a; }
+    .pill.info { background: var(--info-bg); color: #2a5f8f; }
+    .pill.warn { background: var(--warn-bg); color: #8a5a00; }
+    section { margin-top: 32px; }
+    .plan { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+    .plan li {
+      position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+      padding: 14px 16px 14px 56px; margin: 10px 0;
+    }
+    .plan li::before {
+      counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 14px;
+      width: 28px; height: 28px; border-radius: 50%; background: var(--step); color: #fff;
+      font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+      line-height: 28px; text-align: center;
+    }
+    .plan .t { font-weight: 650; margin-bottom: 4px; }
+    .plan .d { font-size: 0.9rem; color: var(--muted); }
+    .meta { font-size: 0.85rem; color: var(--muted); }
+    footer { margin-top: 48px; color: var(--faint); font-size: 0.8rem; border-top: 1px solid var(--line); padding-top: 16px; }
+    code { font-size: 0.88em; background: #eef1f4; padding: 1px 5px; border-radius: 4px; }
+    ul.compact { margin: 6px 0; padding-left: 18px; }
+    ul.compact li { margin: 3px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="handoff">
+      <strong style="display:block;font-size:1.05rem;margin-bottom:8px">Передаточный документ (без истории чата)</strong>
+      Этот HTML — сводка всей работы по ревизии баллов Okdesk, чтобы продолжить на другом компьютере.
+      Репозиторий: <a href="https://github.com/averstech2026/okdesk-score-rules">github.com/averstech2026/okdesk-score-rules</a>
+      · локально: <code>~/Documents/okdesk-score-rules</code>
+      · Okdesk: <a href="https://avers.okdesk.ru/">avers.okdesk.ru</a>
+      · выгрузка API: 23.01.2026–22.07.2026, <b>19 640</b> решённых/закрытых.
+      Токен API только в локальном <code>.env</code> (не в git). Сырые карточки: <code>data/</code> (~119 MB, не в git) — на новом ПК нужно заново
+      <code>python3 scripts/fetch_issues.py 6</code> при наличии токена.
+    </div>
+
+    <h1>Okdesk: баллы, каталоги, план действий</h1>
+    <p class="lead">
+      Цель: сохранить привычные баллы и премию, но убрать самооценку «на глаз», выровнять конвейер vs пул,
+      почистить справочники «Типовая проблема» / «Способ решения», заложить аудит аномалий.
+    </p>
+
+    <nav class="nav">
+      <a href="#plan">План действий</a>
+      <a href="#context">Контекст</a>
+      <a href="#principles">Принципы</a>
+      <a href="#data">Данные 6 мес</a>
+      <a href="#contours">Контуры</a>
+      <a href="#scores">Баллы / конвейеры</a>
+      <a href="#problems">Каталог проблем</a>
+      <a href="#nonstandard">Нестандарт</a>
+      <a href="#solutions">Способы решения</a>
+      <a href="#bonus">Премия / SLA</a>
+      <a href="#repo">Репозиторий</a>
+      <a href="#open">Открытые вопросы</a>
+    </nav>
+
+    <!-- ========== PLAN ========== -->
+    <section id="plan">
+      <h2>План действий (согласованная логика)</h2>
+      <p class="lead">Порядок важен: сначала каталоги и «Нестандарт» (без Expert), потом нормы баллов и сегменты, потом аналитика/аудит.</p>
+      <ol class="plan">
+        <li>
+          <div class="t">Зафиксировать контуры данных</div>
+          <div class="d">Нативные заявки / перенос MFC (~33%, техзакрытие, typical часто пусто) / почта·чаты. KPI качества заполнения и каталога — <b>без MFC</b>. Документ: <code>docs/11-ticket-contours.md</code>.</div>
+        </li>
+        <li>
+          <div class="t">Обновить справочник типовых проблем (~18 пунктов)</div>
+          <div class="d">Слить дубли (ДУЭТ+банк, отчёты, карта+лимиты→«Карты и клиенты»). Добавить: НДС, раскатка ПО, запуск/подготовка, сопутствующий сервис клиента (Work Bright…). Сузить «Доп. настройки…» до доступов/точечных настроек. Убрать «Другое» из списка.</div>
+        </li>
+        <li>
+          <div class="t">Ввести тип заявки «Нестандарт» + поле «Суть»</div>
+          <div class="d">Без тарифа Expert 50+: автоправила «чекбокс→обязательное поле» недоступны. Тип «Нестандарт» = нестандартная <b>проблема</b>; способ решения всё равно из каталога. Обязательность «Сути» при «Решена». MFC этим типом не кормить. <code>docs/12-nonstandard-issue-type.md</code>.</div>
+        </li>
+        <li>
+          <div class="t">Обновить справочник способов решения (~14–15)</div>
+          <div class="d">Слить рестарты, железо, обмены; убрать «бумагу»; разрезать «Настройка ПО». Добавить: консультация, раскатка, карты/начисления, доступ/код кассира, НДС. Убрать «Другое» как основной путь. Катить <b>вместе</b> с каталогом проблем. <code>docs/13-solution-catalog-proposal.md</code>.</div>
+        </li>
+        <li>
+          <div class="t">Нормы баллов: категория → база (+ надбавки), не свободный select 5…1000</div>
+          <div class="d">Сейчас <code>ticket_weight</code> — длинный выпадающий список чисел. Цель: баллы из правил (база по типу работ/проблеме + закрытые надбавки за осложнение + выезд по зоне). Дежурство ×2 только по табелю. Выезд: Мск 30 / ближнее 60 / дальнее 120 — отдельно от работ на месте.</div>
+        </li>
+        <li>
+          <div class="t">Сегменты премии: конвейер ≠ общий пул</div>
+          <div class="d">IFCM, MFC и т.п. — отдельные нормы/сравнение с медианой сегмента. Не один рейтинг «кто набрал больше баллов».</div>
+        </li>
+        <li>
+          <div class="t">SLA: группа ≠ человек</div>
+          <div class="d">Просрочка очереди — термометр + владелец пула/смены. Лично — сроки после взятия. SLA как лёгкое дополнение к баллам, не вместо.</div>
+        </li>
+        <li>
+          <div class="t">Аналитика / аудит (инструмент)</div>
+          <div class="d">Скрипты уже есть: <code>scripts/fetch_issues.py</code>, <code>scripts/analyze_scores.py</code>. Дальше: флаги аномалий, доля Нестандарт без MFC, микс категорий, хвост высоких баллов. Внеурочка вне дежурства — пока не трогаем.</div>
+        </li>
+      </ol>
+      <div class="callout ok">
+        <strong>Ближайший практический шаг в Okdesk (можно без Expert)</strong>
+        1) Черновик новых списков typical + solution утвердить с тимлидами.
+        2) Создать тип «Нестандарт» + атрибут «Суть».
+        3) Параллельно 1–2 недели, затем убрать «Другое» из обоих списков.
+        4) Через месяц — разбор формулировок «Суть» → донастройка каталога проблем.
+      </div>
+    </section>
+
+    <!-- ========== CONTEXT ========== -->
+    <section id="context">
+      <h2>Контекст: как работали и что болело</h2>
+      <div class="two">
+        <div class="card">
+          <div class="card-h">Как сейчас</div>
+          <div class="card-b pad">
+            <ul class="compact">
+              <li>Инженер сам ставит <b>баллы</b> (select 5…1000), ориентиры «5 / 15 / 30» условные</li>
+              <li>Дежурство: чекбокс <code>watch</code>, множитель ×2 (сейчас вручную)</li>
+              <li>Выезд: чекбокс + фикс по зоне (30/60/120)</li>
+              <li>Обязательные: типовая проблема, способ решения, тип кассы…</li>
+              <li>Премия по сумме баллов (месяц) + отдельно дежурства (~1.5 нед.)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h">Изъяны</div>
+          <div class="card-b pad">
+            <ul class="compact">
+              <li>Нет чёткой градации веса; разночтения между инженерами</li>
+              <li>Самооценка → риск приписок (~1000+ заявок/мес, вручную не проверить)</li>
+              <li>Один ПИОТ может занять полдня при тех же 30 баллах → выгоднее 6 простых</li>
+              <li>Конвейер 50 типовых vs общий пул — одна сумма баллов врёт</li>
+              <li>«Другое» в проблеме и особенно в способе — свалка</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PRINCIPLES ========== -->
+    <section id="principles">
+      <h2>Принципы (договорённости)</h2>
+      <div class="card">
+        <div class="card-b pad">
+          <ul class="compact">
+            <li><b>Сохраняем</b> баллы, ×2 дежурства, фикс выездов по зоне</li>
+            <li><b>Убираем</b> свободный ввод баллов → категория/правило (+ закрытые надбавки за осложнение)</li>
+            <li><b>Конвейер и пул</b> не мешать в одном «чемпионе месяца»</li>
+            <li><b>SLA группы</b> ≠ персональный минус; лично — после взятия</li>
+            <li><b>Внеурочка вне смены</b> — пока без отдельного коэффициента</li>
+            <li><b>Нестандарт</b> = тип проблемы; способ — из списка</li>
+            <li>Тариф ниже Expert 50+: <b>нет автоправил</b> от поддержки Okdesk → тип «Нестандарт» вместо условных полей</li>
+          </ul>
+        </div>
+      </div>
+      <p class="meta">Формула (цель): (база + осложнения + выезд) × (1|2 дежурство). Подробнее: <code>docs/00-principles.md</code> … <code>07-bonus.md</code>.</p>
+    </section>
+
+    <!-- ========== DATA ========== -->
+    <section id="data">
+      <h2>Данные выгрузки (6 месяцев)</h2>
+      <div class="stats">
+        <div class="stat"><div class="v">19 640</div><div class="l">Решено/закрыто</div></div>
+        <div class="stat"><div class="v">~3 000</div><div class="l">В среднем в месяц</div></div>
+        <div class="stat"><div class="v">75%</div><div class="l">С баллами (14 712)</div></div>
+        <div class="stat info"><div class="v">REST</div><div class="l">SQL API нет</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h">Ключевые поля Okdesk</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Код</th><th>Название</th><th>Замечание</th></tr></thead>
+            <tbody>
+              <tr><td><code>ticket_weight</code></td><td>Баллы</td><td>Select чисел 5…1000 — самооценка</td></tr>
+              <tr><td><code>typical</code></td><td>Типовая проблема</td><td>Обязательный select; «Другое» + пусто = 37% всех / 22% без MFC</td></tr>
+              <tr><td><code>solution_method</code></td><td>Способ решения</td><td>Multiselect; «Другое» ещё сильнее (~4.9k без MFC)</td></tr>
+              <tr><td><code>departure</code> / <code>watch</code></td><td>Выезд / дежурство</td><td>Чекбоксы; выезд заполнен редко (86), дежурство 4375</td></tr>
+              <tr><td><code>knowledge_base_issue</code></td><td>Статья БЗ</td><td>Строка</td></tr>
+              <tr><td><code>pos_type</code></td><td>Тип кассы</td><td>КСО / Фронт / Офис</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTOURS ========== -->
+    <section id="contours">
+      <h2>Контуры заявок (критично для интерпретации)</h2>
+      <div class="stats">
+        <div class="stat"><div class="v">37%→22%</div><div class="l">Другое+пусто: все → без MFC</div></div>
+        <div class="stat warn"><div class="v">33%</div><div class="l">Доля MFC в выборке</div></div>
+        <div class="stat info"><div class="v">67%</div><div class="l">Другое+пусто внутри MFC</div></div>
+        <div class="stat"><div class="v">~2.1k</div><div class="l">from_email</div></div>
+      </div>
+      <div class="callout warn">
+        <strong>MFC</strong>
+        У MFC свой helpdesk; заявки переносят в Okdesk <b>скопом без интеграции</b>, часто только по заголовку.
+        «Техническое закрытие» — про этот процесс, не про лень классифицировать.
+        Не использовать MFC как главный аргумент «раздуть каталог из‑за Другое».
+        Компания в данных: <code>ООО эМэФСи (МФС, MFC)</code> — не путать с IFCM
+        (<code>ООО «АЙЭФСИЭМ ГРУПП» (Содексо ЕвроАзия SDX IFCM)</code> — это другой клиент.
+      </div>
+    </section>
+
+    <!-- ========== SCORES ========== -->
+    <section id="scores">
+      <h2>Баллы и конвейеры</h2>
+      <div class="stats">
+        <div class="stat"><div class="v">5 и 10</div><div class="l">Доминирующие баллы</div></div>
+        <div class="stat warn"><div class="v">до 1000</div><div class="l">Хвост (раскатки/запуски)</div></div>
+        <div class="stat"><div class="v">4375</div><div class="l">Флаг дежурства</div></div>
+        <div class="stat"><div class="v">86</div><div class="l">Флаг выезда</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h">Конвейеры (доля топ-клиента)</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Исполнитель</th><th class="num">Заявок</th><th>Топ-клиент</th><th class="num">Доля</th></tr></thead>
+            <tbody>
+              <tr><td>Петров Артем Евгеньевич</td><td class="num">4382</td><td>ООО эМэФСи (МФС, MFC)</td><td class="num">95%</td></tr>
+              <tr><td>Ососков Евгений Петрович</td><td class="num">4547</td><td>ООО «АЙЭФСИЭМ ГРУПП» (… IFCM)</td><td class="num">93%</td></tr>
+              <tr><td>Сушков Павел</td><td class="num">2459</td><td>ООО «АЙЭФСИЭМ ГРУПП» (… IFCM)</td><td class="num">61%</td></tr>
+              <tr><td>Гулумбетов Павел</td><td class="num">1137</td><td>ООО «АЙЭФСИЭМ ГРУПП» (… IFCM)</td><td class="num">61%</td></tr>
+              <tr><td>Кирюшкин Андрей Дмитриевич</td><td class="num">1518</td><td>А-Восток (A-Vostok, А-Сервис)</td><td class="num">52%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">Топ по сумме баллов (с заполненным ticket_weight)</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Исполнитель</th><th class="num">N</th><th class="num">Сумма</th><th class="num">Среднее</th><th class="num">Медиана</th></tr></thead>
+            <tbody>
+              <tr><td>Ососков Е. П.</td><td class="num">4490</td><td class="num">61015</td><td class="num">13.6</td><td class="num">10</td></tr>
+              <tr><td>Петров А. Е.</td><td class="num">588</td><td class="num">35670</td><td class="num">60.7</td><td class="num">10</td></tr>
+              <tr><td>Павлов А. А.</td><td class="num">1261</td><td class="num">19320</td><td class="num">15.3</td><td class="num">10</td></tr>
+              <tr><td>Сушков П.</td><td class="num">2425</td><td class="num">16905</td><td class="num">7.0</td><td class="num">5</td></tr>
+              <tr><td>Конарев М. М.</td><td class="num">1182</td><td class="num">16720</td><td class="num">14.2</td><td class="num">10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">У Петрова мало строк с баллами vs объём MFC: у переноса баллы часто пустые; высокая средняя — хвост крупных значений.</p>
+      </div>
+    </section>
+
+    <!-- ========== PROBLEMS ========== -->
+    <section id="problems">
+      <h2>Каталог типовых проблем</h2>
+      <p class="lead">Две корзины размывают учёт: «Другое» и «Доп. настройки, сопутствующий сервис…». Work Bright чаще в «Другое», не в «Доп.».</p>
+
+      <h3>Что в «Другое» (3639; без MFC 1248)</h3>
+      <div class="card">
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Класс</th><th class="num">Все</th><th class="num">Без MFC</th><th>→ целевой пункт</th></tr></thead>
+            <tbody>
+              <tr><td>Карты / клиенты / лимиты</td><td class="num">843</td><td class="num">355</td><td>Карты питания и клиенты</td></tr>
+              <tr><td>Чеки / ФР / печать</td><td class="num">347</td><td class="num">69</td><td>Чеки / корректировка</td></tr>
+              <tr><td>Отчёты / расхождения</td><td class="num">256</td><td class="num">79</td><td>Отчёты и расхождения</td></tr>
+              <tr><td>Консультация / звонок</td><td class="num">237</td><td class="num">126</td><td>Консультация / звонок</td></tr>
+              <tr><td>Корректировка чека</td><td class="num">188</td><td class="num">31</td><td>Корректировка чека</td></tr>
+              <tr><td>Меню / обмен</td><td class="num">181</td><td class="num">62</td><td>Меню, товары, обмен</td></tr>
+              <tr><td>Work Bright / AllBusiness</td><td class="num">87</td><td class="num">~80</td><td>Сопутствующий сервис клиента</td></tr>
+              <tr><td>НДС, ЧЗ-письма, раскатки…</td><td class="num">—</td><td class="num">—</td><td>Соответствующие новые/расширенные пункты</td></tr>
+              <tr><td>Не распознано</td><td class="num">770</td><td class="num">353</td><td>Тип Нестандарт + суть</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Что в «Доп. настройки…» (~2203, почти все без MFC)</h3>
+      <div class="card">
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Класс</th><th class="num">N≈</th><th>→ куда</th></tr></thead>
+            <tbody>
+              <tr><td>Карты / дотации / коды сотруднику</td><td class="num">464</td><td>Карты и клиенты</td></tr>
+              <tr><td>Меню / обмен</td><td class="num">221</td><td>Меню, обмен</td></tr>
+              <tr><td>Доступы (ядро смысла пункта)</td><td class="num">122</td><td>Сузить сюда</td></tr>
+              <tr><td>Раскатка ПО (ЛМ2, спулер…)</td><td class="num">71</td><td>Массовое обновление</td></tr>
+              <tr><td>Код кассира / портал</td><td class="num">72</td><td>Лицензия/портал + доступы</td></tr>
+              <tr><td>ЧЗ-модуль / ПИОТ</td><td class="num">~53</td><td>ЧЗ / маркировка</td></tr>
+              <tr><td>Запуск / frontupdater</td><td class="num">46</td><td>Оборудование / запуск</td></tr>
+              <tr><td>Прочее</td><td class="num">543</td><td>Разбор / Нестандарт</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Целевой каталог проблем (~18)</h3>
+      <div class="card">
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Пункт</th><th>Откуда</th><th>Кратко</th></tr></thead>
+            <tbody>
+              <tr><td>Смена не закрывается / не открывается</td><td><span class="pill">Было</span></td><td>Оставить</td></tr>
+              <tr><td>Меню, товары, обмен с 1С</td><td><span class="pill ok">Было+</span></td><td>+ обмены из корзин</td></tr>
+              <tr><td>Карты питания и клиенты</td><td><span class="pill ok">Расширено</span></td><td>Крупнейший скрытый класс</td></tr>
+              <tr><td>Чеки: печать / ФР</td><td><span class="pill">Было</span></td><td>Укоротить имя</td></tr>
+              <tr><td>Корректировка чека</td><td><span class="pill ok">Расширено</span></td><td>Сторно, удаление, перенос</td></tr>
+              <tr><td>Оплата (банк / процессинг / ДУЭТ)</td><td><span class="pill ok">Объединено</span></td><td>Слить два пункта</td></tr>
+              <tr><td>ЧЗ / маркировка</td><td><span class="pill ok">Расширено</span></td><td>+ RE:, ПИОТ</td></tr>
+              <tr><td>ОФД</td><td><span class="pill">Было</span></td><td></td></tr>
+              <tr><td>Касса недоступна / перезапуск</td><td><span class="pill">Было</span></td><td></td></tr>
+              <tr><td>Периферия</td><td><span class="pill">Было</span></td><td></td></tr>
+              <tr><td>Ошибка ПО / лицензия / портал</td><td><span class="pill ok">Расширено</span></td><td></td></tr>
+              <tr><td>Отчёты и расхождения</td><td><span class="pill ok">Объединено</span></td><td></td></tr>
+              <tr><td>Настройки и доступы (не блокирует)</td><td><span class="pill warn">Сжато</span></td><td>Вместо catch-all «Доп.»</td></tr>
+              <tr><td>Оборудование / запуск</td><td><span class="pill ok">Расширено</span></td><td></td></tr>
+              <tr><td>Массовое обновление / раскатка ПО</td><td><span class="pill info">Новое</span></td><td>Хвост баллов</td></tr>
+              <tr><td>НДС / фискальные ставки</td><td><span class="pill info">Новое</span></td><td>Кампании</td></tr>
+              <tr><td>Сопутствующий сервис клиента</td><td><span class="pill info">Новое</span></td><td>Work Bright / AllBusiness — не путать с «Доп.»</td></tr>
+              <tr><td>Консультация / звонок</td><td><span class="pill ok">Расширено</span></td><td></td></tr>
+              <tr><td>— (вместо Другое)</td><td><span class="pill warn">Тип Нестандарт</span></td><td>См. следующую секцию</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== NONSTANDARD ========== -->
+    <section id="nonstandard">
+      <h2>Тип «Нестандарт»</h2>
+      <div class="callout info">
+        <strong>Роль</strong>
+        Нестандарт = нестандартная <b>проблема</b> (нет пункта в typical).
+        Способ решения при этом <b>выбирается из каталога</b> (рестарт, обмен, консультация…).
+        Нестандартная заявка ≠ «неизвестно что сделали».
+      </div>
+      <div class="two">
+        <div class="card">
+          <div class="card-h">В Okdesk</div>
+          <div class="card-b pad">
+            <ul class="compact">
+              <li>Тип <code>nonstandard</code> / «Нестандарт»</li>
+              <li>Атрибут <code>nonstandard_detail</code> «Суть нестандарта»</li>
+              <li>Показать атрибут только на этом типе</li>
+              <li>Обязателен при входе в «Решена»</li>
+              <li>Убрать «Другое» из typical</li>
+              <li>MFC-bulk — не через этот тип</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h">Почему не чекбокс</div>
+          <div class="card-b pad">
+            <p style="margin:0 0 8px">Идея «чекбокс → обязательное поле» хорошая, но без Expert 50+ поддержка Okdesk автоправила не делает, а условная обязательность атрибутов в UI не настраивается.</p>
+            <p style="margin:0;color:var(--muted);font-size:0.9rem">Тип заявки даёт обязательность «только когда нужно» штатными средствами.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SOLUTIONS ========== -->
+    <section id="solutions">
+      <h2>Каталог способов решения</h2>
+      <div class="stats">
+        <div class="stat warn"><div class="v">4 934</div><div class="l">«Другое» без MFC</div></div>
+        <div class="stat warn"><div class="v">4 658</div><div class="l">Только «Другое»</div></div>
+        <div class="stat"><div class="v">16</div><div class="l">Пунктов сейчас</div></div>
+        <div class="stat info"><div class="v">~15</div><div class="l">Целевой список</div></div>
+      </div>
+      <div class="callout info">
+        <strong>Покрытие бывшего «Другое» в способах</strong>
+        Целевой список закрывает <b>основную массу</b>: звонки→консультация; касса→рестарт/железо;
+        чеки→рестарт/БД/сеть; начисления→карты; код кассира→доступ; меню→обмен; ЧЗ→сеть/раскатка;
+        апдейты→раскатка; НДС→фискальные параметры.
+        Хвост разового — ближайший пункт; нестандартность проблемы — типом «Нестандарт», не способом «Другое».
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <div class="card-h">Сжать</div>
+          <div class="card-b pad">
+            <ul class="compact">
+              <li>Рестарт ПО + GriServ → один пункт</li>
+              <li>Питание + провода → «Железо…»</li>
+              <li>Обмен + SALES3 → «Обмен / перевыгрузка»</li>
+              <li>Убрать «бумагу» (16 раз)</li>
+              <li>Разрезать широкую «Настройка ПО и доступы»</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h">Добавить</div>
+          <div class="card-b pad">
+            <ul class="compact">
+              <li>Консультация / ответ без изменений</li>
+              <li>Массовое обновление / раскатка</li>
+              <li>Карты / лимиты / начисления</li>
+              <li>Доступ / права / код кассира</li>
+              <li>НДС / фискальные параметры</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">Целевой список способов</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>#</th><th>Пункт</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Рестарт ПО / сервиса (фронт, спулер, IIS, GriServ…)</td></tr>
+              <tr><td>2</td><td>Обмен / перевыгрузка данных (в т.ч. SALES3)</td></tr>
+              <tr><td>3</td><td>Железо: питание, кабели, переподключение</td></tr>
+              <tr><td>4</td><td>Сеть / недоступность внешнего сервиса</td></tr>
+              <tr><td>5</td><td>Проблема 1С / источника меню</td></tr>
+              <tr><td>6</td><td>БД / ручная корректировка чека или данных</td></tr>
+              <tr><td>7</td><td>Отмена чека / сторно / возврат</td></tr>
+              <tr><td>8</td><td>Закрытие смены / устранение расхождения смены</td></tr>
+              <tr><td>9</td><td>Восстановление настроек кассы</td></tr>
+              <tr><td>10</td><td>Доступ / права / код кассира</td></tr>
+              <tr><td>11</td><td>Точечная настройка ПО (не раскатка)</td></tr>
+              <tr><td>12</td><td>Массовое обновление / раскатка ПО</td></tr>
+              <tr><td>13</td><td>Карты / лимиты / начисления</td></tr>
+              <tr><td>14</td><td>Консультация / ответ без изменений</td></tr>
+              <tr><td>15</td><td>Самовосстановление</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">«Другое» в способах как основной путь не оставляем.</p>
+      </div>
+    </section>
+
+    <!-- ========== BONUS ========== -->
+    <section id="bonus">
+      <h2>Премия, SLA, выезды (кратко)</h2>
+      <div class="card">
+        <div class="card-b pad">
+          <ul class="compact">
+            <li><b>Премия:</b> нормативные баллы в контексте сегмента (конвейер/пул) + качество/аудит позже; не сырая сумма по всей компании</li>
+            <li><b>Дежурство:</b> ×2 только по графику/табелю, не ручной чекбокс как источник истины</li>
+            <li><b>Выезды:</b> 30/60/120 по зоне + отдельно работы на месте; причина выезда для аудита</li>
+            <li><b>SLA:</b> группа = очередь/владелец смены; человек = после взятия</li>
+            <li><b>Внеурочка вне смены:</b> пока не выделяем</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== REPO ========== -->
+    <section id="repo">
+      <h2>Как продолжить на другом компьютере</h2>
+      <div class="card">
+        <div class="card-b pad">
+          <ol style="margin:0;padding-left:18px">
+            <li>Клонировать <code>https://github.com/averstech2026/okdesk-score-rules.git</code> (если ещё не запушено — закоммитить/запушить этот HTML и docs с текущего ПК).</li>
+            <li>Открыть этот файл: <code>analysis/typical-catalog.html</code> в браузере.</li>
+            <li>Читать <code>docs/</code> по номерам 00→13.</li>
+            <li>Для новой выгрузки: <code>.env</code> с <code>OKDESK_DOMAIN</code> и <code>OKDESK_API_TOKEN</code>, затем:
+              <br><code>python3 scripts/fetch_issues.py 6</code>
+              <br><code>python3 scripts/analyze_scores.py</code></li>
+            <li>В Cursor: открыть папку проекта как workspace (не home), продолжить с плана §1.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">Карта документов</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Файл</th><th>О чём</th></tr></thead>
+            <tbody>
+              <tr><td><code>docs/00–08</code></td><td>Принципы, баллы, выезды, дежурство, потоки, SLA, премия, аудит</td></tr>
+              <tr><td><code>docs/09</code></td><td>Находки по выгрузке</td></tr>
+              <tr><td><code>docs/10</code></td><td>Ревизия типовых проблем</td></tr>
+              <tr><td><code>docs/11</code></td><td>Контуры MFC / натив / почта</td></tr>
+              <tr><td><code>docs/12</code></td><td>Тип «Нестандарт»</td></tr>
+              <tr><td><code>docs/13</code></td><td>Ревизия способов решения</td></tr>
+              <tr><td><code>scripts/</code></td><td>fetch + analyze</td></tr>
+              <tr><td><code>analysis/report.md</code></td><td>Черновой отчёт по баллам</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== OPEN ========== -->
+    <section id="open">
+      <h2>Открытые вопросы</h2>
+      <div class="card">
+        <div class="card-b pad">
+          <ul class="compact">
+            <li>Утвердить финальные формулировки пунктов typical и solution с тимлидами</li>
+            <li>Точные границы выезда «ближнее / дальнее»</li>
+            <li>Список конвейерных клиентов/очередей для сегментации премии</li>
+            <li>Пороги надбавок за осложнение и потолок</li>
+            <li>Привязка атрибутов к типам/статусам в UI Okdesk на текущем тарифе (проверить обязательность «Сути»)</li>
+            <li>Нужен ли отдельный пункт НДС в способах или хватит «точечная настройка» + раскатка</li>
+            <li>Запушить актуальный HTML/docs в GitHub, если ещё не все изменения на remote</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Сводка для продолжения работы · Okdesk avers · данные 23.01.2026–22.07.2026 ·
+      файл <code>analysis/typical-catalog.html</code> · обновлено под передачу без истории чата.
+      Предыдущая версия с длинными таблицами сохранена как <code>analysis/typical-catalog.prev.html</code>.
+    </footer>
+  </div>
+</body>
+</html>

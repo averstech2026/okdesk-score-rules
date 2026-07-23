@@ -24,7 +24,15 @@
 | [docs/06-sla.md](docs/06-sla.md) | SLA: группа vs исполнитель |
 | [docs/07-bonus.md](docs/07-bonus.md) | Формула премии (черновик) |
 | [docs/08-audit.md](docs/08-audit.md) | Аудит и флаги аномалий |
+| [docs/09-data-findings.md](docs/09-data-findings.md) | Находки по реальной выгрузке Okdesk |
+| [docs/10-typical-catalog-proposal.md](docs/10-typical-catalog-proposal.md) | Ревизия справочника типовых проблем |
+| [docs/11-ticket-contours.md](docs/11-ticket-contours.md) | Контуры заявок: нативные / MFC-перенос / почта-чаты |
+| [docs/12-nonstandard-issue-type.md](docs/12-nonstandard-issue-type.md) | Тип «Нестандарт» вместо «Другое» (без Expert) |
+| [docs/13-solution-catalog-proposal.md](docs/13-solution-catalog-proposal.md) | Ревизия справочника способов решения |
+| [docs/14-handoff.md](docs/14-handoff.md) | Как продолжить без истории чата |
 | [docs/open-questions.md](docs/open-questions.md) | Открытые вопросы для согласования |
+| [analysis/report.md](analysis/report.md) | Сводный отчёт по последней выгрузке |
+| [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |
 
 ## Статус
 

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Okdesk — типовые проблемы и аналитика</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --surface: #ffffff;
+      --text: #1a1d23;
+      --muted: #5c6570;
+      --faint: #8b939e;
+      --line: #e2e5ea;
+      --accent: #1f4b7a;
+      --warn-bg: #fff6e8;
+      --warn-border: #e6b35c;
+      --info-bg: #eef5fb;
+      --info-border: #7aa7d0;
+      --ok-bg: #eef8f1;
+      --bar: #1f4b7a;
+      --bar2: #3d7ab0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 64px; }
+    h1 { font-size: 1.75rem; font-weight: 650; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 1.2rem; font-weight: 650; margin: 0 0 8px; }
+    h3 { font-size: 1rem; font-weight: 650; margin: 0 0 8px; }
+    .lead { color: var(--muted); margin: 0 0 20px; max-width: 70ch; }
+    .caption { color: var(--faint); font-size: 0.8rem; margin-top: 6px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 800px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .two { grid-template-columns: 1fr !important; }
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .stat .v { font-size: 1.45rem; font-weight: 700; color: var(--accent); }
+    .stat.warn .v { color: #9a6700; }
+    .stat.info .v { color: #2a5f8f; }
+    .stat .l { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    .callout {
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .callout.warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .callout.info { background: var(--info-bg); border-color: var(--info-border); }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .card-h {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 650;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .card-b { padding: 0; }
+    .card-b.pad { padding: 14px 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; background: #fafbfc; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef2f6;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .pill.ok { background: var(--ok-bg); color: #1f6b3a; }
+    .pill.info { background: var(--info-bg); color: #2a5f8f; }
+    .pill.warn { background: var(--warn-bg); color: #8a5a00; }
+    .bars { padding: 12px 16px 8px; }
+    .bar-row { display: grid; grid-template-columns: minmax(120px, 220px) 1fr 52px; gap: 10px; align-items: center; margin: 6px 0; }
+    .bar-lab { font-size: 0.78rem; color: var(--muted); line-height: 1.25; }
+    .bar-track { height: 10px; background: #eef1f4; border-radius: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--bar); border-radius: 6px; }
+    .bar-fill.alt { background: var(--bar2); }
+    .bar-n { font-size: 0.78rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--text); }
+    .item { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: 0; }
+    .item .to { font-weight: 650; margin: 4px 0; }
+    .item .from { font-size: 0.85rem; color: var(--muted); }
+    .item .why { font-size: 0.9rem; margin-top: 4px; }
+    section { margin-top: 28px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 8px; }
+    .nav a {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+    .nav a:hover { border-color: var(--accent); }
+    footer { margin-top: 40px; color: var(--faint); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Типовые проблемы: ревизия каталога</h1>
+    <p class="lead">
+      Okdesk avers · решённые/закрытые заявки 23.01.2026–22.07.2026 · 19&nbsp;640 шт.
+      Анализ поля «Типовая проблема», заголовков и описаний. Учтены контуры: нативные заявки,
+      перенос из хелпдеска MFC, почта/чаты.
+    </p>
+
+    <nav class="nav">
+      <a href="#summary">Сводка</a>
+      <a href="#contours">Контуры</a>
+      <a href="#scores">Баллы</a>
+      <a href="#current">Текущий справочник</a>
+      <a href="#other-detail">Разбор «Другое»</a>
+      <a href="#dop-detail">Разбор «Доп. настройки»</a>
+      <a href="#gaps">Сжатие / добавления</a>
+      <a href="#target">Целевой каталог проблем</a>
+      <a href="#nonstandard">Тип «Нестандарт»</a>
+      <a href="#solutions">Способы решения</a>
+    </nav>
+
+    <div class="stats" id="summary">
+      <div class="stat"><div class="v">19&nbsp;640</div><div class="l">Заявок в выборке</div></div>
+      <div class="stat warn"><div class="v">37% → 22%</div><div class="l">Другое+пусто: все → без MFC</div></div>
+      <div class="stat info"><div class="v">33%</div><div class="l">Доля MFC (отдельный контур)</div></div>
+      <div class="stat"><div class="v">~18</div><div class="l">Цель: сжатый справочник</div></div>
+    </div>
+
+    <div class="callout warn">
+      <strong>Главный вывод</strong>
+      Список не столько «короткий», сколько плохо покрывает реальные потоки — но «37% Другое+пусто»
+      нельзя читать в лоб. Крупный кусок — массовый перенос из хелпдеска MFC (без интеграции, по заголовкам)
+      и техзакрытие, плюс почта/чаты. Каталог и KPI заполнения typical — по <em>нативному</em> контуру;
+      MFC — отдельный сегмент. В нативном «Другое» остаются стабильные классы (карты/клиенты, НДС, раскатки,
+      Work Bright) — их вытащить и слить дубли, не раздувая список.
+    </div>
+
+    <div class="callout info" id="contours">
+      <strong>Контуры данных</strong>
+      <ol style="margin:8px 0 0; padding-left:18px">
+        <li><b>Нативные</b> заявки Okdesk — основа для справочника и премии.</li>
+        <li><b>Перенос MFC</b> (~6.5k / ~33%): typical часто «Другое»/пусто, закрытие шаблонное («техническое закрытие») — не про качество классификации инженером.</li>
+        <li><b>Почта</b> (~2.1k from_email) и чаты — больше шума в заголовках.</li>
+      </ol>
+      <table style="margin-top:12px">
+        <thead>
+          <tr><th>Контур</th><th class="num">Заявок</th><th class="num">Другое + пусто</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Вся выборка</td><td class="num">19&nbsp;640</td><td class="num">37%</td></tr>
+          <tr><td>Только MFC</td><td class="num">6&nbsp;574</td><td class="num">67%</td></tr>
+          <tr><td>Без MFC</td><td class="num">13&nbsp;066</td><td class="num">22%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <section id="scores">
+      <h2>Баллы и нагрузка (обзор)</h2>
+      <p class="lead" style="margin-bottom:8px">Поле ticket_weight · выезды/дежурство — чекбоксы.</p>
+      <div class="stats">
+        <div class="stat"><div class="v">14&nbsp;712</div><div class="l">С баллами (75%)</div></div>
+        <div class="stat"><div class="v">4&nbsp;928</div><div class="l">Без баллов</div></div>
+        <div class="stat"><div class="v">4&nbsp;375</div><div class="l">С флагом дежурства</div></div>
+        <div class="stat"><div class="v">86</div><div class="l">С флагом выезда</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h">Распределение выбранных баллов (топ)</div>
+        <div class="bars" id="scoreBars"></div>
+        <p class="caption" style="padding:0 16px 12px">Доминируют 5 и 10; хвост до 500–1000 — часто раскатки/запуски, не «типовой инцидент».</p>
+      </div>
+      <div class="card">
+        <div class="card-h">Топ исполнителей по сумме баллов</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr>
+                <th>Исполнитель</th>
+                <th class="num">N с баллами</th>
+                <th class="num">Сумма</th>
+                <th class="num">Среднее</th>
+                <th class="num">Медиана</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Ососков Евгений Петрович</td><td class="num">4490</td><td class="num">61015</td><td class="num">13.6</td><td class="num">10</td></tr>
+              <tr><td>Петров Артем Евгеньевич</td><td class="num">588</td><td class="num">35670</td><td class="num">60.7</td><td class="num">10</td></tr>
+              <tr><td>Павлов Андрей Андреевич</td><td class="num">1261</td><td class="num">19320</td><td class="num">15.3</td><td class="num">10</td></tr>
+              <tr><td>Сушков Павел</td><td class="num">2425</td><td class="num">16905</td><td class="num">7.0</td><td class="num">5</td></tr>
+              <tr><td>Конарев Михаил Михайлович</td><td class="num">1182</td><td class="num">16720</td><td class="num">14.2</td><td class="num">10</td></tr>
+              <tr><td>Ручинскас Андрей Владимирович</td><td class="num">1549</td><td class="num">15195</td><td class="num">9.8</td><td class="num">10</td></tr>
+              <tr><td>Кирюшкин Андрей Дмитриевич</td><td class="num">1384</td><td class="num">13810</td><td class="num">10.0</td><td class="num">10</td></tr>
+              <tr><td>Гулумбетов Павел</td><td class="num">1113</td><td class="num">8940</td><td class="num">8.0</td><td class="num">5</td></tr>
+              <tr><td>Синкин Глеб</td><td class="num">701</td><td class="num">8820</td><td class="num">12.6</td><td class="num">10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">У Петрова мало строк с баллами в этой таблице относительно объёма MFC-заявок: у переноса typical/баллы часто пустые; высокая средняя — хвост крупных значений на меньшем числе карточек с баллами.</p>
+      </div>
+      <div class="card">
+        <div class="card-h">Конвейеры по доле топ-клиента</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr><th>Исполнитель</th><th class="num">Заявок</th><th>Топ-клиент</th><th class="num">Доля</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Петров Артем Евгеньевич</td><td class="num">4382</td><td>ООО эМэФСи (МФС, MFC)</td><td class="num">95%</td></tr>
+              <tr><td>Ососков Евгений Петрович</td><td class="num">4547</td><td>ООО «АЙЭФСИЭМ ГРУПП» (Содексо ЕвроАзия SDX IFCM)</td><td class="num">93%</td></tr>
+              <tr><td>Сушков Павел</td><td class="num">2459</td><td>ООО «АЙЭФСИЭМ ГРУПП» (Содексо ЕвроАзия SDX IFCM)</td><td class="num">61%</td></tr>
+              <tr><td>Гулумбетов Павел</td><td class="num">1137</td><td>ООО «АЙЭФСИЭМ ГРУПП» (Содексо ЕвроАзия SDX IFCM)</td><td class="num">61%</td></tr>
+              <tr><td>Кирюшкин Андрей Дмитриевич</td><td class="num">1518</td><td>А-Восток (A-Vostok, А-Сервис)</td><td class="num">52%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="current">
+      <h2>Как сейчас выбирают типовую проблему</h2>
+      <p class="lead">Топ справочника (без «не указано»). «Доп. настройки…» — второй catch-all.</p>
+      <div class="card">
+        <div class="card-h">Топ typical по числу заявок</div>
+        <div class="bars" id="typicalBars"></div>
+        <p class="caption" style="padding:0 16px 12px">Источник: поле typical · n=19&nbsp;640 · пустые отдельно (3&nbsp;662)</p>
+      </div>
+      <div class="card">
+        <div class="card-h">Текущий справочник — что делать с каждым пунктом</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr><th>Типовая проблема</th><th class="num">N</th><th class="num">Мед. балл</th><th>Рекомендация</th></tr>
+            </thead>
+            <tbody id="currentTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="other-detail">
+      <h2>Что скрывалось в «Другое»</h2>
+      <p class="lead">
+        3&nbsp;639 заявок с typical = «Другое». Из них ~2&nbsp;391 — MFC (перенос/техзакрытие).
+        Ниже — разбор по заголовкам; колонка «без MFC» важнее для каталога.
+        Способ решения у «Другое» почти всегда тоже «Другое» (~94%).
+      </p>
+      <div class="stats">
+        <div class="stat"><div class="v">3&nbsp;639</div><div class="l">Всего «Другое»</div></div>
+        <div class="stat warn"><div class="v">2&nbsp;391</div><div class="l">Из них MFC (~66%)</div></div>
+        <div class="stat info"><div class="v">1&nbsp;248</div><div class="l">Без MFC — для каталога</div></div>
+        <div class="stat"><div class="v">мед. 5</div><div class="l">Медиана баллов (без MFC avg≈13)</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h">Классы внутри «Другое» (оценка по заголовку)</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr>
+                <th>Скрытый класс</th>
+                <th class="num">Все</th>
+                <th class="num">Без MFC</th>
+                <th>Примеры заголовков</th>
+                <th>Куда в целевом каталоге</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Карты / клиенты / лимиты / регистрация</td>
+                <td class="num">843</td><td class="num">355</td>
+                <td>омк/мбз/плаза. клиенты; блокировка карты; регистрация; начисление</td>
+                <td><b>Карты питания и клиенты</b></td>
+              </tr>
+              <tr>
+                <td>Чеки / ФР / печать (без точного пункта)</td>
+                <td class="num">347</td><td class="num">69</td>
+                <td>«…чек», распечатать чек, не выходят чеки</td>
+                <td>Чеки: печать / ФР или корректировка чека</td>
+              </tr>
+              <tr>
+                <td>Отчёты / расхождения</td>
+                <td class="num">256</td><td class="num">79</td>
+                <td>«расхождение», отчёты по объектам</td>
+                <td><b>Отчёты и расхождения</b></td>
+              </tr>
+              <tr>
+                <td>Консультация / звонок</td>
+                <td class="num">237</td><td class="num">126</td>
+                <td>«звонок» (71), вопрос по кассе; часть «мфс. заявки, звонки» — перенос</td>
+                <td><b>Консультация / звонок</b></td>
+              </tr>
+              <tr>
+                <td>Корректировка чека</td>
+                <td class="num">188</td><td class="num">31</td>
+                <td>удалить чек, яндекс перенос чека, корректировка списания</td>
+                <td><b>Корректировка чека</b></td>
+              </tr>
+              <tr>
+                <td>Меню / обмен / 1С</td>
+                <td class="num">181</td><td class="num">62</td>
+                <td>«…. обмен», fix меню</td>
+                <td><b>Меню, товары, обмен</b></td>
+              </tr>
+              <tr>
+                <td>Смена</td>
+                <td class="num">135</td><td class="num">22</td>
+                <td>закрыть смену (по объектам)</td>
+                <td>Смена не закрывается</td>
+              </tr>
+              <tr>
+                <td>Work Bright / AllBusiness / внешний сервис</td>
+                <td class="num">87</td><td class="num">~80+</td>
+                <td>фрито ворк брайт (39), олбизнес (30), сфера развития</td>
+                <td><b>Сопутствующий сервис клиента</b></td>
+              </tr>
+              <tr>
+                <td>Оплата / банк</td>
+                <td class="num">102</td><td class="num">19</td>
+                <td>ппN. банк, проблема с оплатой</td>
+                <td>Оплата (банк / процессинг / ДУЭТ)</td>
+              </tr>
+              <tr>
+                <td>НДС / ставки</td>
+                <td class="num">48</td><td class="num">2*</td>
+                <td>«ндс», «мфс ндс» (*много НДС также в MFC и в «Доп. настройках»)</td>
+                <td><b>НДС / фискальные ставки</b></td>
+              </tr>
+              <tr>
+                <td>ЧЗ / маркировка / ПИОТ</td>
+                <td class="num">~50+</td><td class="num">~30+</td>
+                <td>RE: отклонения в ЧЗ; табак/МРЦ; просрочка; настроить ПИОТ</td>
+                <td><b>ЧЗ / маркировка</b></td>
+              </tr>
+              <tr>
+                <td>Массовое обновление ПО</td>
+                <td class="num">31</td><td class="num">7</td>
+                <td>апдейт лого, спулер, обновление терминала</td>
+                <td><b>Массовое обновление / раскатка ПО</b></td>
+              </tr>
+              <tr>
+                <td>Не распознано / короткие темы</td>
+                <td class="num">770</td><td class="num">353</td>
+                <td>скидка, штат, дотация, mango-расшифровки, разовые темы</td>
+                <td>Другое + уточнение (или донастройка каталога позже)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">Оценки по keyword-эвристике (ориентир). Одна заявка — один класс.</p>
+      </div>
+    </section>
+
+    <section id="dop-detail">
+      <h2>Что скрывалось в «Доп. настройки, сопутствующий сервис…»</h2>
+      <p class="lead">
+        2&nbsp;203 заявки — второй catch-all. Почти все без MFC (2&nbsp;061).
+        Название обещает «неблокирующий сопутствующий сервис», но по факту туда кладут
+        <b>разное</b>: карты/дотации, обмены, раскатки ПО, коды кассира, ЧЗ-модули, запуски.
+        Медиана баллов 10, среднее ~23.
+      </p>
+      <div class="callout warn">
+        <strong>Важное различие</strong>
+        «Сопутствующий сервис» в текущем пункте Okdesk ≠ только Work Bright.
+        Work Bright / AllBusiness чаще оказывались в <b>«Другое»</b>.
+        В «Доп. настройках» — в основном внутренние работы по кассе/интеграциям без точного пункта.
+      </div>
+      <div class="card">
+        <div class="card-h">Классы внутри «Доп. настройки…» (≈ без MFC)</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr>
+                <th>Что реально делали</th>
+                <th class="num">N≈</th>
+                <th>Примеры</th>
+                <th>Куда вынести</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Карты / клиенты / дотации / коды сотруднику</td>
+                <td class="num">464</td>
+                <td>начисление средств (31), дотация, код сотруднику, блоки+fshtrih</td>
+                <td><b>Карты питания и клиенты</b></td>
+              </tr>
+              <tr>
+                <td>Меню / обмен / 1С</td>
+                <td class="num">221</td>
+                <td>fix меню (27), обмен / сделать обмен</td>
+                <td><b>Меню, товары, обмен</b></td>
+              </tr>
+              <tr>
+                <td>Доступы / права / точечные настройки</td>
+                <td class="num">122</td>
+                <td>«доступ», проверить доступ — ядро смысла пункта</td>
+                <td><b>Настройки и доступы</b> (сузить текущий)</td>
+              </tr>
+              <tr>
+                <td>Код кассира / портал / лицензия</td>
+                <td class="num">72</td>
+                <td>код кассира (26), создать код, не работает портал</td>
+                <td>ПО кассы / лицензия / портал + доступы</td>
+              </tr>
+              <tr>
+                <td>Массовое обновление ПО</td>
+                <td class="num">71</td>
+                <td>обновление ПО ЛМ2 (22), спулер Штрих+скрипт, FShtrihSpooler</td>
+                <td><b>Массовое обновление / раскатка ПО</b></td>
+              </tr>
+              <tr>
+                <td>Чеки / нефискальные / НДС в чеках</td>
+                <td class="num">131</td>
+                <td>обновление НДС нефискальных чеков, копии чеков</td>
+                <td>Чеки / ФР или <b>НДС</b></td>
+              </tr>
+              <tr>
+                <td>Отчёты / сверки / Z-отчёт</td>
+                <td class="num">105</td>
+                <td>копия отчёта, ПО к банку для расхождений</td>
+                <td><b>Отчёты и расхождения</b></td>
+              </tr>
+              <tr>
+                <td>ЧЗ-модуль / фронт+ЧЗ / ПИОТ</td>
+                <td class="num">~53</td>
+                <td>обновление фронт+ЧЗ, модуль ЧЗ, настроить ПИОТ</td>
+                <td><b>ЧЗ / маркировка</b></td>
+              </tr>
+              <tr>
+                <td>Оплата / банк-терминал / ДУЭТ</td>
+                <td class="num">75</td>
+                <td>замена банк-терминала, тестирование ДУЭТ 5.0</td>
+                <td>Оплата… или оборудование</td>
+              </tr>
+              <tr>
+                <td>Запуск / frontupdater / РМС</td>
+                <td class="num">46</td>
+                <td>запуск, установка frontupdater, ПО РМС на точки</td>
+                <td><b>Оборудование: подключение / запуск</b></td>
+              </tr>
+              <tr>
+                <td>НДС / ставки (явные)</td>
+                <td class="num">15</td>
+                <td>убрать НДС, НДС 22%, проверка НДС</td>
+                <td><b>НДС / фискальные ставки</b></td>
+              </tr>
+              <tr>
+                <td>Прочее / нераспознанное</td>
+                <td class="num">543</td>
+                <td>изъятие средств, коды повару, мониторинг, разовые темы</td>
+                <td>Часть → доступы/карты; остаток уточнять</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">Способ решения часто «Другое» (~1.1k) или «Настройка ПО и доступы» (~321).</p>
+      </div>
+    </section>
+
+    <section id="gaps">
+      <h2>Сжатие списка и явные добавления</h2>
+      <p class="lead">
+        Вынести повторяющиеся классы из двух корзин («Другое» + «Доп. настройки») и слить дубли —
+        не раздувать справочник десятками узких строк.
+      </p>
+      <div class="card">
+        <div class="card-h">Оценка скрытых классов в Другое+пусто (ориентир)</div>
+        <div class="bars" id="gapBars"></div>
+        <p class="caption" style="padding:0 16px 12px">Keyword · first-match · typical ∈ {Другое, пусто}</p>
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <div class="card-h">Сжатие <span class="pill warn">Объединить / расширить</span></div>
+          <div class="card-b pad" id="merges"></div>
+        </div>
+        <div class="card">
+          <div class="card-h">Добавить <span class="pill info">Новое</span></div>
+          <div class="card-b pad" id="adds"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-h">Частые заголовки при typical = «Другое»</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Заголовок</th><th class="num">Раз</th><th>Смысл</th></tr></thead>
+            <tbody id="otherTitles"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="target">
+      <h2>Целевой справочник (~18) — с расшифровкой</h2>
+      <p class="lead">
+        Для каждого пункта: откуда объём и что раньше пряталось в «Другое» или
+        «Доп. настройки / сопутствующий сервис».
+      </p>
+      <div class="card">
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr>
+                <th>Пункт</th>
+                <th>Откуда</th>
+                <th>Что входит / что вытаскиваем из корзин</th>
+                <th>Ориентир</th>
+              </tr>
+            </thead>
+            <tbody id="targetTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <strong>Как внедрять (проблемы)</strong>
+        <ol style="margin:8px 0 0; padding-left:18px">
+          <li>Вынести из корзин: карты/клиенты, раскатка ПО, НДС, сопутствующий сервис клиента; слить ДУЭТ с оплатой.</li>
+          <li>«Доп. настройки…» <b>сузить</b> → «Настройки и доступы (не блокирует продажу)».</li>
+          <li>«Другое» в проблемах → тип заявки <b>«Нестандарт»</b> + обязательная «Суть» (без Expert). KPI доли — без MFC.</li>
+          <li>Способ решения при нестандарте всё равно выбирается из каталога способов (см. ниже).</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="nonstandard">
+      <h2>Тип «Нестандарт» — только про проблему</h2>
+      <p class="lead">
+        Имеет смысл, когда <b>симптом/ситуация</b> не укладывается в каталог типовых проблем.
+        Это не значит «мы не знаем, что сделали»: действие инженера почти всегда есть в списке способов.
+      </p>
+      <div class="two">
+        <div class="card">
+          <div class="card-h">Проблема</div>
+          <div class="card-b pad">
+            <p style="margin:0 0 8px">Нет честного пункта в <code>typical</code> → тип <b>Нестандарт</b> + поле «Суть нестандарта» (обязательно при «Решена»).</p>
+            <p style="margin:0;color:var(--muted);font-size:0.9rem">Убрать «Другое» из выпадающего списка проблем. MFC-перенос этим типом не кормить.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h">Способ решения</div>
+          <div class="card-b pad">
+            <p style="margin:0 0 8px">Всегда из каталога способов: рестарт, обмен, доступ, консультация, раскатка, железо…</p>
+            <p style="margin:0;color:var(--muted);font-size:0.9rem">Нестандартная <em>заявка</em> ≠ неизвестный <em>способ</em>. Целевой список способов как раз закрывает дыры нынешнего «Другое» в solution.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">Роли полей</div>
+        <div class="card-b">
+          <table>
+            <thead>
+              <tr><th></th><th>Нестандарт (тип + суть)</th><th>Способ решения</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Когда</b></td>
+                <td>Ситуация не из каталога проблем</td>
+                <td>Что инженер сделал</td>
+              </tr>
+              <tr>
+                <td><b>Цель</b></td>
+                <td>Не раздувать typical и не тыкать «Другое»</td>
+                <td>Всегда выбрать действие из списка</td>
+              </tr>
+              <tr>
+                <td><b>«Другое»</b></td>
+                <td>Убрать из проблем → тип Нестандарт</td>
+                <td>Убрать из списка; масса закрывается целевым каталогом</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="solutions">
+      <h2>Способы решения — тоже нужна оптимизация</h2>
+      <p class="lead">
+        Поле <code>solution_method</code> (multiselect). «Другое» здесь ещё сильнее, чем у типовых проблем:
+        без MFC ~4.9k из выбранных способов — «Другое»; только «Другое» — ~4.7k.
+        Multiselect почти не используют (~500 заявок с &gt;1 способом).
+      </p>
+      <div class="stats">
+        <div class="stat warn"><div class="v">4&nbsp;934</div><div class="l">«Другое» без MFC</div></div>
+        <div class="stat warn"><div class="v">4&nbsp;658</div><div class="l">Только «Другое» (без MFC)</div></div>
+        <div class="stat"><div class="v">16</div><div class="l">Пунктов в справочнике сейчас</div></div>
+        <div class="stat info"><div class="v">~14–15</div><div class="l">Цель после сжатия + добавлений</div></div>
+      </div>
+      <div class="callout warn">
+        <strong>Связка с проблемами</strong>
+        Если typical = «Доп. настройки» / «Другое» / «Консультация», способ почти всегда тоже «Другое».
+        Каталоги менять <b>вместе</b>. Тип «Нестандарт» закрывает дыру в <em>проблеме</em>; дыру в <em>способе</em> закрывает целевой список ниже.
+      </div>
+      <div class="callout info">
+        <strong>Покроет ли целевой список то, что сейчас в «Другое» (способ)?</strong>
+        <b>Основную массу — да.</b> Звонки → консультация; касса зависла → рестарт/железо;
+        чеки → рестарт/БД/сеть; начисления/клиенты → карты; код кассира → доступ;
+        меню/обмен → обмен; расхождение → смена/сверка; ЧЗ-письма → сеть или раскатка;
+        апдейты → раскатка; НДС → фискальные параметры.
+        Останется небольшой хвост разовых тем — для них ближайший способ
+        (консультация / точечная настройка / БД), а нестандартность — в типе проблемы, не в способе.
+      </div>
+      <div class="card">
+        <div class="card-h">Текущий справочник способов (без MFC)</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Способ решения</th><th class="num">N</th><th>Комментарий</th></tr></thead>
+            <tbody>
+              <tr><td>Другое</td><td class="num">4934</td><td>Catch-all; убрать/ограничить как у проблем</td></tr>
+              <tr><td>Рестарт ПО (спулеры, фронт, iis)</td><td class="num">1155</td><td>Оставить; слить с GriServ</td></tr>
+              <tr><td>Выполнить обмен</td><td class="num">796</td><td>Оставить; рядом SALES3</td></tr>
+              <tr><td>Настройка ПО и доступы</td><td class="num">725</td><td>Слишком широко — сузить / разрезать</td></tr>
+              <tr><td>Отменить чек / сторно / возврат</td><td class="num">584</td><td>Оставить (хорошо бьётся с typical)</td></tr>
+              <tr><td>Сеть / внешний сервис</td><td class="num">503</td><td>Оставить; длинное имя укоротить</td></tr>
+              <tr><td>Расхождение смены / принуд. закрытие</td><td class="num">454</td><td>Оставить</td></tr>
+              <tr><td>БД / ручная корректировка</td><td class="num">448</td><td>Оставить</td></tr>
+              <tr><td>Питание оборудования вкл/выкл</td><td class="num">367</td><td>Слить с «провода»</td></tr>
+              <tr><td>Самовосстановление</td><td class="num">353</td><td>Оставить; не путать с консультацией</td></tr>
+              <tr><td>Рестарт GriServ</td><td class="num">243</td><td>→ в общий рестарт (часто ДУЭТ/карты)</td></tr>
+              <tr><td>Провода / переподключение</td><td class="num">206</td><td>→ железо вместе с питанием</td></tr>
+              <tr><td>Восстановление настроек кассы</td><td class="num">199</td><td>Оставить</td></tr>
+              <tr><td>Проблема 1С / источник меню</td><td class="num">117</td><td>Оставить</td></tr>
+              <tr><td>SALES3 / перевыгрузка</td><td class="num">77</td><td>→ в «обмен / перевыгрузка»</td></tr>
+              <tr><td>Проверить наличие бумаги</td><td class="num">16</td><td>Убрать (мёртвый пункт)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <div class="card-h">Сжать</div>
+          <div class="card-b pad">
+            <div class="item"><span class="pill ok">Объединить</span><div class="to">Рестарт ПО / сервиса</div><div class="from">Рестарт ПО + Рестарт GriServ</div></div>
+            <div class="item"><span class="pill ok">Объединить</span><div class="to">Железо: питание / кабели / переподключение</div><div class="from">Питание вкл/выкл + провода</div></div>
+            <div class="item"><span class="pill ok">Объединить</span><div class="to">Обмен / перевыгрузка данных</div><div class="from">Выполнить обмен + SALES3…</div></div>
+            <div class="item"><span class="pill warn">Убрать</span><div class="to">Проверить наличие бумаги</div><div class="from">Всего 16 раз</div></div>
+            <div class="item"><span class="pill warn">Сузить</span><div class="to">Настройка ПО → доступы + точечный конфиг</div><div class="from">Сейчас 725, рядом с catch-all typical</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h">Добавить (дыры «Другое»)</div>
+          <div class="card-b pad">
+            <div class="item"><div class="to">Консультация / ответ без изменений</div><div class="why">Сейчас «Другое» или путают с самовосстановлением</div></div>
+            <div class="item"><div class="to">Массовое обновление / раскатка ПО</div><div class="why">Спулер, ЛМ2 — сейчас «Другое» / «Настройка ПО»</div></div>
+            <div class="item"><div class="to">Карты / лимиты / начисления</div><div class="why">Начисление, дотация, клиенты в «Другое»</div></div>
+            <div class="item"><div class="to">Изменение НДС / фискальных параметров</div><div class="why">Отдельно от точечной настройки</div></div>
+            <div class="item"><div class="to">Доступ / права / код кассира</div><div class="why">Вырезать из широкой «Настройки ПО»</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">Целевой список способов (~14)</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>#</th><th>Пункт</th><th>Откуда</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Рестарт ПО / сервиса (фронт, спулер, IIS, GriServ…)</td><td>Слияние</td></tr>
+              <tr><td>2</td><td>Обмен / перевыгрузка данных (в т.ч. SALES3)</td><td>Слияние</td></tr>
+              <tr><td>3</td><td>Железо: питание, кабели, переподключение</td><td>Слияние</td></tr>
+              <tr><td>4</td><td>Сеть / недоступность внешнего сервиса</td><td>Было</td></tr>
+              <tr><td>5</td><td>Проблема 1С / источника меню</td><td>Было</td></tr>
+              <tr><td>6</td><td>БД / ручная корректировка чека или данных</td><td>Было</td></tr>
+              <tr><td>7</td><td>Отмена чека / сторно / возврат</td><td>Было</td></tr>
+              <tr><td>8</td><td>Закрытие смены / устранение расхождения смены</td><td>Было</td></tr>
+              <tr><td>9</td><td>Восстановление настроек кассы</td><td>Было</td></tr>
+              <tr><td>10</td><td>Доступ / права / код кассира</td><td>Из «Настройка ПО»</td></tr>
+              <tr><td>11</td><td>Точечная настройка ПО (не раскатка)</td><td>Сужение</td></tr>
+              <tr><td>12</td><td>Массовое обновление / раскатка ПО</td><td>Новое</td></tr>
+              <tr><td>13</td><td>Карты / лимиты / начисления</td><td>Новое</td></tr>
+              <tr><td>14</td><td>Консультация / ответ без изменений</td><td>Новое</td></tr>
+              <tr><td>15</td><td>Самовосстановление</td><td>Было</td></tr>
+              <tr><td>—</td><td colspan="2" style="color:var(--muted)">«Другое» в способах не нужно как основной путь: тип <b>Нестандарт</b> — только для проблемы; способ — из пунктов 1–15. Редкий хвост → ближайший пункт.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">Покрытие: было «Другое» (способ) → станет в целевом списке</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Заголовок / класс</th><th class="num">Раз≈</th><th>Целевой способ</th></tr></thead>
+            <tbody>
+              <tr><td>звонок / вопрос по кассе</td><td class="num">145+</td><td>Консультация / ответ без изменений</td></tr>
+              <tr><td>проблема с кассой / зависла</td><td class="num">73+</td><td>Рестарт ПО / сервиса или Железо</td></tr>
+              <tr><td>не печатаются / не выходят чеки</td><td class="num">97+</td><td>Рестарт / БД / Сеть (не «Другое»)</td></tr>
+              <tr><td>начисление / клиенты / дотация</td><td class="num">60+</td><td>Карты / лимиты / начисления</td></tr>
+              <tr><td>код кассира / доступ</td><td class="num">52+</td><td>Доступ / права / код кассира</td></tr>
+              <tr><td>fix меню / обмен</td><td class="num">27+</td><td>Обмен / перевыгрузка или 1С</td></tr>
+              <tr><td>расхождение / закрыть смену</td><td class="num">34+</td><td>Смена / сверка</td></tr>
+              <tr><td>RE: ЧЗ…</td><td class="num">48+</td><td>Сеть / раскатка / точечная настройка</td></tr>
+              <tr><td>апдейты, спулер</td><td class="num">—</td><td>Массовое обновление / раскатка</td></tr>
+              <tr><td>НДС</td><td class="num">—</td><td>НДС / фискальные параметры (в точечной или отдельным пунктом)</td></tr>
+              <tr><td>Разовый хвост (mango, «заявка»…)</td><td class="num">сотни</td><td>Ближайший способ; нестандартность — в типе проблемы</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption" style="padding:0 16px 12px">Основную массу «Другое» в способах целевой список закрывает; 100% разовых тем — нет, и не нужно.</p>
+      </div>
+      <div class="card">
+        <div class="card-h">Когда способ = только «Другое» — частые заголовки (без MFC)</div>
+        <div class="card-b">
+          <table>
+            <thead><tr><th>Заголовок</th><th class="num">Раз</th><th>Какой способ напрашивается</th></tr></thead>
+            <tbody>
+              <tr><td>звонок</td><td class="num">75</td><td>Консультация</td></tr>
+              <tr><td>вопрос по кассе</td><td class="num">70</td><td>Консультация</td></tr>
+              <tr><td>проблема с кассой / зависла</td><td class="num">73+</td><td>Рестарт / железо</td></tr>
+              <tr><td>не печатаются / не выходят чеки</td><td class="num">97+</td><td>Рестарт / БД / сеть — но не «Другое»</td></tr>
+              <tr><td>начисление средств / клиенты</td><td class="num">60+</td><td>Карты / начисления</td></tr>
+              <tr><td>код кассира / доступ</td><td class="num">52+</td><td>Доступ / код кассира</td></tr>
+              <tr><td>fix меню / обмен</td><td class="num">27+</td><td>Обмен / 1С</td></tr>
+              <tr><td>расхождение</td><td class="num">34</td><td>Смена / сверка / SALES3</td></tr>
+              <tr><td>RE: ЧЗ…</td><td class="num">48+</td><td>Сеть/ЧЗ или настройка/раскатка</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="caption">Подробности: docs/13-solution-catalog-proposal.md</p>
+    </section>
+
+    <footer>
+      Файл: analysis/typical-catalog.html · данные выгрузки Okdesk avers, локально в data/ · без секретов API.
+      Открыть можно двойным кликом в браузере.
+    </footer>
+  </div>
+
+  <script>
+    const CURRENT = [
+      { name: "(не указано)", n: 3662, median: 10, note: "Часто MFC-перенос / обход; не смешивать с нативным контуром" },
+      { name: "Другое", n: 3639, median: 5, note: "Смесь: MFC-bulk + пробелы каталога + раскатки/запуски" },
+      { name: "Доп. настройки, сопутствующий сервис…", n: 2203, median: 10, note: "Второй catch-all после «Другое»" },
+      { name: "Не печатаются / не закрываются чеки (ФР…)", n: 1563, median: 10, note: "Оставить, укоротить формулировку" },
+      { name: "Не закрывается смена", n: 1472, median: 10, note: "Оставить; в «Другое» ещё похожие" },
+      { name: "Не проходит карта клиента", n: 1003, median: 5, note: "Расширить до «Карты и клиенты»" },
+      { name: "Нет меню, нет товара на кассе", n: 968, median: 5, note: "Связать с обменом/1С" },
+      { name: "Консультация", n: 928, median: 5, note: "Объединить со «звонок»" },
+      { name: "Отменить чек (сторно / возврат)", n: 748, median: 5, note: "Расширить: удаление, перенос, корректировка" },
+      { name: "Не работает касса, перезапуск", n: 706, median: 5, note: "Оставить" },
+      { name: "Не проходит оплата (банк / процессинг)", n: 555, median: 5, note: "Слить с ДУЭТ" },
+      { name: "Не работает ЧЗ", n: 401, median: 5, note: "Расширить до маркировки" },
+      { name: "Не уходят чеки в ОФД", n: 321, median: 5, note: "Оставить" },
+      { name: "Вопросы по отчетам", n: 241, median: 5, note: "Слить с печатью отчёта / сверками" },
+      { name: "Проблема с оплатой по ДУЭТу", n: 222, median: 5, note: "→ в общий пункт оплаты" },
+      { name: "Не работает сканер, весы", n: 220, median: 5, note: "Оставить как периферия" },
+      { name: "Ошибка на кассе (лицензия, дата…)", n: 187, median: 10, note: "Расширить: портал, код кассира" },
+      { name: "Предоставление доступа", n: 184, median: 5, note: "Оставить / чуть расширить" },
+      { name: "Подключение и настройка оборудования", n: 176, median: 12.5, note: "Связать с запуском/подготовкой" },
+      { name: "Не печатается отчет", n: 115, median: 5, note: "→ в отчёты" },
+      { name: "Расхождение данных в отчетах с 1С, ОФД…", n: 107, median: 15, note: "Рядом с отчётами или внутри" },
+      { name: "Не обновились лимиты", n: 19, median: 5, note: "Всего 19 — влить в «Карты и клиенты»" },
+    ];
+
+    const MERGES = [
+      { action: "Объединить", from: "Оплата по ДУЭТу + Не проходит оплата (банк/процессинг)", to: "Оплата не проходит (банк / процессинг / ДУЭТ)", why: "Один класс симптомов; ~777 вместе + хвост из «Другое»." },
+      { action: "Объединить", from: "Вопросы по отчетам + Не печатается отчет (+ сверки)", to: "Отчёты и расхождения данных", why: "Печать отчёта редкая (115). Сверки часто под коротким «расхождение»." },
+      { action: "Объединить / расширить", from: "Карта клиента + лимиты + поток «клиенты» из Другое", to: "Карты питания и клиенты", why: "Самый частый скрытый класс в Другое/пусто (~1500 по заголовкам)." },
+      { action: "Расширить", from: "Отменить чек", to: "Корректировка чека (сторно, возврат, удаление, перенос)", why: "«Удалить чек», «яндекс перенос чека» и т.п." },
+      { action: "Расширить", from: "Консультация", to: "Консультация / звонок без инцидента", why: "Топ: «звонок», «МФС. заявки, звонки» (часть — контур переноса)." },
+      { action: "Расширить", from: "Не работает ЧЗ", to: "ЧЗ / маркировка", why: "RE: отклонения ЧЗ, табак/МРЦ, просрочка." },
+    ];
+
+    const ADD = [
+      { name: "НДС / фискальные ставки", evidence: "~100+ явных «НДС» в Другое; кампании раскатки", scoreHint: "Часто выше медианы — не путать с инцидентом на 5 баллов" },
+      { name: "Массовое обновление / раскатка ПО", evidence: "Спулер, SDK, лого, frontupdater — Другое или «Доп. настройки» с баллами 100–1000", scoreHint: "Отдельный класс для премии и аудита хвоста" },
+      { name: "Запуск / подготовка точки или оборудования", evidence: "«Запуск», «Подготовить моноблок»", scoreHint: "Рядом с подключением оборудования, но про ввод в эксплуатацию" },
+      { name: "Сопутствующий сервис клиента (Work Bright / AllBusiness…)", evidence: "Frito Work Bright (~39) + AllBusiness (~30) сидят в «Другое», не в «Доп. настройках»", scoreHint: "Отделить от catch-all «Доп. настройки…» — это внешний продукт клиента" },
+    ];
+
+    const GAP_BUCKETS = [
+      ["Карты и клиенты", 1500], ["Меню / обмен / 1С", 526], ["Отчёты и расхождения", 485],
+      ["Корректировка чека", 362], ["Консультация / звонок", 354], ["Смена", 332],
+      ["Чеки / ФР", 307], ["Оплата", 285], ["Настройки и доступы", 203],
+      ["Касса недоступна", 201], ["Work Bright и др.", 179], ["ОФД", 177],
+      ["Лицензия / портал", 127], ["НДС", 98], ["ЧЗ", 94], ["Периферия", 80],
+      ["Запуск / оборудование", 62], ["Массовое обновление ПО", 41],
+    ];
+
+    const TARGET = [
+      ["Смена не закрывается / не открывается", "Было",
+       "Было в справочнике. Из «Другое»: закрыть смену по объектам (~135, без MFC мало).", "~1.5k+"],
+      ["Меню, товары, обмен с 1С/источником", "Было+",
+       "Было «нет меню». Из корзин: fix меню, «…. обмен», выгрузки — Другое ~181 + Доп. ~221.", "~1.2k+"],
+      ["Карты питания и клиенты", "Расширено",
+       "Было только «не проходит карта» + «лимиты»(19). Из Другое: омк/мбз/плаза клиенты, блокировки (~843). Из Доп.: начисление, дотация, код сотруднику (~464). Крупнейший скрытый класс.", "~2.5k потенц."],
+      ["Чеки: печать / ФР / не закрывается чек", "Было",
+       "Оставить. Из Другое/Доп. часть коротких «…чек» / копии чеков — сюда или в корректировку.", "~1.6k"],
+      ["Корректировка чека (сторно, возврат, удаление, перенос)", "Расширено",
+       "Было «отменить чек». Из Другое: удалить чек, яндекс перенос (~188). Из Доп.: перенос чеков (~36).", "~1.1k"],
+      ["Оплата не проходит (банк / процессинг / ДУЭТ)", "Объединено",
+       "Слить два пункта. Из корзин: ппN. банк, замена банк-терминала, тест ДУЭТ.", "~0.8k+"],
+      ["ЧЗ / маркировка", "Расширено",
+       "Было «не работает ЧЗ». Из Другое: RE: отклонения ЧЗ, табак/МРЦ, ПИОТ. Из Доп.: обновление фронт+ЧЗ, модуль ЧЗ, настройка ПИОТ (~53).", "~0.5k+"],
+      ["ОФД — чеки не уходят", "Было", "Оставить; хвост из Другое (ппN. офд).", "~0.3k+"],
+      ["Касса недоступна / зависание / перезапуск", "Было",
+       "Оставить. Из корзин: «проблема с кассой», зависла касса.", "~0.7k+"],
+      ["Периферия (сканер, весы…)", "Было", "Оставить; немного из Другое/Доп. (сканер).", "~0.2k+"],
+      ["Ошибка ПО кассы / лицензия / портал", "Расширено",
+       "Было «ошибка на кассе…». Из Доп.: код кассира (26+), портал, лицензия X5/Москвич.", "~0.3k"],
+      ["Отчёты и расхождения данных", "Объединено",
+       "Слить вопросы/печать отчёта + сверки. Из Другое «расхождение»; из Доп. копии отчётов, сверки с банком.", "~0.5k+"],
+      ["Настройки и доступы (не блокирует продажу)", "Сжато из catch-all",
+       "Сузить бывшие «Доп. настройки…»: только доступы/права/точечный конфиг (~122 явных «доступ»). Раскатки, карты, ЧЗ, запуски — НЕ сюда.", "вместо 2.2k «доп.»"],
+      ["Оборудование: подключение / замена / запуск", "Расширено",
+       "Было «подключение оборудования». Из Доп.: запуск, frontupdater, РМС (~46). Из Другое: подготовка/установка.", "~0.25k+"],
+      ["Массовое обновление / раскатка ПО", "Новое",
+       "Из Доп.: обновление ЛМ2, спулер Штрих, FShtrihSpooler (~71). Из Другое: апдейт лого/терминала. Сюда же хвост баллов 100–1000.", "хвост баллов"],
+      ["НДС / фискальные ставки", "Новое",
+       "Из Другое: «ндс», «мфс ндс». Из Доп.: убрать НДС, НДС22%, обновление НДС нефискальных чеков. Отдельно от обычного инцидента.", "кампании"],
+      ["Сопутствующий сервис клиента", "Новое",
+       "НЕ путать с бывшим catch-all. Сюда внешние продукты клиента: Frito Work Bright (~39), AllBusiness (~30), сфера развития — сейчас в «Другое».", "Frito и аналоги"],
+      ["Консультация / звонок", "Расширено",
+       "Было «консультация». Из Другое: «звонок»(71), вопрос по кассе. «мфс. заявки, звонки» частично = перенос MFC.", "~1.3k"],
+      ["Другое (с уточнением, нативный контур)", "Ограничить",
+       "Остаток нераспознанного (~350 без MFC) + редкие темы. MFC-bulk не мерить этим KPI.", "цель <5% без MFC"],
+    ];
+
+    const OTHER_TITLES = [
+      ["звонок", 75, "Консультация (натив)"],
+      ["омк. клиенты", 61, "Карты/клиенты"],
+      ["мфс. заявки, звонки", 56, "Часто MFC-перенос"],
+      ["фрито ворк брайт", 39, "Сопутств. сервис клиента"],
+      ["ндс", 36, "НДС / ставки"],
+      ["фрито олбизнес", 30, "Сопутств. сервис клиента"],
+      ["re: отклонения в чз…", 28, "ЧЗ / маркировка"],
+      ["мбз. клиенты", 22, "Карты/клиенты"],
+      ["плаза. клиенты", 20, "Карты/клиенты"],
+      ["re: чз табак / мрц", 20, "ЧЗ / маркировка"],
+      ["расхождение", 16, "Отчёты и сверки"],
+      ["нк нпз. удалить чек", 14, "Корректировка чека"],
+    ];
+
+    const SCORES = [
+      [5, 7168], [10, 5740], [15, 258], [20, 417], [30, 488], [50, 87], [60, 123],
+      [100, 48], [120, 24], [200, 29], [300, 13], [400, 8], [500, 7], [1000, 4],
+    ];
+
+    function bars(el, rows, alt) {
+      const max = Math.max(...rows.map((r) => r[1]));
+      el.innerHTML = rows.map(([lab, n]) => {
+        const pct = Math.max(2, (n / max) * 100);
+        return `<div class="bar-row">
+          <div class="bar-lab">${lab}</div>
+          <div class="bar-track"><div class="bar-fill${alt ? " alt" : ""}" style="width:${pct}%"></div></div>
+          <div class="bar-n">${n.toLocaleString("ru-RU")}</div>
+        </div>`;
+      }).join("");
+    }
+
+    bars(
+      document.getElementById("typicalBars"),
+      CURRENT.filter((c) => c.name !== "(не указано)").slice(0, 12).map((c) => [
+        c.name.length > 36 ? c.name.slice(0, 34) + "…" : c.name,
+        c.n,
+      ])
+    );
+    bars(document.getElementById("gapBars"), GAP_BUCKETS, true);
+    bars(
+      document.getElementById("scoreBars"),
+      SCORES.map(([s, n]) => [String(s) + " б.", n])
+    );
+
+    document.getElementById("currentTable").innerHTML = CURRENT.map((c) =>
+      `<tr><td>${c.name}</td><td class="num">${c.n.toLocaleString("ru-RU")}</td><td class="num">${c.median}</td><td>${c.note}</td></tr>`
+    ).join("");
+
+    document.getElementById("merges").innerHTML = MERGES.map((m) =>
+      `<div class="item">
+        <span class="pill ok">${m.action}</span>
+        <div class="to">${m.to}</div>
+        <div class="from">Из: ${m.from}</div>
+        <div class="why">${m.why}</div>
+      </div>`
+    ).join("");
+
+    document.getElementById("adds").innerHTML = ADD.map((a) =>
+      `<div class="item">
+        <div class="to">${a.name}</div>
+        <div class="from">${a.evidence}</div>
+        <div class="why">${a.scoreHint}</div>
+      </div>`
+    ).join("") + `<div class="callout info" style="margin-top:12px"><strong>Про «Доп. настройки…»</strong>Оставить, но сузить: только неблокирующие точечные настройки. Раскатки, запуски и внешние сервисы — отдельно.</div>`;
+
+    document.getElementById("otherTitles").innerHTML = OTHER_TITLES.map(([t, n, s]) =>
+      `<tr><td>${t}</td><td class="num">${n}</td><td>${s}</td></tr>`
+    ).join("");
+
+    function originPill(o) {
+      let cls = "";
+      if (o === "Новое") cls = "info";
+      else if (o.startsWith("Объедин") || o.startsWith("Расшир") || o.startsWith("Было+")) cls = "ok";
+      else if (o.startsWith("Огранич") || o.startsWith("Сжато")) cls = "warn";
+      return `<span class="pill ${cls}">${o}</span>`;
+    }
+
+    document.getElementById("targetTable").innerHTML = TARGET.map(([name, origin, detail, hint]) =>
+      `<tr><td><b>${name}</b></td><td>${originPill(origin)}</td><td>${detail}</td><td>${hint}</td></tr>`
+    ).join("");
+  </script>
+</body>
+</html>

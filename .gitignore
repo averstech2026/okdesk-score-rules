@@ -2,3 +2,12 @@
 *.swp
 .idea/
 .vscode/
+.env
+.env.*
+!.env.example
+data/
+analysis/issues_flat.jsonl
+analysis/summary.json
+__pycache__/
+.venv/
+*.pyc
