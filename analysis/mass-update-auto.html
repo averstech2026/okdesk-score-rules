@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Массовые обновления ПО → автообновление</title>
+  <style>
+    :root {
+      --bg:#f4f5f7; --surface:#fff; --text:#1a1d23; --muted:#5c6570; --line:#e2e5ea;
+      --accent:#1f4b7a; --ok:#1f6b3a; --warn:#8a5a00;
+    }
+    body { margin:0; font-family:"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.45; }
+    .wrap { max-width:1000px; margin:0 auto; padding:28px 20px 72px; }
+    h1 { font-size:1.45rem; margin:0 0 8px; }
+    h2 { font-size:1.1rem; margin:28px 0 10px; }
+    .lead { color:var(--muted); max-width:80ch; }
+    .banner { background:#1f4b7a; color:#fff; border-radius:12px; padding:16px 18px; margin-bottom:16px; }
+    .banner a { color:#cfe3ff; }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:14px 0; }
+    @media(max-width:800px){ .stats{ grid-template-columns:1fr 1fr; } }
+    .stat { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+    .stat .v { font-size:1.2rem; font-weight:700; color:var(--accent); }
+    .stat .l { font-size:.8rem; color:var(--muted); margin-top:4px; }
+    .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; margin:14px 0; overflow:hidden; }
+    .card-h { padding:12px 16px; border-bottom:1px solid var(--line); font-weight:650; }
+    table { width:100%; border-collapse:collapse; font-size:.88rem; }
+    th,td { padding:8px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); background:#fafbfc; }
+    td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    tr:last-child td { border-bottom:0; }
+    .ok { color:var(--ok); font-weight:650; }
+    .muted { color:var(--muted); font-size:.85rem; }
+    ul { color:var(--muted); }
+    footer { margin-top:36px; color:#8b939e; font-size:.8rem; border-top:1px solid var(--line); padding-top:14px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <strong style="display:block;margin-bottom:6px">Массовые обновления ПО vs автообновление</strong>
+    Период 23-01-2026 00:00 — 22-07-2026 23:59 ·
+    1 балл = 15 ₽ · см. также <a href="bonus-comparison.html">bonus-comparison.html</a>
+  </div>
+  <h1>Ручные раскатки: объём и что уйдёт с автообновлением</h1>
+  <p class="lead">
+    Крупные самооценки часто = одна заявка на обновление ПО по списку объектов.
+    Ниже — сколько таких заявок в выгрузке и как сократится контур, если типовые обновления пойдут агентом.
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="v">298</div><div class="l">Заявок mass-update<br>(1.6% всех)</div></div>
+    <div class="stat"><div class="v">451 575 ₽</div><div class="l">Премия в этом контуре<br>(15.3% фонда баллов)</div></div>
+    <div class="stat"><div class="v">123</div><div class="l">Из них с баллом ≥100<br>(377 550 ₽)</div></div>
+    <div class="stat"><div class="v ok">−68%</div><div class="l">Сокращение mass (базовый)<br>−304 365 ₽</div></div>
+  </div>
+
+<div class="card"><div class="card-h">Корзины</div><table><thead><tr>
+<th>Корзина</th><th class='num'>Заявок</th><th class='num'>Баллы</th><th class='num'>₽</th><th>Смысл</th></tr></thead><tbody>
+<tr><td><code>auto_kill</code></td><td class='num'>83</td><td class='num'>12 785</td><td class='num'>191 775</td><td class='muted'>Снимается автообновлением почти полностью (спулер, frontupdater, лого, sdk…)</td></tr>
+<tr><td><code>auto_likely</code></td><td class='num'>178</td><td class='num'>13 160</td><td class='num'>197 400</td><td class='muted'>Снимается на типовых пакетах ПО/Фронт/ЧЗ (останутся сбои и исключения)</td></tr>
+<tr><td><code>residual_special</code></td><td class='num'>29</td><td class='num'>3 240</td><td class='num'>48 600</td><td class='muted'>Часто останется вручную (НДС, банк, портал, спец. сверки)</td></tr>
+<tr><td><code>residual_launch</code></td><td class='num'>8</td><td class='num'>920</td><td class='num'>13 800</td><td class='muted'>Часто останется (запуск/подготовка/моноблок/фискализация)</td></tr>
+<tr><td><b>Итого</b></td><td class='num'><b>298</b></td><td class='num'><b>30 105</b></td><td class='num'><b>451 575</b></td><td></td></tr>
+</tbody></table></div>
+<div class="card"><div class="card-h">Сценарии автообновления</div><table><thead><tr>
+<th>Сценарий</th><th class='num'>− заявок</th><th class='num'>−% mass</th><th class='num'>− ₽</th><th class='num'>−% фонда</th><th class='num'>Остаток mass</th></tr></thead><tbody>
+<tr><td><b>Оптимистичный</b><div class='muted'>стандартные раскатки почти уходят; редкие сбои/офлайн-точки</div></td><td class='num'>246</td><td class='num'>83%</td><td class='num ok'>−368 970</td><td class='num'>12.5%</td><td class='num'>52</td></tr>
+<tr><td><b>Базовый</b><div class='muted'>большинство ПО/спулеров/лого авто; часть ручных доводок остаётся</div></td><td class='num'>203</td><td class='num'>68%</td><td class='num ok'>−304 365</td><td class='num'>10.3%</td><td class='num'>95</td></tr>
+<tr><td><b>Консервативный</b><div class='muted'>авто только на типовых агентах; много кастомных пакетов вручную</div></td><td class='num'>160</td><td class='num'>54%</td><td class='num ok'>−239 745</td><td class='num'>8.1%</td><td class='num'>138</td></tr>
+</tbody></table></div>
+<div class="card"><div class="card-h">По сотрудникам</div><table><thead><tr>
+<th>Сотрудник</th><th class='num'>Mass N</th><th class='num'>Mass ₽</th><th class='num'>% его баллов</th><th class='num'>Autoable ₽</th></tr></thead><tbody>
+<tr><td>Ососков Евгений Петрович</td><td class='num'>140</td><td class='num'>181 950</td><td class='num'>20%</td><td class='num'>156 900</td></tr>
+<tr><td>Павлов Андрей Андреевич</td><td class='num'>53</td><td class='num'>98 775</td><td class='num'>34%</td><td class='num'>68 100</td></tr>
+<tr><td>Петров Артем Евгеньевич</td><td class='num'>37</td><td class='num'>82 350</td><td class='num'>15%</td><td class='num'>82 350</td></tr>
+<tr><td>Ручинскас Андрей Владимирович</td><td class='num'>12</td><td class='num'>34 650</td><td class='num'>15%</td><td class='num'>34 650</td></tr>
+<tr><td>Конарев Михаил Михайлович</td><td class='num'>25</td><td class='num'>29 250</td><td class='num'>12%</td><td class='num'>28 800</td></tr>
+<tr><td>Кирюшкин Андрей Дмитриевич</td><td class='num'>16</td><td class='num'>22 650</td><td class='num'>11%</td><td class='num'>16 575</td></tr>
+<tr><td>Гулумбетов Павел</td><td class='num'>11</td><td class='num'>1 425</td><td class='num'>1%</td><td class='num'>1 425</td></tr>
+<tr><td>Сушков Павел</td><td class='num'>2</td><td class='num'>300</td><td class='num'>0%</td><td class='num'>150</td></tr>
+<tr><td>Синкин Глеб</td><td class='num'>2</td><td class='num'>225</td><td class='num'>0%</td><td class='num'>225</td></tr>
+</tbody></table></div>
+<div class="card"><div class="card-h">Топ тем</div><table><thead><tr>
+<th class='num'>N</th><th class='num'>Баллы</th><th>Тема</th></tr></thead><tbody>
+<tr><td class='num'>22</td><td class='num'>1 710</td><td>Обновление ПО ЛМ2</td></tr>
+<tr><td class='num'>15</td><td class='num'>1 190</td><td>Обновление ПО Блоки + fshtrih</td></tr>
+<tr><td class='num'>11</td><td class='num'>1 620</td><td>Установка ПО</td></tr>
+<tr><td class='num'>11</td><td class='num'>920</td><td>Обновление ПО Фронт + ЧЗ</td></tr>
+<tr><td class='num'>11</td><td class='num'>1 140</td><td>Обновление НДС нефискальных чеков</td></tr>
+<tr><td class='num'>9</td><td class='num'>1 860</td><td>Установка ПО к банку для выявления расхождений</td></tr>
+<tr><td class='num'>8</td><td class='num'>520</td><td>Обновление ПО</td></tr>
+<tr><td class='num'>7</td><td class='num'>690</td><td>Обновление ПО ЧЗ</td></tr>
+<tr><td class='num'>6</td><td class='num'>1 860</td><td>Обновление спулера Штрих + скрипт</td></tr>
+<tr><td class='num'>5</td><td class='num'>100</td><td>Установка ПО РМС на точки</td></tr>
+<tr><td class='num'>5</td><td class='num'>760</td><td>Обновление ПО Фронт + ЧЗ + Блоки + fshtrih</td></tr>
+<tr><td class='num'>5</td><td class='num'>1 270</td><td>MFC FShtrihSpooler</td></tr>
+<tr><td class='num'>4</td><td class='num'>380</td><td>Обновление модуля ЧЗ</td></tr>
+<tr><td class='num'>3</td><td class='num'>380</td><td>Апдейт бг фронта + номер</td></tr>
+<tr><td class='num'>3</td><td class='num'>0</td><td>Спортмастер Авиатор обновление цен реализации</td></tr>
+</tbody></table></div>
+<h2>Практический вывод для руководителя</h2>
+  <ul>
+    <li>Контур маленький по <b>штукам</b> (~1.6% заявок), но заметный по <b>деньгам</b> (~15% фонда).</li>
+    <li>Автообновление бьёт не по конвейеру 5–10 баллов, а по пакетным раскаткам у Ососкова / Павлова / Петрова.</li>
+    <li>Базовый ориентир экономии премии: <b>≈304 365 ₽ за 6 мес</b> (−68% mass-заявок).</li>
+    <li>Ручной хвост (НДС/банк/запуски/фейлы авто) лучше сразу оформить отдельным typical + N объектов.</li>
+  </ul>
+  <footer>Сгенерировано 2026-07-23 13:58 · python scripts/analyze_mass_updates.py</footer>
+</div></body></html>

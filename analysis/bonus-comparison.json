@@ -1,0 +1,3283 @@
+{
+  "rub_per_point": 15,
+  "meta": {
+    "since": "23-01-2026 00:00",
+    "until": "22-07-2026 23:59",
+    "months": 6,
+    "list_count": 19640,
+    "fetched_at": "2026-07-22T23:11:39"
+  },
+  "totals": {
+    "fact": {
+      "points": 196395.0,
+      "rub": 2945925.0,
+      "points_reg": 143135.0,
+      "rub_reg": 2147025.0,
+      "points_duty": 53260.0,
+      "rub_duty": 798900.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "fact_duty_x2": {
+      "points": 249655.0,
+      "rub": 3744825.0,
+      "points_reg": 143135.0,
+      "rub_reg": 2147025.0,
+      "points_duty": 106520.0,
+      "rub_duty": 1597800.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "new_all": {
+      "points": 215475.0,
+      "rub": 3232125.0,
+      "points_reg": 148865.0,
+      "rub_reg": 2232975.0,
+      "points_duty": 66610.0,
+      "rub_duty": 999150.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "new_scored_only": {
+      "points": 210685.0,
+      "rub": 3160275.0,
+      "points_reg": 145125.0,
+      "rub_reg": 2176875.0,
+      "points_duty": 65560.0,
+      "rub_duty": 983400.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "new_no_mfc": {
+      "points": 160785.0,
+      "rub": 2411775.0,
+      "points_reg": 103415.0,
+      "rub_reg": 1551225.0,
+      "points_duty": 57370.0,
+      "rub_duty": 860550.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "new_all_xlong": {
+      "points": 215475.0,
+      "rub": 3232125.0,
+      "points_reg": 148865.0,
+      "rub_reg": 2232975.0,
+      "points_duty": 66610.0,
+      "rub_duty": 999150.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    },
+    "new_all_gate": {
+      "points": 213150.0,
+      "rub": 3197250.0,
+      "points_reg": 146690.0,
+      "rub_reg": 2200350.0,
+      "points_duty": 66460.0,
+      "rub_duty": 996900.0,
+      "tickets": 18917,
+      "tickets_reg": 14688,
+      "tickets_duty": 4229
+    }
+  },
+  "by_month": {
+    "2026-01": {
+      "fact": {
+        "points": 8695.0,
+        "rub": 130425.0,
+        "tickets": 832
+      },
+      "fact_duty_x2": {
+        "points": 11300.0,
+        "rub": 169500.0,
+        "tickets": 832
+      },
+      "new_all": {
+        "points": 9280.0,
+        "rub": 139200.0,
+        "tickets": 832
+      },
+      "new_scored_only": {
+        "points": 9110.0,
+        "rub": 136650.0,
+        "tickets": 832
+      },
+      "new_no_mfc": {
+        "points": 7325.0,
+        "rub": 109875.0,
+        "tickets": 832
+      },
+      "new_all_xlong": {
+        "points": 9280.0,
+        "rub": 139200.0,
+        "tickets": 832
+      },
+      "new_all_gate": {
+        "points": 9280.0,
+        "rub": 139200.0,
+        "tickets": 832
+      }
+    },
+    "2026-02": {
+      "fact": {
+        "points": 26535.0,
+        "rub": 398025.0,
+        "tickets": 2749
+      },
+      "fact_duty_x2": {
+        "points": 32585.0,
+        "rub": 488775.0,
+        "tickets": 2749
+      },
+      "new_all": {
+        "points": 28675.0,
+        "rub": 430125.0,
+        "tickets": 2749
+      },
+      "new_scored_only": {
+        "points": 28315.0,
+        "rub": 424725.0,
+        "tickets": 2749
+      },
+      "new_no_mfc": {
+        "points": 22735.0,
+        "rub": 341025.0,
+        "tickets": 2749
+      },
+      "new_all_xlong": {
+        "points": 28675.0,
+        "rub": 430125.0,
+        "tickets": 2749
+      },
+      "new_all_gate": {
+        "points": 28675.0,
+        "rub": 430125.0,
+        "tickets": 2749
+      }
+    },
+    "2026-03": {
+      "fact": {
+        "points": 30490.0,
+        "rub": 457350.0,
+        "tickets": 2982
+      },
+      "fact_duty_x2": {
+        "points": 38730.0,
+        "rub": 580950.0,
+        "tickets": 2982
+      },
+      "new_all": {
+        "points": 31065.0,
+        "rub": 465975.0,
+        "tickets": 2982
+      },
+      "new_scored_only": {
+        "points": 30870.0,
+        "rub": 463050.0,
+        "tickets": 2982
+      },
+      "new_no_mfc": {
+        "points": 22900.0,
+        "rub": 343500.0,
+        "tickets": 2982
+      },
+      "new_all_xlong": {
+        "points": 31065.0,
+        "rub": 465975.0,
+        "tickets": 2982
+      },
+      "new_all_gate": {
+        "points": 31065.0,
+        "rub": 465975.0,
+        "tickets": 2982
+      }
+    },
+    "2026-04": {
+      "fact": {
+        "points": 32960.0,
+        "rub": 494400.0,
+        "tickets": 3288
+      },
+      "fact_duty_x2": {
+        "points": 42645.0,
+        "rub": 639675.0,
+        "tickets": 3288
+      },
+      "new_all": {
+        "points": 37895.0,
+        "rub": 568425.0,
+        "tickets": 3288
+      },
+      "new_scored_only": {
+        "points": 36955.0,
+        "rub": 554325.0,
+        "tickets": 3288
+      },
+      "new_no_mfc": {
+        "points": 28210.0,
+        "rub": 423150.0,
+        "tickets": 3288
+      },
+      "new_all_xlong": {
+        "points": 37895.0,
+        "rub": 568425.0,
+        "tickets": 3288
+      },
+      "new_all_gate": {
+        "points": 37495.0,
+        "rub": 562425.0,
+        "tickets": 3288
+      }
+    },
+    "2026-05": {
+      "fact": {
+        "points": 33275.0,
+        "rub": 499125.0,
+        "tickets": 2948
+      },
+      "fact_duty_x2": {
+        "points": 42510.0,
+        "rub": 637650.0,
+        "tickets": 2948
+      },
+      "new_all": {
+        "points": 37730.0,
+        "rub": 565950.0,
+        "tickets": 2948
+      },
+      "new_scored_only": {
+        "points": 37115.0,
+        "rub": 556725.0,
+        "tickets": 2948
+      },
+      "new_no_mfc": {
+        "points": 30340.0,
+        "rub": 455100.0,
+        "tickets": 2948
+      },
+      "new_all_xlong": {
+        "points": 37730.0,
+        "rub": 565950.0,
+        "tickets": 2948
+      },
+      "new_all_gate": {
+        "points": 37030.0,
+        "rub": 555450.0,
+        "tickets": 2948
+      }
+    },
+    "2026-06": {
+      "fact": {
+        "points": 36100.0,
+        "rub": 541500.0,
+        "tickets": 3347
+      },
+      "fact_duty_x2": {
+        "points": 45310.0,
+        "rub": 679650.0,
+        "tickets": 3347
+      },
+      "new_all": {
+        "points": 39910.0,
+        "rub": 598650.0,
+        "tickets": 3347
+      },
+      "new_scored_only": {
+        "points": 38575.0,
+        "rub": 578625.0,
+        "tickets": 3347
+      },
+      "new_no_mfc": {
+        "points": 27715.0,
+        "rub": 415725.0,
+        "tickets": 3347
+      },
+      "new_all_xlong": {
+        "points": 39910.0,
+        "rub": 598650.0,
+        "tickets": 3347
+      },
+      "new_all_gate": {
+        "points": 38935.0,
+        "rub": 584025.0,
+        "tickets": 3347
+      }
+    },
+    "2026-07": {
+      "fact": {
+        "points": 28340.0,
+        "rub": 425100.0,
+        "tickets": 2771
+      },
+      "fact_duty_x2": {
+        "points": 36575.0,
+        "rub": 548625.0,
+        "tickets": 2771
+      },
+      "new_all": {
+        "points": 30920.0,
+        "rub": 463800.0,
+        "tickets": 2771
+      },
+      "new_scored_only": {
+        "points": 29745.0,
+        "rub": 446175.0,
+        "tickets": 2771
+      },
+      "new_no_mfc": {
+        "points": 21560.0,
+        "rub": 323400.0,
+        "tickets": 2771
+      },
+      "new_all_xlong": {
+        "points": 30920.0,
+        "rub": 463800.0,
+        "tickets": 2771
+      },
+      "new_all_gate": {
+        "points": 30670.0,
+        "rub": 460050.0,
+        "tickets": 2771
+      }
+    }
+  },
+  "by_assignee": {
+    "Ососков Евгений Петрович": {
+      "fact": {
+        "points": 61015.0,
+        "rub": 915225.0,
+        "points_reg": 50955.0,
+        "rub_reg": 764325.0,
+        "points_duty": 10060.0,
+        "rub_duty": 150900.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "fact_duty_x2": {
+        "points": 71075.0,
+        "rub": 1066125.0,
+        "points_reg": 50955.0,
+        "rub_reg": 764325.0,
+        "points_duty": 20120.0,
+        "rub_duty": 301800.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "new_all": {
+        "points": 65735.0,
+        "rub": 986025.0,
+        "points_reg": 52465.0,
+        "rub_reg": 786975.0,
+        "points_duty": 13270.0,
+        "rub_duty": 199050.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "new_scored_only": {
+        "points": 65135.0,
+        "rub": 977025.0,
+        "points_reg": 51895.0,
+        "rub_reg": 778425.0,
+        "points_duty": 13240.0,
+        "rub_duty": 198600.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "new_no_mfc": {
+        "points": 64200.0,
+        "rub": 963000.0,
+        "points_reg": 52460.0,
+        "rub_reg": 786900.0,
+        "points_duty": 11740.0,
+        "rub_duty": 176100.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "new_all_xlong": {
+        "points": 65735.0,
+        "rub": 986025.0,
+        "points_reg": 52465.0,
+        "rub_reg": 786975.0,
+        "points_duty": 13270.0,
+        "rub_duty": 199050.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      },
+      "new_all_gate": {
+        "points": 63535.0,
+        "rub": 953025.0,
+        "points_reg": 50415.0,
+        "rub_reg": 756225.0,
+        "points_duty": 13120.0,
+        "rub_duty": 196800.0,
+        "tickets": 4547,
+        "tickets_reg": 3859,
+        "tickets_duty": 688,
+        "scored_tickets": 4490
+      }
+    },
+    "Петров Артем Евгеньевич": {
+      "fact": {
+        "points": 35670.0,
+        "rub": 535050.0,
+        "points_reg": 35670.0,
+        "rub_reg": 535050.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "fact_duty_x2": {
+        "points": 35670.0,
+        "rub": 535050.0,
+        "points_reg": 35670.0,
+        "rub_reg": 535050.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "new_all": {
+        "points": 33140.0,
+        "rub": 497100.0,
+        "points_reg": 33140.0,
+        "rub_reg": 497100.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "new_scored_only": {
+        "points": 33095.0,
+        "rub": 496425.0,
+        "points_reg": 33095.0,
+        "rub_reg": 496425.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "new_no_mfc": {
+        "points": 2360.0,
+        "rub": 35400.0,
+        "points_reg": 2360.0,
+        "rub_reg": 35400.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "new_all_xlong": {
+        "points": 33140.0,
+        "rub": 497100.0,
+        "points_reg": 33140.0,
+        "rub_reg": 497100.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      },
+      "new_all_gate": {
+        "points": 33115.0,
+        "rub": 496725.0,
+        "points_reg": 33115.0,
+        "rub_reg": 496725.0,
+        "points_duty": 0.0,
+        "rub_duty": 0.0,
+        "tickets": 4382,
+        "tickets_reg": 4377,
+        "tickets_duty": 5,
+        "scored_tickets": 588
+      }
+    },
+    "Павлов Андрей Андреевич": {
+      "fact": {
+        "points": 19320.0,
+        "rub": 289800.0,
+        "points_reg": 11970.0,
+        "rub_reg": 179550.0,
+        "points_duty": 7350.0,
+        "rub_duty": 110250.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "fact_duty_x2": {
+        "points": 26670.0,
+        "rub": 400050.0,
+        "points_reg": 11970.0,
+        "rub_reg": 179550.0,
+        "points_duty": 14700.0,
+        "rub_duty": 220500.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "new_all": {
+        "points": 20450.0,
+        "rub": 306750.0,
+        "points_reg": 11090.0,
+        "rub_reg": 166350.0,
+        "points_duty": 9360.0,
+        "rub_duty": 140400.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "new_scored_only": {
+        "points": 20030.0,
+        "rub": 300450.0,
+        "points_reg": 10960.0,
+        "rub_reg": 164400.0,
+        "points_duty": 9070.0,
+        "rub_duty": 136050.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "new_no_mfc": {
+        "points": 18105.0,
+        "rub": 271575.0,
+        "points_reg": 9735.0,
+        "rub_reg": 146025.0,
+        "points_duty": 8370.0,
+        "rub_duty": 125550.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "new_all_xlong": {
+        "points": 20450.0,
+        "rub": 306750.0,
+        "points_reg": 11090.0,
+        "rub_reg": 166350.0,
+        "points_duty": 9360.0,
+        "rub_duty": 140400.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      },
+      "new_all_gate": {
+        "points": 20450.0,
+        "rub": 306750.0,
+        "points_reg": 11090.0,
+        "rub_reg": 166350.0,
+        "points_duty": 9360.0,
+        "rub_duty": 140400.0,
+        "tickets": 1288,
+        "tickets_reg": 660,
+        "tickets_duty": 628,
+        "scored_tickets": 1261
+      }
+    },
+    "Сушков Павел": {
+      "fact": {
+        "points": 16905.0,
+        "rub": 253575.0,
+        "points_reg": 13715.0,
+        "rub_reg": 205725.0,
+        "points_duty": 3190.0,
+        "rub_duty": 47850.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "fact_duty_x2": {
+        "points": 20095.0,
+        "rub": 301425.0,
+        "points_reg": 13715.0,
+        "rub_reg": 205725.0,
+        "points_duty": 6380.0,
+        "rub_duty": 95700.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "new_all": {
+        "points": 19020.0,
+        "rub": 285300.0,
+        "points_reg": 15390.0,
+        "rub_reg": 230850.0,
+        "points_duty": 3630.0,
+        "rub_duty": 54450.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "new_scored_only": {
+        "points": 18715.0,
+        "rub": 280725.0,
+        "points_reg": 15145.0,
+        "rub_reg": 227175.0,
+        "points_duty": 3570.0,
+        "rub_duty": 53550.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "new_no_mfc": {
+        "points": 15040.0,
+        "rub": 225600.0,
+        "points_reg": 11750.0,
+        "rub_reg": 176250.0,
+        "points_duty": 3290.0,
+        "rub_duty": 49350.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "new_all_xlong": {
+        "points": 19020.0,
+        "rub": 285300.0,
+        "points_reg": 15390.0,
+        "rub_reg": 230850.0,
+        "points_duty": 3630.0,
+        "rub_duty": 54450.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      },
+      "new_all_gate": {
+        "points": 19020.0,
+        "rub": 285300.0,
+        "points_reg": 15390.0,
+        "rub_reg": 230850.0,
+        "points_duty": 3630.0,
+        "rub_duty": 54450.0,
+        "tickets": 2459,
+        "tickets_reg": 2194,
+        "tickets_duty": 265,
+        "scored_tickets": 2425
+      }
+    },
+    "Конарев Михаил Михайлович": {
+      "fact": {
+        "points": 16720.0,
+        "rub": 250800.0,
+        "points_reg": 5970.0,
+        "rub_reg": 89550.0,
+        "points_duty": 10750.0,
+        "rub_duty": 161250.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "fact_duty_x2": {
+        "points": 27470.0,
+        "rub": 412050.0,
+        "points_reg": 5970.0,
+        "rub_reg": 89550.0,
+        "points_duty": 21500.0,
+        "rub_duty": 322500.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "new_all": {
+        "points": 19010.0,
+        "rub": 285150.0,
+        "points_reg": 6190.0,
+        "rub_reg": 92850.0,
+        "points_duty": 12820.0,
+        "rub_duty": 192300.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "new_scored_only": {
+        "points": 18265.0,
+        "rub": 273975.0,
+        "points_reg": 5545.0,
+        "rub_reg": 83175.0,
+        "points_duty": 12720.0,
+        "rub_duty": 190800.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "new_no_mfc": {
+        "points": 15985.0,
+        "rub": 239775.0,
+        "points_reg": 5465.0,
+        "rub_reg": 81975.0,
+        "points_duty": 10520.0,
+        "rub_duty": 157800.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "new_all_xlong": {
+        "points": 19010.0,
+        "rub": 285150.0,
+        "points_reg": 6190.0,
+        "rub_reg": 92850.0,
+        "points_duty": 12820.0,
+        "rub_duty": 192300.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      },
+      "new_all_gate": {
+        "points": 19010.0,
+        "rub": 285150.0,
+        "points_reg": 6190.0,
+        "rub_reg": 92850.0,
+        "points_duty": 12820.0,
+        "rub_duty": 192300.0,
+        "tickets": 1241,
+        "tickets_reg": 471,
+        "tickets_duty": 770,
+        "scored_tickets": 1182
+      }
+    },
+    "Ручинскас Андрей Владимирович": {
+      "fact": {
+        "points": 15195.0,
+        "rub": 227925.0,
+        "points_reg": 5765.0,
+        "rub_reg": 86475.0,
+        "points_duty": 9430.0,
+        "rub_duty": 141450.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "fact_duty_x2": {
+        "points": 24625.0,
+        "rub": 369375.0,
+        "points_reg": 5765.0,
+        "rub_reg": 86475.0,
+        "points_duty": 18860.0,
+        "rub_duty": 282900.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "new_all": {
+        "points": 17515.0,
+        "rub": 262725.0,
+        "points_reg": 6595.0,
+        "rub_reg": 98925.0,
+        "points_duty": 10920.0,
+        "rub_duty": 163800.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "new_scored_only": {
+        "points": 17215.0,
+        "rub": 258225.0,
+        "points_reg": 6365.0,
+        "rub_reg": 95475.0,
+        "points_duty": 10850.0,
+        "rub_duty": 162750.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "new_no_mfc": {
+        "points": 10670.0,
+        "rub": 160050.0,
+        "points_reg": 2050.0,
+        "rub_reg": 30750.0,
+        "points_duty": 8620.0,
+        "rub_duty": 129300.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "new_all_xlong": {
+        "points": 17515.0,
+        "rub": 262725.0,
+        "points_reg": 6595.0,
+        "rub_reg": 98925.0,
+        "points_duty": 10920.0,
+        "rub_duty": 163800.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      },
+      "new_all_gate": {
+        "points": 17490.0,
+        "rub": 262350.0,
+        "points_reg": 6570.0,
+        "rub_reg": 98550.0,
+        "points_duty": 10920.0,
+        "rub_duty": 163800.0,
+        "tickets": 1598,
+        "tickets_reg": 862,
+        "tickets_duty": 736,
+        "scored_tickets": 1549
+      }
+    },
+    "Кирюшкин Андрей Дмитриевич": {
+      "fact": {
+        "points": 13810.0,
+        "rub": 207150.0,
+        "points_reg": 5195.0,
+        "rub_reg": 77925.0,
+        "points_duty": 8615.0,
+        "rub_duty": 129225.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "fact_duty_x2": {
+        "points": 22425.0,
+        "rub": 336375.0,
+        "points_reg": 5195.0,
+        "rub_reg": 77925.0,
+        "points_duty": 17230.0,
+        "rub_duty": 258450.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "new_all": {
+        "points": 21080.0,
+        "rub": 316200.0,
+        "points_reg": 9060.0,
+        "rub_reg": 135900.0,
+        "points_duty": 12020.0,
+        "rub_duty": 180300.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "new_scored_only": {
+        "points": 19615.0,
+        "rub": 294225.0,
+        "points_reg": 7885.0,
+        "rub_reg": 118275.0,
+        "points_duty": 11730.0,
+        "rub_duty": 175950.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "new_no_mfc": {
+        "points": 19670.0,
+        "rub": 295050.0,
+        "points_reg": 8960.0,
+        "rub_reg": 134400.0,
+        "points_duty": 10710.0,
+        "rub_duty": 160650.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "new_all_xlong": {
+        "points": 21080.0,
+        "rub": 316200.0,
+        "points_reg": 9060.0,
+        "rub_reg": 135900.0,
+        "points_duty": 12020.0,
+        "rub_duty": 180300.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      },
+      "new_all_gate": {
+        "points": 21005.0,
+        "rub": 315075.0,
+        "points_reg": 8985.0,
+        "rub_reg": 134775.0,
+        "points_duty": 12020.0,
+        "rub_duty": 180300.0,
+        "tickets": 1518,
+        "tickets_reg": 772,
+        "tickets_duty": 746,
+        "scored_tickets": 1384
+      }
+    },
+    "Гулумбетов Павел": {
+      "fact": {
+        "points": 8940.0,
+        "rub": 134100.0,
+        "points_reg": 8925.0,
+        "rub_reg": 133875.0,
+        "points_duty": 15.0,
+        "rub_duty": 225.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "fact_duty_x2": {
+        "points": 8955.0,
+        "rub": 134325.0,
+        "points_reg": 8925.0,
+        "rub_reg": 133875.0,
+        "points_duty": 30.0,
+        "rub_duty": 450.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "new_all": {
+        "points": 8900.0,
+        "rub": 133500.0,
+        "points_reg": 8860.0,
+        "rub_reg": 132900.0,
+        "points_duty": 40.0,
+        "rub_duty": 600.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "new_scored_only": {
+        "points": 8590.0,
+        "rub": 128850.0,
+        "points_reg": 8550.0,
+        "rub_reg": 128250.0,
+        "points_duty": 40.0,
+        "rub_duty": 600.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "new_no_mfc": {
+        "points": 6810.0,
+        "rub": 102150.0,
+        "points_reg": 6800.0,
+        "rub_reg": 102000.0,
+        "points_duty": 10.0,
+        "rub_duty": 150.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "new_all_xlong": {
+        "points": 8900.0,
+        "rub": 133500.0,
+        "points_reg": 8860.0,
+        "rub_reg": 132900.0,
+        "points_duty": 40.0,
+        "rub_duty": 600.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      },
+      "new_all_gate": {
+        "points": 8900.0,
+        "rub": 133500.0,
+        "points_reg": 8860.0,
+        "rub_reg": 132900.0,
+        "points_duty": 40.0,
+        "rub_duty": 600.0,
+        "tickets": 1137,
+        "tickets_reg": 1135,
+        "tickets_duty": 2,
+        "scored_tickets": 1113
+      }
+    },
+    "Синкин Глеб": {
+      "fact": {
+        "points": 8820.0,
+        "rub": 132300.0,
+        "points_reg": 4970.0,
+        "rub_reg": 74550.0,
+        "points_duty": 3850.0,
+        "rub_duty": 57750.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "fact_duty_x2": {
+        "points": 12670.0,
+        "rub": 190050.0,
+        "points_reg": 4970.0,
+        "rub_reg": 74550.0,
+        "points_duty": 7700.0,
+        "rub_duty": 115500.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "new_all": {
+        "points": 10370.0,
+        "rub": 155550.0,
+        "points_reg": 5940.0,
+        "rub_reg": 89100.0,
+        "points_duty": 4430.0,
+        "rub_duty": 66450.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "new_scored_only": {
+        "points": 10025.0,
+        "rub": 150375.0,
+        "points_reg": 5685.0,
+        "rub_reg": 85275.0,
+        "points_duty": 4340.0,
+        "rub_duty": 65100.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "new_no_mfc": {
+        "points": 7690.0,
+        "rub": 115350.0,
+        "points_reg": 3700.0,
+        "rub_reg": 55500.0,
+        "points_duty": 3990.0,
+        "rub_duty": 59850.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "new_all_xlong": {
+        "points": 10370.0,
+        "rub": 155550.0,
+        "points_reg": 5940.0,
+        "rub_reg": 89100.0,
+        "points_duty": 4430.0,
+        "rub_duty": 66450.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      },
+      "new_all_gate": {
+        "points": 10370.0,
+        "rub": 155550.0,
+        "points_reg": 5940.0,
+        "rub_reg": 89100.0,
+        "points_duty": 4430.0,
+        "rub_duty": 66450.0,
+        "tickets": 732,
+        "tickets_reg": 347,
+        "tickets_duty": 385,
+        "scored_tickets": 701
+      }
+    }
+  },
+  "by_assignee_month": {
+    "Ососков Евгений Петрович": {
+      "2026-01": {
+        "fact": {
+          "points": 3515.0,
+          "rub": 52725.0,
+          "tickets": 234,
+          "scored_tickets": 232
+        },
+        "new_scored_only": {
+          "points": 4345.0,
+          "rub": 65175.0,
+          "tickets": 234,
+          "scored_tickets": 232
+        },
+        "new_all": {
+          "points": 4355.0,
+          "rub": 65325.0,
+          "tickets": 234,
+          "scored_tickets": 232
+        },
+        "new_no_mfc": {
+          "points": 4135.0,
+          "rub": 62025.0,
+          "tickets": 234,
+          "scored_tickets": 232
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 9645.0,
+          "rub": 144675.0,
+          "tickets": 705,
+          "scored_tickets": 696
+        },
+        "new_scored_only": {
+          "points": 10970.0,
+          "rub": 164550.0,
+          "tickets": 705,
+          "scored_tickets": 696
+        },
+        "new_all": {
+          "points": 11025.0,
+          "rub": 165375.0,
+          "tickets": 705,
+          "scored_tickets": 696
+        },
+        "new_no_mfc": {
+          "points": 10880.0,
+          "rub": 163200.0,
+          "tickets": 705,
+          "scored_tickets": 696
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 10570.0,
+          "rub": 158550.0,
+          "tickets": 850,
+          "scored_tickets": 844
+        },
+        "new_scored_only": {
+          "points": 10330.0,
+          "rub": 154950.0,
+          "tickets": 850,
+          "scored_tickets": 844
+        },
+        "new_all": {
+          "points": 10360.0,
+          "rub": 155400.0,
+          "tickets": 850,
+          "scored_tickets": 844
+        },
+        "new_no_mfc": {
+          "points": 10020.0,
+          "rub": 150300.0,
+          "tickets": 850,
+          "scored_tickets": 844
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 11740.0,
+          "rub": 176100.0,
+          "tickets": 908,
+          "scored_tickets": 890
+        },
+        "new_scored_only": {
+          "points": 12165.0,
+          "rub": 182475.0,
+          "tickets": 908,
+          "scored_tickets": 890
+        },
+        "new_all": {
+          "points": 12390.0,
+          "rub": 185850.0,
+          "tickets": 908,
+          "scored_tickets": 890
+        },
+        "new_no_mfc": {
+          "points": 12170.0,
+          "rub": 182550.0,
+          "tickets": 908,
+          "scored_tickets": 890
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 9945.0,
+          "rub": 149175.0,
+          "tickets": 709,
+          "scored_tickets": 700
+        },
+        "new_scored_only": {
+          "points": 10915.0,
+          "rub": 163725.0,
+          "tickets": 709,
+          "scored_tickets": 700
+        },
+        "new_all": {
+          "points": 11030.0,
+          "rub": 165450.0,
+          "tickets": 709,
+          "scored_tickets": 700
+        },
+        "new_no_mfc": {
+          "points": 11030.0,
+          "rub": 165450.0,
+          "tickets": 709,
+          "scored_tickets": 700
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 12360.0,
+          "rub": 185400.0,
+          "tickets": 924,
+          "scored_tickets": 917
+        },
+        "new_scored_only": {
+          "points": 13220.0,
+          "rub": 198300.0,
+          "tickets": 924,
+          "scored_tickets": 917
+        },
+        "new_all": {
+          "points": 13295.0,
+          "rub": 199425.0,
+          "tickets": 924,
+          "scored_tickets": 917
+        },
+        "new_no_mfc": {
+          "points": 12685.0,
+          "rub": 190275.0,
+          "tickets": 924,
+          "scored_tickets": 917
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 3240.0,
+          "rub": 48600.0,
+          "tickets": 217,
+          "scored_tickets": 211
+        },
+        "new_scored_only": {
+          "points": 3190.0,
+          "rub": 47850.0,
+          "tickets": 217,
+          "scored_tickets": 211
+        },
+        "new_all": {
+          "points": 3280.0,
+          "rub": 49200.0,
+          "tickets": 217,
+          "scored_tickets": 211
+        },
+        "new_no_mfc": {
+          "points": 3280.0,
+          "rub": 49200.0,
+          "tickets": 217,
+          "scored_tickets": 211
+        }
+      }
+    },
+    "Петров Артем Евгеньевич": {
+      "2026-01": {
+        "fact": {
+          "points": 1935.0,
+          "rub": 29025.0,
+          "tickets": 227,
+          "scored_tickets": 41
+        },
+        "new_scored_only": {
+          "points": 1195.0,
+          "rub": 17925.0,
+          "tickets": 227,
+          "scored_tickets": 41
+        },
+        "new_all": {
+          "points": 1195.0,
+          "rub": 17925.0,
+          "tickets": 227,
+          "scored_tickets": 41
+        },
+        "new_no_mfc": {
+          "points": 55.0,
+          "rub": 825.0,
+          "tickets": 227,
+          "scored_tickets": 41
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 4930.0,
+          "rub": 73950.0,
+          "tickets": 735,
+          "scored_tickets": 110
+        },
+        "new_scored_only": {
+          "points": 3775.0,
+          "rub": 56625.0,
+          "tickets": 735,
+          "scored_tickets": 110
+        },
+        "new_all": {
+          "points": 3775.0,
+          "rub": 56625.0,
+          "tickets": 735,
+          "scored_tickets": 110
+        },
+        "new_no_mfc": {
+          "points": 210.0,
+          "rub": 3150.0,
+          "tickets": 735,
+          "scored_tickets": 110
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 6565.0,
+          "rub": 98475.0,
+          "tickets": 772,
+          "scored_tickets": 103
+        },
+        "new_scored_only": {
+          "points": 5600.0,
+          "rub": 84000.0,
+          "tickets": 772,
+          "scored_tickets": 103
+        },
+        "new_all": {
+          "points": 5600.0,
+          "rub": 84000.0,
+          "tickets": 772,
+          "scored_tickets": 103
+        },
+        "new_no_mfc": {
+          "points": 170.0,
+          "rub": 2550.0,
+          "tickets": 772,
+          "scored_tickets": 103
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 5170.0,
+          "rub": 77550.0,
+          "tickets": 601,
+          "scored_tickets": 78
+        },
+        "new_scored_only": {
+          "points": 5705.0,
+          "rub": 85575.0,
+          "tickets": 601,
+          "scored_tickets": 78
+        },
+        "new_all": {
+          "points": 5720.0,
+          "rub": 85800.0,
+          "tickets": 601,
+          "scored_tickets": 78
+        },
+        "new_no_mfc": {
+          "points": 320.0,
+          "rub": 4800.0,
+          "tickets": 601,
+          "scored_tickets": 78
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 5185.0,
+          "rub": 77775.0,
+          "tickets": 629,
+          "scored_tickets": 69
+        },
+        "new_scored_only": {
+          "points": 5070.0,
+          "rub": 76050.0,
+          "tickets": 629,
+          "scored_tickets": 69
+        },
+        "new_all": {
+          "points": 5070.0,
+          "rub": 76050.0,
+          "tickets": 629,
+          "scored_tickets": 69
+        },
+        "new_no_mfc": {
+          "points": 450.0,
+          "rub": 6750.0,
+          "tickets": 629,
+          "scored_tickets": 69
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 7600.0,
+          "rub": 114000.0,
+          "tickets": 745,
+          "scored_tickets": 112
+        },
+        "new_scored_only": {
+          "points": 7365.0,
+          "rub": 110475.0,
+          "tickets": 745,
+          "scored_tickets": 112
+        },
+        "new_all": {
+          "points": 7395.0,
+          "rub": 110925.0,
+          "tickets": 745,
+          "scored_tickets": 112
+        },
+        "new_no_mfc": {
+          "points": 685.0,
+          "rub": 10275.0,
+          "tickets": 745,
+          "scored_tickets": 112
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 4285.0,
+          "rub": 64275.0,
+          "tickets": 673,
+          "scored_tickets": 75
+        },
+        "new_scored_only": {
+          "points": 4385.0,
+          "rub": 65775.0,
+          "tickets": 673,
+          "scored_tickets": 75
+        },
+        "new_all": {
+          "points": 4385.0,
+          "rub": 65775.0,
+          "tickets": 673,
+          "scored_tickets": 75
+        },
+        "new_no_mfc": {
+          "points": 470.0,
+          "rub": 7050.0,
+          "tickets": 673,
+          "scored_tickets": 75
+        }
+      }
+    },
+    "Павлов Андрей Андреевич": {
+      "2026-01": {
+        "fact": {
+          "points": 545.0,
+          "rub": 8175.0,
+          "tickets": 65,
+          "scored_tickets": 65
+        },
+        "new_scored_only": {
+          "points": 405.0,
+          "rub": 6075.0,
+          "tickets": 65,
+          "scored_tickets": 65
+        },
+        "new_all": {
+          "points": 405.0,
+          "rub": 6075.0,
+          "tickets": 65,
+          "scored_tickets": 65
+        },
+        "new_no_mfc": {
+          "points": 395.0,
+          "rub": 5925.0,
+          "tickets": 65,
+          "scored_tickets": 65
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 1845.0,
+          "rub": 27675.0,
+          "tickets": 153,
+          "scored_tickets": 149
+        },
+        "new_scored_only": {
+          "points": 1520.0,
+          "rub": 22800.0,
+          "tickets": 153,
+          "scored_tickets": 149
+        },
+        "new_all": {
+          "points": 1550.0,
+          "rub": 23250.0,
+          "tickets": 153,
+          "scored_tickets": 149
+        },
+        "new_no_mfc": {
+          "points": 1250.0,
+          "rub": 18750.0,
+          "tickets": 153,
+          "scored_tickets": 149
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 3410.0,
+          "rub": 51150.0,
+          "tickets": 215,
+          "scored_tickets": 215
+        },
+        "new_scored_only": {
+          "points": 2690.0,
+          "rub": 40350.0,
+          "tickets": 215,
+          "scored_tickets": 215
+        },
+        "new_all": {
+          "points": 2690.0,
+          "rub": 40350.0,
+          "tickets": 215,
+          "scored_tickets": 215
+        },
+        "new_no_mfc": {
+          "points": 2440.0,
+          "rub": 36600.0,
+          "tickets": 215,
+          "scored_tickets": 215
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 3160.0,
+          "rub": 47400.0,
+          "tickets": 272,
+          "scored_tickets": 263
+        },
+        "new_scored_only": {
+          "points": 3545.0,
+          "rub": 53175.0,
+          "tickets": 272,
+          "scored_tickets": 263
+        },
+        "new_all": {
+          "points": 3675.0,
+          "rub": 55125.0,
+          "tickets": 272,
+          "scored_tickets": 263
+        },
+        "new_no_mfc": {
+          "points": 3100.0,
+          "rub": 46500.0,
+          "tickets": 272,
+          "scored_tickets": 263
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 3635.0,
+          "rub": 54525.0,
+          "tickets": 151,
+          "scored_tickets": 147
+        },
+        "new_scored_only": {
+          "points": 3840.0,
+          "rub": 57600.0,
+          "tickets": 151,
+          "scored_tickets": 147
+        },
+        "new_all": {
+          "points": 3870.0,
+          "rub": 58050.0,
+          "tickets": 151,
+          "scored_tickets": 147
+        },
+        "new_no_mfc": {
+          "points": 3465.0,
+          "rub": 51975.0,
+          "tickets": 151,
+          "scored_tickets": 147
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 3530.0,
+          "rub": 52950.0,
+          "tickets": 292,
+          "scored_tickets": 287
+        },
+        "new_scored_only": {
+          "points": 4465.0,
+          "rub": 66975.0,
+          "tickets": 292,
+          "scored_tickets": 287
+        },
+        "new_all": {
+          "points": 4585.0,
+          "rub": 68775.0,
+          "tickets": 292,
+          "scored_tickets": 287
+        },
+        "new_no_mfc": {
+          "points": 3930.0,
+          "rub": 58950.0,
+          "tickets": 292,
+          "scored_tickets": 287
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 3195.0,
+          "rub": 47925.0,
+          "tickets": 140,
+          "scored_tickets": 135
+        },
+        "new_scored_only": {
+          "points": 3565.0,
+          "rub": 53475.0,
+          "tickets": 140,
+          "scored_tickets": 135
+        },
+        "new_all": {
+          "points": 3675.0,
+          "rub": 55125.0,
+          "tickets": 140,
+          "scored_tickets": 135
+        },
+        "new_no_mfc": {
+          "points": 3525.0,
+          "rub": 52875.0,
+          "tickets": 140,
+          "scored_tickets": 135
+        }
+      }
+    },
+    "Сушков Павел": {
+      "2026-01": {
+        "fact": {
+          "points": 695.0,
+          "rub": 10425.0,
+          "tickets": 129,
+          "scored_tickets": 125
+        },
+        "new_scored_only": {
+          "points": 925.0,
+          "rub": 13875.0,
+          "tickets": 129,
+          "scored_tickets": 125
+        },
+        "new_all": {
+          "points": 945.0,
+          "rub": 14175.0,
+          "tickets": 129,
+          "scored_tickets": 125
+        },
+        "new_no_mfc": {
+          "points": 735.0,
+          "rub": 11025.0,
+          "tickets": 129,
+          "scored_tickets": 125
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 2490.0,
+          "rub": 37350.0,
+          "tickets": 392,
+          "scored_tickets": 386
+        },
+        "new_scored_only": {
+          "points": 2960.0,
+          "rub": 44400.0,
+          "tickets": 392,
+          "scored_tickets": 386
+        },
+        "new_all": {
+          "points": 3010.0,
+          "rub": 45150.0,
+          "tickets": 392,
+          "scored_tickets": 386
+        },
+        "new_no_mfc": {
+          "points": 2440.0,
+          "rub": 36600.0,
+          "tickets": 392,
+          "scored_tickets": 386
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 1950.0,
+          "rub": 29250.0,
+          "tickets": 338,
+          "scored_tickets": 336
+        },
+        "new_scored_only": {
+          "points": 2485.0,
+          "rub": 37275.0,
+          "tickets": 338,
+          "scored_tickets": 336
+        },
+        "new_all": {
+          "points": 2495.0,
+          "rub": 37425.0,
+          "tickets": 338,
+          "scored_tickets": 336
+        },
+        "new_no_mfc": {
+          "points": 2040.0,
+          "rub": 30600.0,
+          "tickets": 338,
+          "scored_tickets": 336
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 2420.0,
+          "rub": 36300.0,
+          "tickets": 296,
+          "scored_tickets": 295
+        },
+        "new_scored_only": {
+          "points": 2520.0,
+          "rub": 37800.0,
+          "tickets": 296,
+          "scored_tickets": 295
+        },
+        "new_all": {
+          "points": 2525.0,
+          "rub": 37875.0,
+          "tickets": 296,
+          "scored_tickets": 295
+        },
+        "new_no_mfc": {
+          "points": 2065.0,
+          "rub": 30975.0,
+          "tickets": 296,
+          "scored_tickets": 295
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 2760.0,
+          "rub": 41400.0,
+          "tickets": 405,
+          "scored_tickets": 400
+        },
+        "new_scored_only": {
+          "points": 2980.0,
+          "rub": 44700.0,
+          "tickets": 405,
+          "scored_tickets": 400
+        },
+        "new_all": {
+          "points": 3040.0,
+          "rub": 45600.0,
+          "tickets": 405,
+          "scored_tickets": 400
+        },
+        "new_no_mfc": {
+          "points": 2665.0,
+          "rub": 39975.0,
+          "tickets": 405,
+          "scored_tickets": 400
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 3670.0,
+          "rub": 55050.0,
+          "tickets": 501,
+          "scored_tickets": 494
+        },
+        "new_scored_only": {
+          "points": 3835.0,
+          "rub": 57525.0,
+          "tickets": 501,
+          "scored_tickets": 494
+        },
+        "new_all": {
+          "points": 3905.0,
+          "rub": 58575.0,
+          "tickets": 501,
+          "scored_tickets": 494
+        },
+        "new_no_mfc": {
+          "points": 3180.0,
+          "rub": 47700.0,
+          "tickets": 501,
+          "scored_tickets": 494
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 2920.0,
+          "rub": 43800.0,
+          "tickets": 398,
+          "scored_tickets": 389
+        },
+        "new_scored_only": {
+          "points": 3010.0,
+          "rub": 45150.0,
+          "tickets": 398,
+          "scored_tickets": 389
+        },
+        "new_all": {
+          "points": 3100.0,
+          "rub": 46500.0,
+          "tickets": 398,
+          "scored_tickets": 389
+        },
+        "new_no_mfc": {
+          "points": 1915.0,
+          "rub": 28725.0,
+          "tickets": 398,
+          "scored_tickets": 389
+        }
+      }
+    },
+    "Конарев Михаил Михайлович": {
+      "2026-01": {
+        "fact": {
+          "points": 725.0,
+          "rub": 10875.0,
+          "tickets": 57,
+          "scored_tickets": 55
+        },
+        "new_scored_only": {
+          "points": 800.0,
+          "rub": 12000.0,
+          "tickets": 57,
+          "scored_tickets": 55
+        },
+        "new_all": {
+          "points": 815.0,
+          "rub": 12225.0,
+          "tickets": 57,
+          "scored_tickets": 55
+        },
+        "new_no_mfc": {
+          "points": 725.0,
+          "rub": 10875.0,
+          "tickets": 57,
+          "scored_tickets": 55
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 1240.0,
+          "rub": 18600.0,
+          "tickets": 93,
+          "scored_tickets": 86
+        },
+        "new_scored_only": {
+          "points": 1295.0,
+          "rub": 19425.0,
+          "tickets": 93,
+          "scored_tickets": 86
+        },
+        "new_all": {
+          "points": 1330.0,
+          "rub": 19950.0,
+          "tickets": 93,
+          "scored_tickets": 86
+        },
+        "new_no_mfc": {
+          "points": 1190.0,
+          "rub": 17850.0,
+          "tickets": 93,
+          "scored_tickets": 86
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 2485.0,
+          "rub": 37275.0,
+          "tickets": 162,
+          "scored_tickets": 152
+        },
+        "new_scored_only": {
+          "points": 2565.0,
+          "rub": 38475.0,
+          "tickets": 162,
+          "scored_tickets": 152
+        },
+        "new_all": {
+          "points": 2615.0,
+          "rub": 39225.0,
+          "tickets": 162,
+          "scored_tickets": 152
+        },
+        "new_no_mfc": {
+          "points": 1930.0,
+          "rub": 28950.0,
+          "tickets": 162,
+          "scored_tickets": 152
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 3060.0,
+          "rub": 45900.0,
+          "tickets": 264,
+          "scored_tickets": 258
+        },
+        "new_scored_only": {
+          "points": 3575.0,
+          "rub": 53625.0,
+          "tickets": 264,
+          "scored_tickets": 258
+        },
+        "new_all": {
+          "points": 3665.0,
+          "rub": 54975.0,
+          "tickets": 264,
+          "scored_tickets": 258
+        },
+        "new_no_mfc": {
+          "points": 3230.0,
+          "rub": 48450.0,
+          "tickets": 264,
+          "scored_tickets": 258
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 3360.0,
+          "rub": 50400.0,
+          "tickets": 210,
+          "scored_tickets": 206
+        },
+        "new_scored_only": {
+          "points": 3665.0,
+          "rub": 54975.0,
+          "tickets": 210,
+          "scored_tickets": 206
+        },
+        "new_all": {
+          "points": 3740.0,
+          "rub": 56100.0,
+          "tickets": 210,
+          "scored_tickets": 206
+        },
+        "new_no_mfc": {
+          "points": 3300.0,
+          "rub": 49500.0,
+          "tickets": 210,
+          "scored_tickets": 206
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 1470.0,
+          "rub": 22050.0,
+          "tickets": 131,
+          "scored_tickets": 105
+        },
+        "new_scored_only": {
+          "points": 1495.0,
+          "rub": 22425.0,
+          "tickets": 131,
+          "scored_tickets": 105
+        },
+        "new_all": {
+          "points": 1885.0,
+          "rub": 28275.0,
+          "tickets": 131,
+          "scored_tickets": 105
+        },
+        "new_no_mfc": {
+          "points": 1540.0,
+          "rub": 23100.0,
+          "tickets": 131,
+          "scored_tickets": 105
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 4380.0,
+          "rub": 65700.0,
+          "tickets": 324,
+          "scored_tickets": 320
+        },
+        "new_scored_only": {
+          "points": 4870.0,
+          "rub": 73050.0,
+          "tickets": 324,
+          "scored_tickets": 320
+        },
+        "new_all": {
+          "points": 4960.0,
+          "rub": 74400.0,
+          "tickets": 324,
+          "scored_tickets": 320
+        },
+        "new_no_mfc": {
+          "points": 4070.0,
+          "rub": 61050.0,
+          "tickets": 324,
+          "scored_tickets": 320
+        }
+      }
+    },
+    "Ручинскас Андрей Владимирович": {
+      "2026-01": {
+        "fact": {
+          "points": 670.0,
+          "rub": 10050.0,
+          "tickets": 64,
+          "scored_tickets": 64
+        },
+        "new_scored_only": {
+          "points": 735.0,
+          "rub": 11025.0,
+          "tickets": 64,
+          "scored_tickets": 64
+        },
+        "new_all": {
+          "points": 735.0,
+          "rub": 11025.0,
+          "tickets": 64,
+          "scored_tickets": 64
+        },
+        "new_no_mfc": {
+          "points": 520.0,
+          "rub": 7800.0,
+          "tickets": 64,
+          "scored_tickets": 64
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 995.0,
+          "rub": 14925.0,
+          "tickets": 140,
+          "scored_tickets": 139
+        },
+        "new_scored_only": {
+          "points": 1150.0,
+          "rub": 17250.0,
+          "tickets": 140,
+          "scored_tickets": 139
+        },
+        "new_all": {
+          "points": 1150.0,
+          "rub": 17250.0,
+          "tickets": 140,
+          "scored_tickets": 139
+        },
+        "new_no_mfc": {
+          "points": 645.0,
+          "rub": 9675.0,
+          "tickets": 140,
+          "scored_tickets": 139
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 1655.0,
+          "rub": 24825.0,
+          "tickets": 173,
+          "scored_tickets": 172
+        },
+        "new_scored_only": {
+          "points": 1830.0,
+          "rub": 27450.0,
+          "tickets": 173,
+          "scored_tickets": 172
+        },
+        "new_all": {
+          "points": 1835.0,
+          "rub": 27525.0,
+          "tickets": 173,
+          "scored_tickets": 172
+        },
+        "new_no_mfc": {
+          "points": 1465.0,
+          "rub": 21975.0,
+          "tickets": 173,
+          "scored_tickets": 172
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 2190.0,
+          "rub": 32850.0,
+          "tickets": 273,
+          "scored_tickets": 256
+        },
+        "new_scored_only": {
+          "points": 2870.0,
+          "rub": 43050.0,
+          "tickets": 273,
+          "scored_tickets": 256
+        },
+        "new_all": {
+          "points": 2965.0,
+          "rub": 44475.0,
+          "tickets": 273,
+          "scored_tickets": 256
+        },
+        "new_no_mfc": {
+          "points": 2005.0,
+          "rub": 30075.0,
+          "tickets": 273,
+          "scored_tickets": 256
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 2755.0,
+          "rub": 41325.0,
+          "tickets": 254,
+          "scored_tickets": 247
+        },
+        "new_scored_only": {
+          "points": 3300.0,
+          "rub": 49500.0,
+          "tickets": 254,
+          "scored_tickets": 247
+        },
+        "new_all": {
+          "points": 3355.0,
+          "rub": 50325.0,
+          "tickets": 254,
+          "scored_tickets": 247
+        },
+        "new_no_mfc": {
+          "points": 2550.0,
+          "rub": 38250.0,
+          "tickets": 254,
+          "scored_tickets": 247
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 3645.0,
+          "rub": 54675.0,
+          "tickets": 356,
+          "scored_tickets": 338
+        },
+        "new_scored_only": {
+          "points": 4010.0,
+          "rub": 60150.0,
+          "tickets": 356,
+          "scored_tickets": 338
+        },
+        "new_all": {
+          "points": 4145.0,
+          "rub": 62175.0,
+          "tickets": 356,
+          "scored_tickets": 338
+        },
+        "new_no_mfc": {
+          "points": 1710.0,
+          "rub": 25650.0,
+          "tickets": 356,
+          "scored_tickets": 338
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 3285.0,
+          "rub": 49275.0,
+          "tickets": 338,
+          "scored_tickets": 333
+        },
+        "new_scored_only": {
+          "points": 3320.0,
+          "rub": 49800.0,
+          "tickets": 338,
+          "scored_tickets": 333
+        },
+        "new_all": {
+          "points": 3330.0,
+          "rub": 49950.0,
+          "tickets": 338,
+          "scored_tickets": 333
+        },
+        "new_no_mfc": {
+          "points": 1775.0,
+          "rub": 26625.0,
+          "tickets": 338,
+          "scored_tickets": 333
+        }
+      }
+    },
+    "Кирюшкин Андрей Дмитриевич": {
+      "2026-01": {
+        "fact": {
+          "points": 305.0,
+          "rub": 4575.0,
+          "tickets": 46,
+          "scored_tickets": 38
+        },
+        "new_scored_only": {
+          "points": 390.0,
+          "rub": 5850.0,
+          "tickets": 46,
+          "scored_tickets": 38
+        },
+        "new_all": {
+          "points": 440.0,
+          "rub": 6600.0,
+          "tickets": 46,
+          "scored_tickets": 38
+        },
+        "new_no_mfc": {
+          "points": 430.0,
+          "rub": 6450.0,
+          "tickets": 46,
+          "scored_tickets": 38
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 2475.0,
+          "rub": 37125.0,
+          "tickets": 264,
+          "scored_tickets": 246
+        },
+        "new_scored_only": {
+          "points": 3700.0,
+          "rub": 55500.0,
+          "tickets": 264,
+          "scored_tickets": 246
+        },
+        "new_all": {
+          "points": 3815.0,
+          "rub": 57225.0,
+          "tickets": 264,
+          "scored_tickets": 246
+        },
+        "new_no_mfc": {
+          "points": 3565.0,
+          "rub": 53475.0,
+          "tickets": 264,
+          "scored_tickets": 246
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 2480.0,
+          "rub": 37200.0,
+          "tickets": 312,
+          "scored_tickets": 295
+        },
+        "new_scored_only": {
+          "points": 3705.0,
+          "rub": 55575.0,
+          "tickets": 312,
+          "scored_tickets": 295
+        },
+        "new_all": {
+          "points": 3800.0,
+          "rub": 57000.0,
+          "tickets": 312,
+          "scored_tickets": 295
+        },
+        "new_no_mfc": {
+          "points": 3585.0,
+          "rub": 53775.0,
+          "tickets": 312,
+          "scored_tickets": 295
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 1660.0,
+          "rub": 24900.0,
+          "tickets": 218,
+          "scored_tickets": 189
+        },
+        "new_scored_only": {
+          "points": 2485.0,
+          "rub": 37275.0,
+          "tickets": 218,
+          "scored_tickets": 189
+        },
+        "new_all": {
+          "points": 2680.0,
+          "rub": 40200.0,
+          "tickets": 218,
+          "scored_tickets": 189
+        },
+        "new_no_mfc": {
+          "points": 2570.0,
+          "rub": 38550.0,
+          "tickets": 218,
+          "scored_tickets": 189
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 3065.0,
+          "rub": 45975.0,
+          "tickets": 271,
+          "scored_tickets": 259
+        },
+        "new_scored_only": {
+          "points": 4155.0,
+          "rub": 62325.0,
+          "tickets": 271,
+          "scored_tickets": 259
+        },
+        "new_all": {
+          "points": 4320.0,
+          "rub": 64800.0,
+          "tickets": 271,
+          "scored_tickets": 259
+        },
+        "new_no_mfc": {
+          "points": 4030.0,
+          "rub": 60450.0,
+          "tickets": 271,
+          "scored_tickets": 259
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 1365.0,
+          "rub": 20475.0,
+          "tickets": 163,
+          "scored_tickets": 131
+        },
+        "new_scored_only": {
+          "points": 1910.0,
+          "rub": 28650.0,
+          "tickets": 163,
+          "scored_tickets": 131
+        },
+        "new_all": {
+          "points": 2380.0,
+          "rub": 35700.0,
+          "tickets": 163,
+          "scored_tickets": 131
+        },
+        "new_no_mfc": {
+          "points": 2265.0,
+          "rub": 33975.0,
+          "tickets": 163,
+          "scored_tickets": 131
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 2460.0,
+          "rub": 36900.0,
+          "tickets": 244,
+          "scored_tickets": 226
+        },
+        "new_scored_only": {
+          "points": 3270.0,
+          "rub": 49050.0,
+          "tickets": 244,
+          "scored_tickets": 226
+        },
+        "new_all": {
+          "points": 3645.0,
+          "rub": 54675.0,
+          "tickets": 244,
+          "scored_tickets": 226
+        },
+        "new_no_mfc": {
+          "points": 3225.0,
+          "rub": 48375.0,
+          "tickets": 244,
+          "scored_tickets": 226
+        }
+      }
+    },
+    "Гулумбетов Павел": {
+      "2026-02": {
+        "fact": {
+          "points": 470.0,
+          "rub": 7050.0,
+          "tickets": 81,
+          "scored_tickets": 80
+        },
+        "new_scored_only": {
+          "points": 550.0,
+          "rub": 8250.0,
+          "tickets": 81,
+          "scored_tickets": 80
+        },
+        "new_all": {
+          "points": 550.0,
+          "rub": 8250.0,
+          "tickets": 81,
+          "scored_tickets": 80
+        },
+        "new_no_mfc": {
+          "points": 460.0,
+          "rub": 6900.0,
+          "tickets": 81,
+          "scored_tickets": 80
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 670.0,
+          "rub": 10050.0,
+          "tickets": 110,
+          "scored_tickets": 110
+        },
+        "new_scored_only": {
+          "points": 880.0,
+          "rub": 13200.0,
+          "tickets": 110,
+          "scored_tickets": 110
+        },
+        "new_all": {
+          "points": 880.0,
+          "rub": 13200.0,
+          "tickets": 110,
+          "scored_tickets": 110
+        },
+        "new_no_mfc": {
+          "points": 665.0,
+          "rub": 9975.0,
+          "tickets": 110,
+          "scored_tickets": 110
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 1475.0,
+          "rub": 22125.0,
+          "tickets": 228,
+          "scored_tickets": 226
+        },
+        "new_scored_only": {
+          "points": 1590.0,
+          "rub": 23850.0,
+          "tickets": 228,
+          "scored_tickets": 226
+        },
+        "new_all": {
+          "points": 1600.0,
+          "rub": 24000.0,
+          "tickets": 228,
+          "scored_tickets": 226
+        },
+        "new_no_mfc": {
+          "points": 1190.0,
+          "rub": 17850.0,
+          "tickets": 228,
+          "scored_tickets": 226
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 1020.0,
+          "rub": 15300.0,
+          "tickets": 151,
+          "scored_tickets": 151
+        },
+        "new_scored_only": {
+          "points": 1090.0,
+          "rub": 16350.0,
+          "tickets": 151,
+          "scored_tickets": 151
+        },
+        "new_all": {
+          "points": 1090.0,
+          "rub": 16350.0,
+          "tickets": 151,
+          "scored_tickets": 151
+        },
+        "new_no_mfc": {
+          "points": 930.0,
+          "rub": 13950.0,
+          "tickets": 151,
+          "scored_tickets": 151
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 1620.0,
+          "rub": 24300.0,
+          "tickets": 208,
+          "scored_tickets": 205
+        },
+        "new_scored_only": {
+          "points": 1465.0,
+          "rub": 21975.0,
+          "tickets": 208,
+          "scored_tickets": 205
+        },
+        "new_all": {
+          "points": 1495.0,
+          "rub": 22425.0,
+          "tickets": 208,
+          "scored_tickets": 205
+        },
+        "new_no_mfc": {
+          "points": 1115.0,
+          "rub": 16725.0,
+          "tickets": 208,
+          "scored_tickets": 205
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 3685.0,
+          "rub": 55275.0,
+          "tickets": 359,
+          "scored_tickets": 341
+        },
+        "new_scored_only": {
+          "points": 3015.0,
+          "rub": 45225.0,
+          "tickets": 359,
+          "scored_tickets": 341
+        },
+        "new_all": {
+          "points": 3285.0,
+          "rub": 49275.0,
+          "tickets": 359,
+          "scored_tickets": 341
+        },
+        "new_no_mfc": {
+          "points": 2450.0,
+          "rub": 36750.0,
+          "tickets": 359,
+          "scored_tickets": 341
+        }
+      }
+    },
+    "Синкин Глеб": {
+      "2026-01": {
+        "fact": {
+          "points": 305.0,
+          "rub": 4575.0,
+          "tickets": 9,
+          "scored_tickets": 6
+        },
+        "new_scored_only": {
+          "points": 315.0,
+          "rub": 4725.0,
+          "tickets": 9,
+          "scored_tickets": 6
+        },
+        "new_all": {
+          "points": 385.0,
+          "rub": 5775.0,
+          "tickets": 9,
+          "scored_tickets": 6
+        },
+        "new_no_mfc": {
+          "points": 325.0,
+          "rub": 4875.0,
+          "tickets": 9,
+          "scored_tickets": 6
+        }
+      },
+      "2026-02": {
+        "fact": {
+          "points": 2445.0,
+          "rub": 36675.0,
+          "tickets": 184,
+          "scored_tickets": 182
+        },
+        "new_scored_only": {
+          "points": 2395.0,
+          "rub": 35925.0,
+          "tickets": 184,
+          "scored_tickets": 182
+        },
+        "new_all": {
+          "points": 2460.0,
+          "rub": 36900.0,
+          "tickets": 184,
+          "scored_tickets": 182
+        },
+        "new_no_mfc": {
+          "points": 2085.0,
+          "rub": 31275.0,
+          "tickets": 184,
+          "scored_tickets": 182
+        }
+      },
+      "2026-03": {
+        "fact": {
+          "points": 705.0,
+          "rub": 10575.0,
+          "tickets": 50,
+          "scored_tickets": 49
+        },
+        "new_scored_only": {
+          "points": 785.0,
+          "rub": 11775.0,
+          "tickets": 50,
+          "scored_tickets": 49
+        },
+        "new_all": {
+          "points": 790.0,
+          "rub": 11850.0,
+          "tickets": 50,
+          "scored_tickets": 49
+        },
+        "new_no_mfc": {
+          "points": 585.0,
+          "rub": 8775.0,
+          "tickets": 50,
+          "scored_tickets": 49
+        }
+      },
+      "2026-04": {
+        "fact": {
+          "points": 2085.0,
+          "rub": 31275.0,
+          "tickets": 220,
+          "scored_tickets": 215
+        },
+        "new_scored_only": {
+          "points": 2500.0,
+          "rub": 37500.0,
+          "tickets": 220,
+          "scored_tickets": 215
+        },
+        "new_all": {
+          "points": 2525.0,
+          "rub": 37875.0,
+          "tickets": 220,
+          "scored_tickets": 215
+        },
+        "new_no_mfc": {
+          "points": 1410.0,
+          "rub": 21150.0,
+          "tickets": 220,
+          "scored_tickets": 215
+        }
+      },
+      "2026-05": {
+        "fact": {
+          "points": 1550.0,
+          "rub": 23250.0,
+          "tickets": 168,
+          "scored_tickets": 156
+        },
+        "new_scored_only": {
+          "points": 2100.0,
+          "rub": 31500.0,
+          "tickets": 168,
+          "scored_tickets": 156
+        },
+        "new_all": {
+          "points": 2215.0,
+          "rub": 33225.0,
+          "tickets": 168,
+          "scored_tickets": 156
+        },
+        "new_no_mfc": {
+          "points": 1920.0,
+          "rub": 28800.0,
+          "tickets": 168,
+          "scored_tickets": 156
+        }
+      },
+      "2026-06": {
+        "fact": {
+          "points": 840.0,
+          "rub": 12600.0,
+          "tickets": 27,
+          "scored_tickets": 26
+        },
+        "new_scored_only": {
+          "points": 810.0,
+          "rub": 12150.0,
+          "tickets": 27,
+          "scored_tickets": 26
+        },
+        "new_all": {
+          "points": 825.0,
+          "rub": 12375.0,
+          "tickets": 27,
+          "scored_tickets": 26
+        },
+        "new_no_mfc": {
+          "points": 605.0,
+          "rub": 9075.0,
+          "tickets": 27,
+          "scored_tickets": 26
+        }
+      },
+      "2026-07": {
+        "fact": {
+          "points": 890.0,
+          "rub": 13350.0,
+          "tickets": 74,
+          "scored_tickets": 67
+        },
+        "new_scored_only": {
+          "points": 1120.0,
+          "rub": 16800.0,
+          "tickets": 74,
+          "scored_tickets": 67
+        },
+        "new_all": {
+          "points": 1170.0,
+          "rub": 17550.0,
+          "tickets": 74,
+          "scored_tickets": 67
+        },
+        "new_no_mfc": {
+          "points": 760.0,
+          "rub": 11400.0,
+          "tickets": 74,
+          "scored_tickets": 67
+        }
+      }
+    }
+  },
+  "explanations": {
+    "Ососков Евгений Петрович": {
+      "lead": "Scored растёт на 61 800 ₽ (915 225 → 977 025, +6.8%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+213 450 ₽). Сдерживается: снижение средних самооценок (-151 125 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 1322,
+          "delta_pts": 14230.0,
+          "delta_rub": 213450.0,
+          "examples": [
+            "«пробитие чека 101348 »: 10→30 б. (Расхождение данных в отчетах с 1С, ОФД и)",
+            "«Новые кассы»: 10→30 б. (Консультация)",
+            "«кассир»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 958,
+          "delta_pts": -10075.0,
+          "delta_rub": -151125.0,
+          "examples": [
+            "«ошибки ксо фармасинтез »: 30→15 б. (Другое)",
+            "«Расследование ошибки по ксо 101360 АВТОБАН»: 30→15 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«Расследование ошибки по ксо 101360 АВТОБАН»: 30→15 б. (Другое)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 151,
+          "delta_pts": -35.0,
+          "delta_rub": -525.0,
+          "examples": [
+            "«Подготовить КСО»: 100→120 б. (Подключение и настройка оборудования)",
+            "«Подготовка КСО»: 100→120 б. (Подключение и настройка оборудования)",
+            "«SMT 18 ВЫСОКАЯ СРОЧНОСТЬ!!! Подготовить моноблок»: 50→90 б. (Подключение и настройка оборудования)"
+          ]
+        }
+      ],
+      "fact_rub": 915225.0,
+      "new_rub": 977025.0,
+      "delta_rub": 61800.0
+    },
+    "Петров Артем Евгеньевич": {
+      "lead": "Scored снижается на 38 625 ₽ (535 050 → 496 425, -7.2%).",
+      "dominant": "Главный фактор снижения: снижение средних самооценок (-28 875 ₽). Частично компенсируется: рост по нормам каталога (+20 100 ₽).",
+      "parts": [
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 110,
+          "delta_pts": -1925.0,
+          "delta_rub": -28875.0,
+          "examples": [
+            "«Виката. Отчеты»: 35→15 б. (Вопросы по отчетам)",
+            "«Хендай. Фискализация»: 40→15 б. (Другое)",
+            "«Джета. Сверка данных»: 30→15 б. (Вопросы по отчетам)"
+          ]
+        },
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 145,
+          "delta_pts": 1340.0,
+          "delta_rub": 20100.0,
+          "examples": [
+            "«МФТИ. выгрузка»: 15→30 б. (Расхождение данных в отчетах с 1С, ОФД и)"
+          ]
+        },
+        {
+          "key": "mfc_day",
+          "title": "Дневной компенсатор MFC",
+          "why": "Пакет «МФС. Заявки, звонки» пересчитывается как T5 × число техзаявок за день вместо произвольного крупного балла.",
+          "n": 117,
+          "delta_pts": -1250.0,
+          "delta_rub": -18750.0,
+          "examples": [
+            "«МФС. Заявки, звонки»: 200→5 б. (Другое)",
+            "«мфс. Заявки, звонки»: 180→510 б. (Другое)",
+            "«МФС. Заявки, звонки»: 30→250 б. (Другое)"
+          ]
+        },
+        {
+          "key": "high_tail",
+          "title": "Срез крупного балла без признаков пакета",
+          "why": "Балл ≥100, но нет маркеров массовой раскатки/перечня объектов — начисляется одна норма категории, не свободная цифра.",
+          "n": 6,
+          "delta_pts": -740.0,
+          "delta_rub": -11100.0,
+          "examples": [
+            "«Автоваз Магазины Процессинг»: 100→5 б.",
+            "«Автоваз. Магазины. Процессинг»: 100→5 б.",
+            "«АвтовазМагазины»: 100→5 б."
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 33,
+          "delta_pts": 0.0,
+          "delta_rub": 0.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 535050.0,
+      "new_rub": 496425.0,
+      "delta_rub": -38625.0
+    },
+    "Павлов Андрей Андреевич": {
+      "lead": "Scored растёт на 10 650 ₽ (289 800 → 300 450, +3.7%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+46 650 ₽). Сдерживается: снижение средних самооценок (-32 250 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 213,
+          "delta_pts": 3110.0,
+          "delta_rub": 46650.0,
+          "examples": [
+            "«Прошу заблокировать карту РН Инжиниринг 2024081641»: 5→30 б. (Другое)",
+            "«Добавить нового сотрудника в категорию РН Инжинири»: 5→30 б. (Другое)",
+            "«Заменить сканер»: 10→60 б. (Подключение и настройка оборудования)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 160,
+          "delta_pts": -2150.0,
+          "delta_rub": -32250.0,
+          "examples": [
+            "«Срочно удалить чеки»: 30→5 б.",
+            "«Сбербанк Оружейный:в ОФД не идут чеки»: 20→5 б. (Не уходят чеки в ОФД)",
+            "«Удалёнка для настройки ТСПиоТ»: 30→15 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "high_tail",
+          "title": "Срез крупного балла без признаков пакета",
+          "why": "Балл ≥100, но нет маркеров массовой раскатки/перечня объектов — начисляется одна норма категории, не свободная цифра.",
+          "n": 2,
+          "delta_pts": -190.0,
+          "delta_rub": -2850.0,
+          "examples": [
+            "«Настройка Чеков намерения»: 100→5 б.",
+            "«Настройка Чеков намерения»: 100→5 б."
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 36,
+          "delta_pts": -60.0,
+          "delta_rub": -900.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 289800.0,
+      "new_rub": 300450.0,
+      "delta_rub": 10650.0
+    },
+    "Сушков Павел": {
+      "lead": "Scored растёт на 27 150 ₽ (253 575 → 280 725, +10.7%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+69 675 ₽). Сдерживается: снижение средних самооценок (-42 525 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 460,
+          "delta_pts": 4645.0,
+          "delta_rub": 69675.0,
+          "examples": [
+            "«Мултон Щелково. Включить задание в планировщике»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«Вопрос по возврату»: 10→30 б. (Консультация)",
+            "«vnk47 проверка кассы»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 378,
+          "delta_pts": -2835.0,
+          "delta_rub": -42525.0,
+          "examples": [
+            "«Не работает карта клиента»: 20→5 б. (Не проходит карта клиента)",
+            "«nrk6 не работает считыватель»: 20→5 б. (Не проходит карта клиента)",
+            "«КСО не работает»: 20→5 б. (Ошибка на кассе (ошибка лицензии, попытк)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 1,
+          "delta_pts": 0.0,
+          "delta_rub": 0.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 253575.0,
+      "new_rub": 280725.0,
+      "delta_rub": 27150.0
+    },
+    "Конарев Михаил Михайлович": {
+      "lead": "Scored растёт на 23 175 ₽ (250 800 → 273 975, +9.2%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+64 050 ₽). Сдерживается: снижение средних самооценок (-41 625 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 271,
+          "delta_pts": 4270.0,
+          "delta_rub": 64050.0,
+          "examples": [
+            "«вопрос по кассе»: 10→30 б. (Консультация)",
+            "«VNK11 вопрос по карте»: 10→30 б. (Консультация)",
+            "«не работает мониторинг»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 206,
+          "delta_pts": -2775.0,
+          "delta_rub": -41625.0,
+          "examples": [
+            "«обновить ЧЗ на тс пиот»: 50→5 б. (Не работает ЧЗ)",
+            "«Настроить на летней веранде печать чека по новым п»: 50→15 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«отключить печать чеков»: 30→15 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 23,
+          "delta_pts": 50.0,
+          "delta_rub": 750.0,
+          "examples": [
+            "«Настроить с нашей стороны пиот»: 100→120 б. (Подключение и настройка оборудования)"
+          ]
+        }
+      ],
+      "fact_rub": 250800.0,
+      "new_rub": 273975.0,
+      "delta_rub": 23175.0
+    },
+    "Ручинскас Андрей Владимирович": {
+      "lead": "Scored растёт на 30 300 ₽ (227 925 → 258 225, +13.3%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+50 700 ₽). Сдерживается: снижение средних самооценок (-18 600 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 240,
+          "delta_pts": 3380.0,
+          "delta_rub": 50700.0,
+          "examples": [
+            "«не работает мониторинг»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«ошибка при закрытии смены»: 10→30 б. (Консультация)",
+            "«Обновить цены»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 123,
+          "delta_pts": -1240.0,
+          "delta_rub": -18600.0,
+          "examples": [
+            "«vnk_vpu Нет меню»: 30→10 б. (Нет меню, нет товара на кассе)",
+            "«Сбер Расхождения»: 30→10 б. (Не закрывается смена)",
+            "«Прогрузить данные в ОФД»: 30→10 б. (Не уходят чеки в ОФД)"
+          ]
+        },
+        {
+          "key": "mfc_day",
+          "title": "Дневной компенсатор MFC",
+          "why": "Пакет «МФС. Заявки, звонки» пересчитывается как T5 × число техзаявок за день вместо произвольного крупного балла.",
+          "n": 1,
+          "delta_pts": -120.0,
+          "delta_rub": -1800.0,
+          "examples": [
+            "«МФС заявки»: 125→5 б."
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 7,
+          "delta_pts": 0.0,
+          "delta_rub": 0.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 227925.0,
+      "new_rub": 258225.0,
+      "delta_rub": 30300.0
+    },
+    "Кирюшкин Андрей Дмитриевич": {
+      "lead": "Scored растёт на 87 075 ₽ (207 150 → 294 225, +42.0%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+96 300 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 469,
+          "delta_pts": 6420.0,
+          "delta_rub": 96300.0,
+          "examples": [
+            "«заявка»: 5→30 б. (Расхождение данных в отчетах с 1С, ОФД и)",
+            "«Настроить в пятницу в 10-00 работу с двумя фр ооо »: 15→30 б. (Подключение и настройка оборудования)",
+            "«понедельник настроить по тарифу выходного дня»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 32,
+          "delta_pts": -660.0,
+          "delta_rub": -9900.0,
+          "examples": [
+            "«Подготовить кассу к работе»: 50→30 б. (Подключение и настройка оборудования)",
+            "«Не работает касса»: 50→10 б. (Не работает касса, перезапуск на кассе)",
+            "«Не уходят доки в ОФД»: 30→10 б. (Не уходят чеки в ОФД)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 17,
+          "delta_pts": 45.0,
+          "delta_rub": 675.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 207150.0,
+      "new_rub": 294225.0,
+      "delta_rub": 87075.0
+    },
+    "Гулумбетов Павел": {
+      "lead": "Scored снижается на 5 250 ₽ (134 100 → 128 850, -3.9%).",
+      "dominant": "Главный фактор снижения: снижение средних самооценок (-36 900 ₽). Частично компенсируется: рост по нормам каталога (+31 725 ₽).",
+      "parts": [
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 315,
+          "delta_pts": -2460.0,
+          "delta_rub": -36900.0,
+          "examples": [
+            "«внк 29, внк 2, внк 40, внк 9, 11, 12, внк 5, внк 6»: 45→5 б. (Нет меню, нет товара на кассе)",
+            "«обмен gaz 1 gaz3 gaz2 gaz6 gaz5 gaz4 порции »: 30→5 б. (Нет меню, нет товара на кассе)",
+            "«обмен внк 37,47»: 20→5 б. (Нет меню, нет товара на кассе)"
+          ]
+        },
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 245,
+          "delta_pts": 2115.0,
+          "delta_rub": 31725.0,
+          "examples": [
+            "«evx4 2 сканера не работают»: 10→30 б. (Подключение и настройка оборудования)",
+            "«норд стар не работает телеграмм »: 5→30 б. (Другое)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 3,
+          "delta_pts": -5.0,
+          "delta_rub": -75.0,
+          "examples": []
+        }
+      ],
+      "fact_rub": 134100.0,
+      "new_rub": 128850.0,
+      "delta_rub": -5250.0
+    },
+    "Синкин Глеб": {
+      "lead": "Scored растёт на 18 075 ₽ (132 300 → 150 375, +13.7%).",
+      "dominant": "Главный фактор роста: рост по нормам каталога (+24 900 ₽).",
+      "parts": [
+        {
+          "key": "norm_up",
+          "title": "Рост по нормам каталога",
+          "why": "Часть заявок с фактом 5–10 поднимается: консультации/доп.настройки → C15=15, сложные/расхождения/оборудование → S30=30; в дежурство ещё ×2.",
+          "n": 128,
+          "delta_pts": 1660.0,
+          "delta_rub": 24900.0,
+          "examples": [
+            "«Кругозор. Замена моноблока»: 5→60 б. (Другое)",
+            "«Код кассира»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«Профилактика кассы VNK32»: 10→30 б. (Доп. настройки, сопутствующий сервис, не)"
+          ]
+        },
+        {
+          "key": "norm_down",
+          "title": "Снижение средних самооценок",
+          "why": "Заявки с фактом 20–90 на типовых (не пакет) садятся на норму T5/C15.",
+          "n": 25,
+          "delta_pts": -315.0,
+          "delta_rub": -4725.0,
+          "examples": [
+            "«привезли новый комп управляющего, нужно настроить »: 30→15 б. (Доп. настройки, сопутствующий сервис, не)",
+            "«настроить карточку товара»: 30→5 б. (Не работает ЧЗ)",
+            "«не работают терминалы»: 25→5 б. (Не проходит оплата (по банку или процесс)"
+          ]
+        },
+        {
+          "key": "batch_pack",
+          "title": "Пакет по объектам (N × норма)",
+          "why": "Крупная заявка — обычно перечень однотипных работ по объектам/кассам. Норма = база категории × N (N из описания или восстановлено из факта), без срезания до «одной штуки».",
+          "n": 6,
+          "delta_pts": -140.0,
+          "delta_rub": -2100.0,
+          "examples": [
+            "«офис ifcm, склонить 6 моноблоков, вывести в доступ»: 180→60 б. (Подключение и настройка оборудования)",
+            "«Подготовка оборудования к отгрузке. В офисе»: 80→60 б."
+          ]
+        }
+      ],
+      "fact_rub": 132300.0,
+      "new_rub": 150375.0,
+      "delta_rub": 18075.0
+    }
+  },
+  "diagnostics": {
+    "mfc_unscored": 3824,
+    "non_mfc_unscored": 400,
+    "mfc_bulk_zeroed": 3824,
+    "mfc_compensators": 118,
+    "mfc_comp_fact_points": 20740,
+    "mfc_comp_new_points": 19370,
+    "mfc_tech_points_per_ticket": 5,
+    "high_tail_count": 119,
+    "high_tail_points": 21505,
+    "category_counts": {
+      "T5": 10317,
+      "C15": 4134,
+      "BATCH_C15_x27": 6,
+      "MFC_BULK": 3824,
+      "BATCH_C15_x10": 8,
+      "BATCH_C15_x11": 9,
+      "BATCH_C15_x7": 37,
+      "BATCH_C15_x3": 25,
+      "BATCH_C15_x5": 23,
+      "BATCH_C15_x9": 14,
+      "S30": 247,
+      "MFC_DAY": 118,
+      "BATCH_C15_x4": 22,
+      "BATCH_S30_x2": 7,
+      "BATCH_S30_x6": 2,
+      "BATCH_C15_x6": 8,
+      "BATCH_S30_x4": 2,
+      "BATCH_S30_x3": 7,
+      "BATCH_C15_x67": 3,
+      "BATCH_C15_x13": 19,
+      "BATCH_S30_x7": 1,
+      "BATCH_C15_x16": 2,
+      "BATCH_C15_x20": 5,
+      "BATCH_C15_x12": 2,
+      "BATCH_T5_x7": 1,
+      "BATCH_C15_x33": 5,
+      "BATCH_C15_x2": 17,
+      "BATCH_C15_x8": 14,
+      "BATCH_S30_x10": 1,
+      "BATCH_C15_x17": 3,
+      "BATCH_S30_x1": 1,
+      "BATCH_C15_x15": 1,
+      "BATCH_S30_x8": 1,
+      "BATCH_T5_x12": 2,
+      "BATCH_S30_x17": 1,
+      "BATCH_T5_x1": 5,
+      "BATCH_T5_x18": 1,
+      "BATCH_T5_x34": 1,
+      "BATCH_T5_x10": 2,
+      "BATCH_T5_x60": 2,
+      "BATCH_C15_x14": 1,
+      "BATCH_T5_x22": 3,
+      "BATCH_T5_x80": 2,
+      "BATCH_T5_x13": 1,
+      "BATCH_T5_x48": 1,
+      "BATCH_T5_x14": 1,
+      "BATCH_T5_x200": 1,
+      "BATCH_T5_x36": 1,
+      "BATCH_T5_x40": 1,
+      "BATCH_T5_x20": 2,
+      "BATCH_T5_x24": 2,
+      "BATCH_T5_x32": 1
+    },
+    "skipped_no_month": 0,
+    "excluded_assignees": [
+      "(без ответственного)",
+      "Елыков Денис",
+      "Меркулов Игорь"
+    ],
+    "excluded_tickets": 723
+  }
+}

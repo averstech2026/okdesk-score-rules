@@ -31,9 +31,20 @@
 | [docs/13-solution-catalog-proposal.md](docs/13-solution-catalog-proposal.md) | Ревизия справочника способов решения |
 | [docs/14-handoff.md](docs/14-handoff.md) | Как продолжить без истории чата |
 | [docs/15-balance-conveyor-vs-investigations.md](docs/15-balance-conveyor-vs-investigations.md) | Баланс конвейер vs расследования, анти-перехват |
+| [docs/16-handoff-internal-app.md](docs/16-handoff-internal-app.md) | **Передача в соседний проект:** личные отчёты премии/дежурств, массовые заявки, accept |
+| [docs/17-implementation-plan.md](docs/17-implementation-plan.md) | **Пошаговый план внедрения** нового подхода (фазы 0–6) |
+| [docs/18-phase0-decisions.md](docs/18-phase0-decisions.md) | **Фаза 0:** лист решений (в т.ч. текст «Осложнение») |
+| [docs/19-phase0-revision.md](docs/19-phase0-revision.md) | **Фаза 0:** было → станет (markdown) |
+| [docs/20-phase0-comment-answers.md](docs/20-phase0-comment-answers.md) | Ответы на комментарии к HTML фазы 0 |
+| [docs/21-okdesk-new-fields.md](docs/21-okdesk-new-fields.md) | **Финал:** новые поля Okdesk |
+| [docs/22-typical-base-weights.md](docs/22-typical-base-weights.md) | **Typical → база баллов** (+ статьи БЗ) |
 | [docs/23-mfc-fast-create.md](docs/23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём; объекты; парсер URL/текста) |
+| [analysis/phase0-revision.html](analysis/phase0-revision.html) | **HTML:** фаза 0 было → станет (для согласования) |
 | [docs/open-questions.md](docs/open-questions.md) | Открытые вопросы для согласования |
 | [analysis/report.md](analysis/report.md) | Сводный отчёт по последней выгрузке |
+| [analysis/bonus-comparison.md](analysis/bonus-comparison.md) | **Сравнение премий:** факт vs новый подход (по сотрудникам и месяцам, 1 балл = 15 ₽) |
+| [analysis/bonus-comparison.html](analysis/bonus-comparison.html) | **HTML:** помесячное сравнение текущий / новый по каждому инженеру |
+| [analysis/mass-update-auto.html](analysis/mass-update-auto.html) | **Массовые обновления ПО:** объём, премия, сценарии автообновления |
 | [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |
 
 ## Статус

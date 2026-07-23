@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Фаза 0 — ревизия: было → станет</title>
+  <style>
+    :root {
+      --bg: #f4f5f7; --surface: #fff; --text: #1a1d23; --muted: #5c6570; --faint: #8b939e;
+      --line: #e2e5ea; --accent: #1f4b7a; --warn-bg: #fff6e8; --warn-border: #e6b35c;
+      --info-bg: #eef5fb; --info-border: #7aa7d0; --ok-bg: #eef8f1; --ok-border: #9bc9a8;
+      --was: #6b7280; --will: #1f6b3a; --will-bg: #f3faf5;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 80px; }
+    h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 1.2rem; font-weight: 650; margin: 0 0 10px; padding-top: 4px; }
+    h3 { font-size: 1rem; font-weight: 650; margin: 18px 0 8px; color: var(--muted); }
+    .lead { color: var(--muted); margin: 0 0 16px; max-width: 78ch; }
+    .banner {
+      background: #1f4b7a; color: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 18px;
+    }
+    .banner a { color: #cfe3ff; }
+    .banner code { background: rgba(255,255,255,.15); padding: 1px 6px; border-radius: 4px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px; }
+    .nav a {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line);
+      background: var(--surface); padding: 6px 10px; border-radius: 8px;
+    }
+    .nav a:hover { border-color: var(--accent); }
+    section { margin-top: 28px; }
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 12px 0; border: 1px solid var(--line); background: var(--surface); }
+    .callout.warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .callout.info { background: var(--info-bg); border-color: var(--info-border); }
+    .callout.ok { background: var(--ok-bg); border-color: var(--ok-border); }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 12px 0; overflow: hidden; }
+    .card-h { padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 650; display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; background: #fafbfc; }
+    tr:last-child td { border-bottom: 0; }
+    th.was, td.was { width: 42%; }
+    th.will, td.will { width: 42%; background: var(--will-bg); }
+    th.will { color: var(--will); background: #e8f5ec; }
+    td.topic { width: 16%; font-weight: 600; color: var(--accent); white-space: nowrap; }
+    td.will { color: #163d24; }
+    .pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eef2f6; color: var(--muted); }
+    .pill.ok { background: var(--ok-bg); color: #1f6b3a; }
+    .pill.warn { background: var(--warn-bg); color: #8a5a00; }
+    .pill.info { background: var(--info-bg); color: #2a5f8f; }
+    code { font-size: 0.88em; background: #eef1f4; padding: 1px 5px; border-radius: 4px; }
+    pre.formula {
+      background: #1a1d23; color: #e8eaed; border-radius: 10px; padding: 16px 18px;
+      font-size: 0.85rem; line-height: 1.55; overflow-x: auto; margin: 12px 0;
+    }
+    .phases { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
+    @media (max-width: 900px) {
+      .phases { grid-template-columns: 1fr 1fr; }
+      td.topic { white-space: normal; }
+    }
+    .phase {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    }
+    .phase.on { border-color: var(--accent); background: var(--info-bg); }
+    .phase .n { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+    .phase .t { font-weight: 650; margin: 4px 0 2px; font-size: 0.92rem; }
+    .phase .d { font-size: 0.8rem; color: var(--muted); }
+    ul.keep { margin: 8px 0; padding-left: 20px; }
+    ul.keep li { margin: 4px 0; }
+    .approve td:last-child { width: auto; text-align: left; color: var(--text); }
+    .links a { color: var(--accent); }
+    footer { margin-top: 48px; color: var(--faint); font-size: 0.8rem; border-top: 1px solid var(--line); padding-top: 16px; }
+    .arrow { color: var(--faint); font-weight: 400; }
+
+    /* Comments */
+    .comment-box {
+      margin: 10px 0 0; padding: 10px 12px; background: #fffdf6; border: 1px dashed #e6b35c;
+      border-radius: 8px;
+    }
+    .comment-box label {
+      display: block; font-size: 0.75rem; font-weight: 650; color: #8a5a00;
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+    }
+    .comment-box textarea, .approve-comment {
+      width: 100%; min-height: 56px; resize: vertical; font: inherit; font-size: 0.88rem;
+      border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; background: #fff;
+      color: var(--text);
+    }
+    .comment-box textarea:focus, .approve-comment:focus, .status-sel:focus {
+      outline: 2px solid var(--info-border); outline-offset: 1px;
+    }
+    .approve-row td { vertical-align: top; }
+    .status-sel {
+      font: inherit; font-size: 0.85rem; padding: 6px 8px; border-radius: 6px;
+      border: 1px solid var(--line); background: #fff; min-width: 7.5rem;
+    }
+    .status-sel.ok { background: var(--ok-bg); border-color: var(--ok-border); }
+    .status-sel.fix { background: var(--warn-bg); border-color: var(--warn-border); }
+    .toolbar {
+      position: sticky; bottom: 0; z-index: 20; margin: 24px -20px 0; padding: 12px 20px;
+      background: rgba(255,255,255,.92); border-top: 1px solid var(--line);
+      backdrop-filter: blur(8px); display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .toolbar button, .toolbar label.btn {
+      font: inherit; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px;
+      border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer;
+    }
+    .toolbar button.secondary { background: #fff; color: var(--accent); }
+    .toolbar .hint { font-size: 0.8rem; color: var(--muted); flex: 1; min-width: 200px; }
+    .toolbar .saved { font-size: 0.8rem; color: #1f6b3a; }
+    #importFile { display: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="banner">
+      <strong style="display:block;font-size:1.05rem;margin-bottom:8px">Фаза 0 — ревизия для согласования</strong>
+      Только правила и списки. Выплаты до даты X не меняются.
+      Markdown: <code>docs/19-phase0-revision.md</code>
+      · чеклист: <code>docs/18-phase0-decisions.md</code>
+      · репо: <a href="https://github.com/averstech2026/okdesk-score-rules">okdesk-score-rules</a>
+    </div>
+
+    <h1>Что было <span class="arrow">→</span> что станет</h1>
+    <p class="lead">
+      Убираем самооценку баллов «на глаз» (select 5…1000). Вводим нормы: база из типовой проблемы,
+      пакет × N, осложнение <b>+15 или +30</b> (поле-список Okdesk), выезд = <b>только 60</b> (без суммы с typical). Курс: <b>1 балл = 15 ₽</b>.
+    </p>
+
+    <div class="callout warn">
+      <strong>Статус: черновик на утверждение</strong>
+      Граница фазы 0 — согласовать таблицы ниже. Фаза 1 = поля в Okdesk при старых выплатах. Платим по формуле только с даты X (после тени 4–6 недель).
+    </div>
+
+    <div class="callout info">
+      <strong>Комментарии для согласования</strong>
+      Под каждым разделом и у пунктов листа утверждения — поля для ваших заметок.
+      Пишите прямо здесь: всё сохраняется в браузере автоматически.
+      Когда закончите — нажмите <b>«Скачать comments.json»</b> и положите файл в
+      <code>analysis/phase0-comments.json</code> (или пришлите в чат) — агент прочитает и учтёт.
+    </div>
+
+    <nav class="nav">
+      <a href="#model">Баллы / премия</a>
+      <a href="#fields">Поля Okdesk</a>
+      <a href="#complic">Осложнение</a>
+      <a href="#typical">Типовые проблемы</a>
+      <a href="#solution">Способы решения</a>
+      <a href="#mfc">MFC</a>
+      <a href="#streams">Потоки</a>
+      <a href="#visits">Выезды</a>
+      <a href="#keep">Не меняем</a>
+      <a href="#roadmap">Внедрение</a>
+      <a href="#approve">Утверждение</a>
+      <a href="#approve">Комментарии</a>
+    </nav>
+
+    <!-- 1 -->
+    <section id="model">
+      <h2>1. Модель баллов и премии</h2>
+      <div class="card">
+        <div class="card-h">
+          <span>Было → станет</span>
+          <span class="pill warn">ключевое</span>
+        </div>
+        <table>
+          <thead>
+            <tr><th class="topic">Тема</th><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic">Источник баллов</td>
+              <td class="was">Инженер выбирает число в <code>ticket_weight</code> (select <b>5…1000</b>)</td>
+              <td class="will">Баллы считает <b>правило</b>: база из typical + пакет × N + осложнение + выезд, затем ×2 дежурства</td>
+            </tr>
+            <tr>
+              <td class="topic">Ориентиры 5/15/30</td>
+              <td class="was">Неформальные</td>
+              <td class="will">Коды <b>T5=5 / C15=15 / S30=30</b> — единственные базы</td>
+            </tr>
+            <tr>
+              <td class="topic">Тяжёлый кейс</td>
+              <td class="was">Часто «ставлю 60 сам» или недооценка</td>
+              <td class="will">База категории + осложнение <b>+15 или +30</b></td>
+            </tr>
+            <tr>
+              <td class="topic">Пакет (N касс)</td>
+              <td class="was">Одна большая цифра «на глаз» (300–1000)</td>
+              <td class="will"><b>база × N</b>, N видно в заявке</td>
+            </tr>
+            <tr>
+              <td class="topic">Выезд</td>
+              <td class="was">Зоны 30 / 60 / 120</td>
+              <td class="will"><b>Только 60</b> при чекбоксе (typical не суммировать)</td>
+            </tr>
+            <tr>
+              <td class="topic">Курс</td>
+              <td class="was">1 балл = 15 ₽</td>
+              <td class="will">Без изменений</td>
+            </tr>
+            <tr>
+              <td class="topic">Статьи премии</td>
+              <td class="was">Сумма баллов; дежурства отдельным циклом ~1,5 нед</td>
+              <td class="will"><b>Две статьи:</b> обычные / дежурство; дежурство сверять с <b>табелем</b></td>
+            </tr>
+            <tr>
+              <td class="topic">Когда платим</td>
+              <td class="was">—</td>
+              <td class="will">Только с <b>даты X</b> (после тени 4–6 нед)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Формула v1</h3>
+      <pre class="formula">если выезд (departure):
+  баллы = 60 × (2 если дежурство, иначе 1)
+  // typical / N / осложнение НЕ суммируются
+
+иначе:
+  баллы = (база(T5|C15|S30) × N
+           + осложнение только если уровень И непустое описание
+          ) × (2 если дежурство, иначе 1)
+  // уровень без описания → надбавка 0 + красный в отчёте
+
+премия_₽ = сумма_баллов × 15</pre>
+      <div class="comment-box">
+        <label for="c-s1">Комментарий к §1 · Баллы / премия</label>
+        <textarea id="c-s1" data-key="section.1" placeholder="Ваш комментарий к модели баллов и формуле…"></textarea>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="fields">
+      <h2>2. Поля Okdesk</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="topic">Поле</th><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic"><code>ticket_weight</code></td>
+              <td class="was">Свободный select 5…1000 — главный источник премии</td>
+              <td class="will">До даты X — как сейчас; после X — <b>заморозка</b> / служебный расчёт</td>
+            </tr>
+            <tr>
+              <td class="topic"><code>typical</code></td>
+              <td class="was">Обязательный select; много «Другое» / «Доп. настройки»</td>
+              <td class="will">Сжатый каталог + явные раскатки/хвост; источник <b>базы</b></td>
+            </tr>
+            <tr>
+              <td class="topic"><code>solution_method</code></td>
+              <td class="was">Multiselect; «Другое» доминирует</td>
+              <td class="will">Сжатый список вместе с typical; для аудита, <b>не</b> источник баллов v1</td>
+            </tr>
+            <tr>
+              <td class="topic">Осложнение</td>
+              <td class="was"><b>Нет</b></td>
+              <td class="will"><b>Два</b> атрибута: «Значение из списка» (+15/+30) + «Строка»; надбавка только если <b>оба</b>; иначе 0 + красный в отчёте</td>
+            </tr>
+            <tr>
+              <td class="topic"><code>departure</code></td>
+              <td class="was">Checkbox + зона</td>
+              <td class="will">Checkbox → баллы заявки = <b>только 60</b></td>
+            </tr>
+            <tr>
+              <td class="topic"><code>watch</code></td>
+              <td class="was">Checkbox ×2 вручную</td>
+              <td class="will">Остаётся; истина — <b>табель</b>; статья «дежурство» отдельно</td>
+            </tr>
+            <tr>
+              <td class="topic">N объектов</td>
+              <td class="was">Нет поля; объём прячут в баллах</td>
+              <td class="will"><b>Атрибут «Число объектов»</b> + список в описании</td>
+            </tr>
+            <tr>
+              <td class="topic">Нестандарт</td>
+              <td class="was">Нет (дыра = «Другое»)</td>
+              <td class="will">Тип + поле <b>«Суть»</b>; не для MFC-bulk</td>
+            </tr>
+            <tr>
+              <td class="topic">Expert</td>
+              <td class="was">Нет автоправил</td>
+              <td class="will">По-прежнему нет → <b>регламент + аудит</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box">
+        <label for="c-s2">Комментарий к §2 · Поля Okdesk</label>
+        <textarea id="c-s2" data-key="section.2" placeholder="Замечания по полям…"></textarea>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="complic">
+      <h2>3. Осложнение (новый слой)</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="topic">Тема</th><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic">Учёт тяжести</td>
+              <td class="was">Свободная цифра в баллах</td>
+              <td class="will">Поле-список Okdesk: <b>+15</b> или <b>+30</b> (+ строка описания)</td>
+            </tr>
+            <tr>
+              <td class="topic">Почему тяжело</td>
+              <td class="was">Часто не видно</td>
+              <td class="will">Текст описания осложнения</td>
+            </tr>
+            <tr>
+              <td class="topic">Суммирование</td>
+              <td class="was">—</td>
+              <td class="will">Нет: одно значение в списке; на выезде осложнение <b>не влияет</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout info">
+        <strong>Не путать</strong>
+        Осложнение ≠ объём пакета (N) ≠ выезд ≠ дежурство.
+      </div>
+      <div class="comment-box">
+        <label for="c-s3">Комментарий к §3 · Осложнение</label>
+        <textarea id="c-s3" data-key="section.3" placeholder="Замечания по +15 / +30…"></textarea>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="typical">
+      <h2>4. Типовые проблемы (<code>typical</code>)</h2>
+
+      <h3>4.1 Слияния дублей</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="was">Оплата ДУЭТ + отдельно банк/процессинг</td>
+              <td class="will"><b>Оплата не проходит</b> (банк / процессинг / ДУЭТ)</td>
+            </tr>
+            <tr>
+              <td class="was">Вопросы по отчётам + не печатается отчёт (+ сверки)</td>
+              <td class="will"><b>Отчёты и расхождения данных</b></td>
+            </tr>
+            <tr>
+              <td class="was">Карта клиента + лимиты + «клиенты» из Другое</td>
+              <td class="will"><b>Карты питания и клиенты</b></td>
+            </tr>
+            <tr>
+              <td class="was">Отменить чек</td>
+              <td class="will"><b>Корректировка чека</b> (сторно, возврат, удаление, перенос)</td>
+            </tr>
+            <tr>
+              <td class="was">Консультация</td>
+              <td class="will"><b>Консультация / звонок</b></td>
+            </tr>
+            <tr>
+              <td class="was">Не работает ЧЗ</td>
+              <td class="will"><b>ЧЗ / маркировка</b> (оперативный инцидент) ≠ расследование отклонений</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.2 Catch-all и дыры</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="was">«Другое» (~37% всей выборки; дыра жива и без MFC)</td>
+              <td class="will">Убрать после 1–2 нед параллели; остаток → <b>Нестандарт + Суть</b></td>
+            </tr>
+            <tr>
+              <td class="was">«Доп. настройки, сопутствующий сервис…» — широкая свалка</td>
+              <td class="will">Сузить до <b>настроек и доступов</b>; раскатки/запуски/сервисы — отдельно</td>
+            </tr>
+            <tr>
+              <td class="was">НДС, раскатки, запуски, банк-модуль спрятаны в catch-all</td>
+              <td class="will">Явные пункты (таблица ниже)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.3 Новые / явные пункты (раскатки и хвост)</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Typical (станет)</th>
+              <th>База</th>
+              <th>Объём</th>
+              <th>Комментарий</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Массовое обновление / раскатка ПО</td>
+              <td><span class="pill ok">T5</span></td>
+              <td>× N</td>
+              <td>Сейчас часто «на глаз» 100–1000</td>
+            </tr>
+            <tr>
+              <td>Массовое обновление НДС / фиск. параметров</td>
+              <td><span class="pill ok">T5</span></td>
+              <td>× N</td>
+              <td>Кампания конфига, не точечный инцидент</td>
+            </tr>
+            <tr>
+              <td>НДС: точечная ошибка ставки / режима</td>
+              <td>T5 / C15</td>
+              <td>обычно 1</td>
+              <td>Ручной хвост после авто</td>
+            </tr>
+            <tr>
+              <td>Банк / модуль банка (ручная доводка)</td>
+              <td><span class="pill info">C15</span></td>
+              <td>× N при пакете</td>
+              <td>Не путать с «оплата не проходит»</td>
+            </tr>
+            <tr>
+              <td>Запуск / подготовка объекта (или партии)</td>
+              <td>S30 или C15</td>
+              <td>× N</td>
+              <td><b>Одно</b> имя; не плодить «Оборудование / запуск»</td>
+            </tr>
+            <tr>
+              <td>Автообновление: сбой / офлайн / доводка</td>
+              <td>T5 / C15</td>
+              <td>× N</td>
+              <td>После агента — <b>это</b> в премии</td>
+            </tr>
+            <tr>
+              <td>Сопутствующий сервис клиента</td>
+              <td>C15</td>
+              <td>1</td>
+              <td>Work Bright / AllBusiness…</td>
+            </tr>
+            <tr>
+              <td>Настройки и доступы (не блокирует)</td>
+              <td>T5</td>
+              <td>1</td>
+              <td>Остаток бывших «Доп. настроек»</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.4 Автообновление</h3>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="was">Ручные массовые раскатки ПО в премии инженера (~15% фонда баллов)</td>
+              <td class="will">Агент делает успешную раскатку; <b>вне</b> премии инженера</td>
+            </tr>
+            <tr>
+              <td class="was">Фейлы/офлайн смешаны с общей раскаткой</td>
+              <td class="will">Отдельный typical «сбой / офлайн / доводка» × N</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box">
+        <label for="c-s4">Комментарий к §4 · Типовые проблемы</label>
+        <textarea id="c-s4" data-key="section.4" placeholder="Слияния, раскатки, имена пунктов…"></textarea>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="solution">
+      <h2>5. Способы решения (<code>solution_method</code>)</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="was">«Другое» — доминирующий выбор</td>
+              <td class="will">Убрать после параллели; дыры — явными пунктами</td>
+            </tr>
+            <tr>
+              <td class="was">Рестарт ПО + отдельно GriServ</td>
+              <td class="will"><b>Рестарт ПО / сервиса</b> (в т.ч. GriServ)</td>
+            </tr>
+            <tr>
+              <td class="was">Провода + питание</td>
+              <td class="will"><b>Железо: питание / кабели / переподключение</b></td>
+            </tr>
+            <tr>
+              <td class="was">Обмен + SALES3</td>
+              <td class="will"><b>Обмен / перевыгрузка данных</b></td>
+            </tr>
+            <tr>
+              <td class="was">«Проверить бумагу» (мёртвый)</td>
+              <td class="will">Убрать</td>
+            </tr>
+            <tr>
+              <td class="was">«Настройка ПО и доступы» — слишком широко</td>
+              <td class="will"><b>Доступ / код кассира</b> + <b>точечная настройка конфига</b></td>
+            </tr>
+            <tr>
+              <td class="was">Нет: консультация, раскатка, карты, НДС, доводка авто</td>
+              <td class="will">Добавить (см. <code>docs/13</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lead" style="margin-top:8px">Катить <b>вместе</b> с ревизией typical.</p>
+      <div class="comment-box">
+        <label for="c-s5">Комментарий к §5 · Способы решения</label>
+        <textarea id="c-s5" data-key="section.5" placeholder="Замечания по solution…"></textarea>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="mfc">
+      <h2>6. MFC и контуры данных</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="topic">Тема</th><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic">MFC-перенос</td>
+              <td class="was">~33% заявок; typical часто пусто / «Другое»</td>
+              <td class="will">KPI каталога — <b>без MFC-bulk</b></td>
+            </tr>
+            <tr>
+              <td class="topic">Баллы / перенос</td>
+              <td class="was">Пустые техзаявки + компенсирующие пакеты</td>
+              <td class="will"><b>Без компенсатора.</b> Форма массового переноса с выбором typical + solution на каждую заявку</td>
+            </tr>
+            <tr>
+              <td class="topic">Рейтинг</td>
+              <td class="was">Одна куча</td>
+              <td class="will">Натив / MFC / почта·чаты — разные контуры</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box">
+        <label for="c-s6">Комментарий к §6 · MFC</label>
+        <textarea id="c-s6" data-key="section.6" placeholder="Компенсатор, bulk…"></textarea>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="streams">
+      <h2>7. Потоки и справедливость</h2>
+      <div class="card">
+        <div class="card-h">
+          <span>Закладка фазы 0</span>
+          <span class="pill info">списки дозаполнить</span>
+        </div>
+        <table>
+          <thead>
+            <tr><th class="topic">Тема</th><th class="was">Было</th><th class="will">Станет (цель)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic">Конвейер vs пул</td>
+              <td class="was">Одна сумма баллов</td>
+              <td class="will">Сегменты сравнения (список клиентов — утвердить)</td>
+            </tr>
+            <tr>
+              <td class="topic">ЧЗ vs расследование</td>
+              <td class="was">Часто одна корзина</td>
+              <td class="will">Развести typical; полный вес — <b>целевым</b> / после передачи</td>
+            </tr>
+            <tr>
+              <td class="topic">SLA группы</td>
+              <td class="was">Может бить человека</td>
+              <td class="will">Группа ≠ человек; лично — после взятия</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box">
+        <label for="c-s7">Комментарий к §7 · Потоки</label>
+        <textarea id="c-s7" data-key="section.7" placeholder="Конвейер, целевые, SLA…"></textarea>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="visits">
+      <h2>8. Выезды и дежурство</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th class="topic">Тема</th><th class="was">Было</th><th class="will">Станет</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="topic">Баллы выезда</td>
+              <td class="was">Мск 30 / ближнее 60 / дальнее 120; «крупная» сумма</td>
+              <td class="will"><b>Только 60</b> при <code>departure</code></td>
+            </tr>
+            <tr>
+              <td class="topic">Typical при выезде</td>
+              <td class="was">Могли суммировать с выездом</td>
+              <td class="will"><b>Не входят</b> в формулу баллов (только учёт)</td>
+            </tr>
+            <tr>
+              <td class="topic">Дежурство ×2</td>
+              <td class="was">Чекбокс <code>watch</code>, риск рассинхрона</td>
+              <td class="will">×2 к 60 → <b>120</b> по табелю; две статьи в отчёте</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box">
+        <label for="c-s8">Комментарий к §8 · Выезды и дежурство</label>
+        <textarea id="c-s8" data-key="section.8" placeholder="+60, табель…"></textarea>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="keep">
+      <h2>9. Что не меняем в фазе 0–1</h2>
+      <div class="callout ok">
+        <ul class="keep">
+          <li>Курс <b>15 ₽ / балл</b></li>
+          <li>Идея баллов и премии за закрытые заявки</li>
+          <li>Коэффициент дежурства ×2</li>
+          <li>Текущие выплаты до даты X (фаза 1–2 = каталоги + тень)</li>
+        </ul>
+      </div>
+      <div class="comment-box">
+        <label for="c-s9">Комментарий к §9 · Что не меняем</label>
+        <textarea id="c-s9" data-key="section.9" placeholder="Если что-то из «не меняем» всё же меняем…"></textarea>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="roadmap">
+      <h2>10. Порядок внедрения</h2>
+      <div class="phases">
+        <div class="phase on">
+          <div class="n">Сейчас</div>
+          <div class="t">Фаза 0</div>
+          <div class="d">Утвердить «было / станет»</div>
+        </div>
+        <div class="phase">
+          <div class="n">Далее</div>
+          <div class="t">Фаза 1</div>
+          <div class="d">Поля и каталоги в Okdesk; выплаты ещё старые</div>
+        </div>
+        <div class="phase">
+          <div class="n">4–6 нед</div>
+          <div class="t">Фаза 2</div>
+          <div class="d">Теневой расчёт факт vs норма</div>
+        </div>
+        <div class="phase">
+          <div class="n">Дата X</div>
+          <div class="t">Фаза 3</div>
+          <div class="d">Платим по формуле</div>
+        </div>
+        <div class="phase">
+          <div class="n">Дальше</div>
+          <div class="t">Фаза 4+</div>
+          <div class="d">Сегменты, расследования, авто, аудит</div>
+        </div>
+      </div>
+      <div class="comment-box">
+        <label for="c-s10">Комментарий к §10 · Порядок внедрения</label>
+        <textarea id="c-s10" data-key="section.10" placeholder="Сроки, дата X…"></textarea>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section id="approve">
+      <h2>11. Лист утверждения</h2>
+      <p class="lead">По каждому пункту: статус и комментарий. Статусы и тексты тоже попадут в экспорт.</p>
+      <div class="card">
+        <table class="approve">
+          <thead>
+            <tr><th style="width:2.5rem">#</th><th>Решение</th><th style="width:8rem">Статус</th><th>Комментарий</th></tr>
+          </thead>
+          <tbody>
+            <tr class="approve-row">
+              <td>1</td>
+              <td>Осложнение: 2 поля (список +15/+30 + строка); надбавка только если оба; пустое описание → 0 + красный</td>
+              <td><select class="status-sel" data-key="approve.1.status" aria-label="Статус 1"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.1.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>2</td>
+              <td>Выезд: <b>только 60</b>, без суммы с typical / осложнением</td>
+              <td><select class="status-sel" data-key="approve.2.status" aria-label="Статус 2"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.2.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>3</td>
+              <td>Базы T5 / C15 / S30 + пакет × N</td>
+              <td><select class="status-sel" data-key="approve.3.status" aria-label="Статус 3"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.3.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>4</td>
+              <td>N = атрибут + список в описании</td>
+              <td><select class="status-sel" data-key="approve.4.status" aria-label="Статус 4"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.4.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>5</td>
+              <td>Раскатка ПО / НДС-кампания → база T5</td>
+              <td><select class="status-sel" data-key="approve.5.status" aria-label="Статус 5"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.5.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>6</td>
+              <td>Одно имя «Запуск / подготовка…»</td>
+              <td><select class="status-sel" data-key="approve.6.status" aria-label="Статус 6"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.6.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>7</td>
+              <td>Успешная авто-раскатка вне премии инженера</td>
+              <td><select class="status-sel" data-key="approve.7.status" aria-label="Статус 7"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.7.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>8</td>
+              <td>Слияния typical + новые пункты §4</td>
+              <td><select class="status-sel" data-key="approve.8.status" aria-label="Статус 8"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.8.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>9</td>
+              <td>Ревизия solution §5</td>
+              <td><select class="status-sel" data-key="approve.9.status" aria-label="Статус 9"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.9.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+            <tr class="approve-row">
+              <td>10</td>
+              <td>MFC: без пустых техзаявок; форма переноса с typical/solution (<b>без</b> компенсатора)</td>
+              <td><select class="status-sel" data-key="approve.10.status" aria-label="Статус 10"><option value="">—</option><option value="да">да</option><option value="правим">правим</option><option value="позже">позже</option></select></td>
+              <td><textarea class="approve-comment" data-key="approve.10.comment" rows="2" placeholder="Комментарий…"></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comment-box" style="margin-top:12px">
+        <label for="c-general">Общий комментарий / подпись</label>
+        <textarea id="c-general" data-key="general" placeholder="ФИО, дата, общие замечания…"></textarea>
+      </div>
+    </section>
+
+    <section id="links">
+      <h2>Ссылки</h2>
+      <div class="card links">
+        <table>
+          <tbody>
+            <tr><td>Markdown ревизии</td><td><code>docs/19-phase0-revision.md</code></td></tr>
+            <tr><td>Лист решений</td><td><code>docs/18-phase0-decisions.md</code></td></tr>
+            <tr><td>Осложнение</td><td><code>docs/02-complications.md</code></td></tr>
+            <tr><td>Typical / solution</td><td><code>docs/10</code>, <code>docs/13</code></td></tr>
+            <tr><td>Общая HTML-сводка</td><td><a href="typical-catalog.html">typical-catalog.html</a></td></tr>
+            <tr><td>Симуляция премий</td><td><a href="bonus-comparison.html">bonus-comparison.html</a></td></tr>
+            <tr><td>Массовые обновления</td><td><a href="mass-update-auto.html">mass-update-auto.html</a></td></tr>
+            <tr><td>Файл комментариев (после экспорта)</td><td><code>analysis/phase0-comments.json</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      okdesk-score-rules · фаза 0 · analysis/phase0-revision.html · источник: docs/19-phase0-revision.md
+    </footer>
+
+    <div class="toolbar">
+      <button type="button" id="btnExportJson">Скачать comments.json</button>
+      <button type="button" id="btnExportMd" class="secondary">Скачать .md</button>
+      <button type="button" id="btnCopy" class="secondary">Копировать в буфер</button>
+      <label class="btn secondary" for="importFile" style="display:inline-block;background:#fff;color:var(--accent);border:1px solid var(--accent);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem">Загрузить JSON</label>
+      <input type="file" id="importFile" accept="application/json,.json" />
+      <span class="hint">Сохраните JSON как <code>analysis/phase0-comments.json</code> и напишите в чат — прочитаю.</span>
+      <span class="saved" id="saveState"></span>
+    </div>
+  </div>
+  <script>
+  (function () {
+    const STORE = "okdesk-phase0-comments-v1";
+    const fields = () => document.querySelectorAll("[data-key]");
+    const saveState = document.getElementById("saveState");
+
+    function collect() {
+      const data = { saved_at: new Date().toISOString(), comments: {} };
+      fields().forEach((el) => {
+        data.comments[el.dataset.key] = el.value;
+      });
+      return data;
+    }
+
+    function apply(data) {
+      const map = (data && data.comments) || data || {};
+      fields().forEach((el) => {
+        if (map[el.dataset.key] != null) el.value = map[el.dataset.key];
+        if (el.classList.contains("status-sel")) paintStatus(el);
+      });
+    }
+
+    function persist() {
+      const data = collect();
+      localStorage.setItem(STORE, JSON.stringify(data));
+      saveState.textContent = "сохранено " + new Date().toLocaleTimeString("ru-RU");
+    }
+
+    function paintStatus(sel) {
+      sel.classList.remove("ok", "fix");
+      if (sel.value === "да") sel.classList.add("ok");
+      if (sel.value === "правим") sel.classList.add("fix");
+    }
+
+    function toMarkdown(data) {
+      const c = data.comments || {};
+      const lines = ["# Комментарии к фазе 0", "", "Сохранено: " + (data.saved_at || ""), ""];
+      const sections = [
+        ["1. Баллы / премия", "section.1"],
+        ["2. Поля Okdesk", "section.2"],
+        ["3. Осложнение", "section.3"],
+        ["4. Типовые проблемы", "section.4"],
+        ["5. Способы решения", "section.5"],
+        ["6. MFC", "section.6"],
+        ["7. Потоки", "section.7"],
+        ["8. Выезды и дежурство", "section.8"],
+        ["9. Что не меняем", "section.9"],
+        ["10. Порядок внедрения", "section.10"],
+      ];
+      lines.push("## По разделам", "");
+      sections.forEach(([title, key]) => {
+        const t = (c[key] || "").trim();
+        if (t) {
+          lines.push("### " + title, "", t, "");
+        }
+      });
+      lines.push("## Лист утверждения", "");
+      for (let i = 1; i <= 10; i++) {
+        const st = (c["approve." + i + ".status"] || "—").trim();
+        const cm = (c["approve." + i + ".comment"] || "").trim();
+        if (st !== "—" && st !== "" || cm) {
+          lines.push("- **" + i + "** [" + (st || "—") + "]" + (cm ? ": " + cm : ""));
+        }
+      }
+      const g = (c.general || "").trim();
+      if (g) {
+        lines.push("", "## Общее", "", g, "");
+      }
+      return lines.join("\n");
+    }
+
+    function download(filename, text, mime) {
+      const blob = new Blob([text], { type: mime });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (raw) apply(JSON.parse(raw));
+    } catch (e) {}
+
+    fields().forEach((el) => {
+      el.addEventListener("input", () => {
+        if (el.classList.contains("status-sel")) paintStatus(el);
+        persist();
+      });
+      el.addEventListener("change", () => {
+        if (el.classList.contains("status-sel")) paintStatus(el);
+        persist();
+      });
+    });
+
+    document.getElementById("btnExportJson").onclick = () => {
+      const data = collect();
+      download("phase0-comments.json", JSON.stringify(data, null, 2), "application/json");
+    };
+    document.getElementById("btnExportMd").onclick = () => {
+      const data = collect();
+      download("phase0-comments.md", toMarkdown(data), "text/markdown");
+    };
+    document.getElementById("btnCopy").onclick = async () => {
+      const data = collect();
+      const text = toMarkdown(data);
+      try {
+        await navigator.clipboard.writeText(text);
+        saveState.textContent = "скопировано в буфер";
+      } catch (e) {
+        saveState.textContent = "не удалось скопировать — скачайте .md";
+      }
+    };
+    document.getElementById("importFile").onchange = (ev) => {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          apply(JSON.parse(reader.result));
+          persist();
+          saveState.textContent = "загружено из файла";
+        } catch (e) {
+          saveState.textContent = "ошибка JSON";
+        }
+      };
+      reader.readAsText(file);
+      ev.target.value = "";
+    };
+  })();
+  </script>
+</body>
+</html>

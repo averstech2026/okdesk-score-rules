@@ -1,0 +1,166 @@
+{
+  "rub_per_point": 15,
+  "meta": {
+    "since": "23-01-2026 00:00",
+    "until": "22-07-2026 23:59",
+    "months": 6,
+    "list_count": 19640,
+    "fetched_at": "2026-07-22T23:11:39"
+  },
+  "all_tickets": 18917,
+  "all_scored_points": 196395,
+  "mass_tickets": 298,
+  "mass_points": 30105,
+  "mass_rub": 451575,
+  "high_ge_100": {
+    "n": 123,
+    "points": 25170,
+    "rub": 377550
+  },
+  "buckets": {
+    "auto_kill": {
+      "n": 83,
+      "points": 12785,
+      "rub": 191775
+    },
+    "auto_likely": {
+      "n": 178,
+      "points": 13160,
+      "rub": 197400
+    },
+    "residual_special": {
+      "n": 29,
+      "points": 3240,
+      "rub": 48600
+    },
+    "residual_launch": {
+      "n": 8,
+      "points": 920,
+      "rub": 13800
+    }
+  },
+  "scenarios": [
+    {
+      "name": "Оптимистичный",
+      "note": "стандартные раскатки почти уходят; редкие сбои/офлайн-точки",
+      "gone_n": 246,
+      "gone_pts": 24598,
+      "gone_rub": 368970,
+      "remain_n": 52,
+      "remain_pts": 5507,
+      "remain_rub": 82605,
+      "share_pts_gone": 12.524758776954608,
+      "share_tickets_gone": 1.3004176137865413,
+      "mass_shrink_pct": 82.5503355704698
+    },
+    {
+      "name": "Базовый",
+      "note": "большинство ПО/спулеров/лого авто; часть ручных доводок остаётся",
+      "gone_n": 203,
+      "gone_pts": 20291,
+      "gone_rub": 304365,
+      "remain_n": 95,
+      "remain_pts": 9814,
+      "remain_rub": 147210,
+      "share_pts_gone": 10.331729422846815,
+      "share_tickets_gone": 1.0731088438970238,
+      "mass_shrink_pct": 68.12080536912751
+    },
+    {
+      "name": "Консервативный",
+      "note": "авто только на типовых агентах; много кастомных пакетов вручную",
+      "gone_n": 160,
+      "gone_pts": 15983,
+      "gone_rub": 239745,
+      "remain_n": 138,
+      "remain_pts": 14122,
+      "remain_rub": 211830,
+      "share_pts_gone": 8.138190890806792,
+      "share_tickets_gone": 0.8458000740075065,
+      "mass_shrink_pct": 53.691275167785236
+    }
+  ],
+  "by_assignee": {
+    "Ососков Евгений Петрович": {
+      "n": 140,
+      "pts": 12130,
+      "auto_n": 123,
+      "auto_pts": 10460,
+      "rub": 181950,
+      "auto_rub": 156900,
+      "share_of_person_points_pct": 19.88035728919118
+    },
+    "Гулумбетов Павел": {
+      "n": 11,
+      "pts": 95,
+      "auto_n": 11,
+      "auto_pts": 95,
+      "rub": 1425,
+      "auto_rub": 1425,
+      "share_of_person_points_pct": 1.0626398210290828
+    },
+    "Ручинскас Андрей Владимирович": {
+      "n": 12,
+      "pts": 2310,
+      "auto_n": 12,
+      "auto_pts": 2310,
+      "rub": 34650,
+      "auto_rub": 34650,
+      "share_of_person_points_pct": 15.202369200394866
+    },
+    "Павлов Андрей Андреевич": {
+      "n": 53,
+      "pts": 6585,
+      "auto_n": 40,
+      "auto_pts": 4540,
+      "rub": 98775,
+      "auto_rub": 68100,
+      "share_of_person_points_pct": 34.08385093167702
+    },
+    "Конарев Михаил Михайлович": {
+      "n": 25,
+      "pts": 1950,
+      "auto_n": 24,
+      "auto_pts": 1920,
+      "rub": 29250,
+      "auto_rub": 28800,
+      "share_of_person_points_pct": 11.66267942583732
+    },
+    "Кирюшкин Андрей Дмитриевич": {
+      "n": 16,
+      "pts": 1510,
+      "auto_n": 11,
+      "auto_pts": 1105,
+      "rub": 22650,
+      "auto_rub": 16575,
+      "share_of_person_points_pct": 10.934105720492397
+    },
+    "Петров Артем Евгеньевич": {
+      "n": 37,
+      "pts": 5490,
+      "auto_n": 37,
+      "auto_pts": 5490,
+      "rub": 82350,
+      "auto_rub": 82350,
+      "share_of_person_points_pct": 15.391084945332212
+    },
+    "Сушков Павел": {
+      "n": 2,
+      "pts": 20,
+      "auto_n": 1,
+      "auto_pts": 10,
+      "rub": 300,
+      "auto_rub": 150,
+      "share_of_person_points_pct": 0.11830819284235433
+    },
+    "Синкин Глеб": {
+      "n": 2,
+      "pts": 15,
+      "auto_n": 2,
+      "auto_pts": 15,
+      "rub": 225,
+      "auto_rub": 225,
+      "share_of_person_points_pct": 0.17006802721088435
+    }
+  }
+}

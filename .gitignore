@@ -13,3 +13,5 @@ __pycache__/
 *.pyc
 
 data-okdesk-*.tar.gz
+._data
+._*
