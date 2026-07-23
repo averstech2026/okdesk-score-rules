@@ -39,8 +39,16 @@
 | `docs/00`…`08` | Принципы, баллы, выезды, дежурство, потоки, SLA, премия, аудит |
 | `docs/09`…`13` | Выгрузка, typical, контуры, Нестандарт, solution |
 | `docs/15-balance-conveyor-vs-investigations.md` | Баланс конвейер vs расследования |
+| [docs/23-mfc-fast-create.md](23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём, объекты, парсер URL/текста) |
 | `scripts/fetch_issues.py` / `analyze_scores.py` | Выгрузка и отчёты |
 | `.env` + `data/` | Локально (не в git); архив `data-okdesk-*.tar.gz` при переносе вручную |
+
+## Продолжить: MFC fast create
+
+Отдельный операционный трек (не баллы): веб-страница для Артёма — вставка дневного списка (ссылки `help.ucg.ru` + короткие заголовки) → объект MFC + typical + solution → одной кнопкой создать и техзакрыть в Okdesk. Менеджера из цепочки убираем.
+
+Полное ТЗ и контекст договорённостей: **[docs/23-mfc-fast-create.md](23-mfc-fast-create.md)**.  
+В Cursor: «продолжи MFC fast create по docs/23».
 
 ## Ограничения тарифа Okdesk
 

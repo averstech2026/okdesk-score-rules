@@ -31,6 +31,7 @@
 | [docs/13-solution-catalog-proposal.md](docs/13-solution-catalog-proposal.md) | Ревизия справочника способов решения |
 | [docs/14-handoff.md](docs/14-handoff.md) | Как продолжить без истории чата |
 | [docs/15-balance-conveyor-vs-investigations.md](docs/15-balance-conveyor-vs-investigations.md) | Баланс конвейер vs расследования, анти-перехват |
+| [docs/23-mfc-fast-create.md](docs/23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём; объекты; парсер URL/текста) |
 | [docs/open-questions.md](docs/open-questions.md) | Открытые вопросы для согласования |
 | [analysis/report.md](analysis/report.md) | Сводный отчёт по последней выгрузке |
 | [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |
