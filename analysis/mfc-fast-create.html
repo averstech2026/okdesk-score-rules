@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MFC fast create — превью формы</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --panel: #ffffff;
+      --ink: #1a2332;
+      --muted: #5c6b7a;
+      --line: #d8dee6;
+      --accent: #1f6feb;
+      --danger: #b42318;
+      --ok: #067647;
+      --navy: #1f4b7a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(165deg, #e8eef5 0%, var(--bg) 40%, #ebe6df 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 24px clamp(16px, 3vw, 40px) 48px;
+    }
+    .banner {
+      background: var(--navy);
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .banner a { color: #cfe3ff; }
+    .banner code { background: rgba(255,255,255,.14); padding: 1px 6px; border-radius: 4px; }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 4px; font-size: 1.6rem; letter-spacing: -0.02em; }
+    .sub, .hint, .meta { color: var(--muted); font-size: 0.92rem; margin: 0; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 0 rgba(26, 35, 50, 0.04);
+    }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    label.inline { display: inline-flex; align-items: center; gap: 6px; margin: 0; color: var(--ink); }
+    label.grow { flex: 1; min-width: 200px; }
+    textarea, input[type="text"], select {
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fafbfc;
+    }
+    textarea { resize: vertical; min-height: 140px; }
+    .row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+    .row.actions { margin-top: 12px; }
+    button {
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 14px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--ink);
+    }
+    button:hover { filter: brightness(0.98); }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+    button.ghost { background: transparent; }
+    .table-wrap { overflow-x: auto; padding: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; vertical-align: top; text-align: left; }
+    th { background: #f7f9fb; color: var(--muted); font-weight: 600; position: sticky; top: 0; white-space: nowrap; }
+    td.theme { max-width: 160px; word-break: break-word; }
+    tr.missing { background: #fff6f4; }
+    .obj-wrap { min-width: 160px; }
+    .obj-search { margin-bottom: 4px; }
+    input.n-input { width: 3.5rem; padding: 8px; }
+    textarea.desc, textarea.comp-desc {
+      width: 100%;
+      min-width: 120px;
+      min-height: 48px;
+      resize: vertical;
+      font: inherit;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: #fafbfc;
+    }
+    .candidates { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+    .candidates button { padding: 2px 6px; margin: 2px 2px 0 0; font-size: 0.72rem; }
+    a.ext { color: var(--accent); }
+    #results { white-space: pre-wrap; font-size: 0.85rem; margin: 0; max-height: 280px; overflow: auto; background: #f7f9fb; padding: 12px; border-radius: 8px; }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef5fb;
+      color: var(--navy);
+      border: 1px solid #c5daf0;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <strong>Превью UI</strong> — локальный макет без записи в Okdesk.
+    Парсер и поля как в <code>tools/mfc-fast-create/</code>.
+    Живой прогон: <code>cd tools/mfc-fast-create && uvicorn app:app --port 8787</code> →
+    <a href="http://127.0.0.1:8787/">http://127.0.0.1:8787/</a>.
+    ТЗ: <code>docs/23-mfc-fast-create.md</code>.
+  </div>
+
+  <header class="top">
+    <div>
+      <h1>MFC fast create</h1>
+      <p class="sub">Список → объект + typical + способ + N / осложнение → создать и закрыть</p>
+    </div>
+    <div class="meta">company 9 · assignee 5 · status completed · <span class="badge">mock</span></div>
+  </header>
+
+  <section class="panel">
+    <label for="paste">Список за день (URL IntraService / UCG и короткие строки)</label>
+    <textarea id="paste">https://help.ucg.ru/Task/View/136419
+https://help.ucg.ru/Task/View/136416
+Сбер. Оплата
+https://help.ucg.ru/Task/View/136425
+НК НПЗ. Чек
+ПП12. Закрыть смену
+ОМК. Клиенты
+Маг 15\1. Закрыть смену</textarea>
+    <div class="row actions">
+      <button type="button" id="btn-parse" class="primary">Разобрать</button>
+      <label class="inline"><input type="checkbox" id="dry-run" checked disabled /> dry-run (в превью всегда)</label>
+      <label class="inline" title="В превью — демо-заголовки; в живом приложении нужен INTRASERVICE_*">
+        <input type="checkbox" id="enrich" /> подтянуть title (демо)
+      </label>
+    </div>
+  </section>
+
+  <section class="panel" id="bulk-panel" hidden>
+    <div class="row wrap">
+      <label class="grow">Общий комментарий пачки
+        <input type="text" id="batch-comment" placeholder="опционально" />
+      </label>
+      <label>N всем
+        <input type="text" id="bulk-n" placeholder="12" style="width:5rem" />
+      </label>
+      <button type="button" id="btn-apply-n" class="ghost">N</button>
+      <label>Способ всем
+        <select id="bulk-solution"></select>
+      </label>
+      <button type="button" id="btn-apply-solution" class="ghost">Способ</button>
+      <button type="button" id="btn-filter-missing" class="ghost">Только без объекта</button>
+      <button type="button" id="btn-select-all" class="ghost">Выбрать все</button>
+      <button type="button" id="btn-submit" class="danger">Создать и закрыть (mock)</button>
+    </div>
+    <p class="hint" id="stats"></p>
+    <p class="hint">Осложнение +15/+30 только вместе с описанием осложнения. При N&gt;1 список объектов — в описании заявки.</p>
+  </section>
+
+  <section class="panel table-wrap" id="table-panel" hidden>
+    <table id="grid">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Тема</th>
+          <th>Объект</th>
+          <th>Typical</th>
+          <th>Способ</th>
+          <th>N</th>
+          <th>Осложнение</th>
+          <th>Описание осложнения</th>
+          <th>Описание</th>
+          <th>UCG</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="panel" id="results-panel" hidden>
+    <h2 style="margin:0 0 8px;font-size:1.05rem">Результат (mock payload)</h2>
+    <pre id="results"></pre>
+  </section>
+
+  <script>
+const CATALOGS = {
+  typical: [
+    "Не закрывается смена",
+    "Не печатаются, не закрываются чеки (сбой ФР, сумма оплат меньше/больше чека)",
+    "Не работает касса, перезапуск на кассе",
+    "Отменить чек (сторнирование или возврат средств)",
+    "Доп. настройки, сопутствующий сервис, не блокирующий работу",
+    "Не уходят чеки в ОФД",
+    "Консультация",
+    "Не проходит карта клиента",
+    "Не работает ЧЗ",
+    "Нет меню, нет товара на кассе",
+    "Не проходит оплата (по банку или процессинг)",
+    "Не работает сканер, весы",
+    "Ошибка на кассе (ошибка лицензии, попытка работы задним числом и др)",
+    "Подключение и настройка оборудования",
+    "Не печатается отчет",
+    "Вопросы по отчетам",
+  ],
+  solution_method: [
+    "Рестарт ПО и/или кассового терминала (спулеры, фронт, iis)",
+    "Устранение расхождения в конце смены, принудительное закрытие",
+    "Отменить чек, сторнировать, возврат средств",
+    "Выключить/включить оборудование по питанию (ФР, сканер, считка, касса, банк терминал)",
+    "Вызвать обмен",
+    "Самовосстановление",
+    "Сетевая проблема или проблема на стороне внешнего сервиса (нет подключения к локальной сети/интернет, к серверу ЧЗ, ftp, процессингу)",
+    "Проблема БД, ручная корректировка чека или работы системы",
+    "Проверить провода и подключение, переподключить в тот же порт",
+    "Восстановление настроек кассы (точное время, параметры конфиг файла)",
+    "Настройка ПО и предоставление доступов (права пользователя, конфиг, доступ к ФС/БД)",
+  ],
+  complication_levels: ["+15", "+30"],
+  typical_aliases: {
+    "закрыть смену": "Не закрывается смена",
+    "смена": "Не закрывается смена",
+    "чек": "Не печатаются, не закрываются чеки (сбой ФР, сумма оплат меньше/больше чека)",
+    "чеки": "Не печатаются, не закрываются чеки (сбой ФР, сумма оплат меньше/больше чека)",
+    "оплата": "Не проходит оплата (по банку или процессинг)",
+    "сбер": "Не проходит оплата (по банку или процессинг)",
+    "клиент": "Не проходит карта клиента",
+    "клиенты": "Не проходит карта клиента",
+    "чз": "Не работает ЧЗ",
+  },
+};
+
+const MOCK_OBJECTS = [
+  { id: 101, name: "ПП12" },
+  { id: 102, name: "НК НПЗ" },
+  { id: 103, name: "Сбер" },
+  { id: 104, name: "ОМК" },
+  { id: 105, name: "Маг 15/1" },
+  { id: 106, name: "Маг 15\\1" },
+  { id: 107, name: "Аскона" },
+  { id: 108, name: "Биокад центральная" },
+];
+
+const DEMO_TITLES = {
+  "136419": "Смена не закрывается — ПП12",
+  "136416": "Ошибка печати чека",
+  "136425": "Клиенты не проходят",
+};
+
+const URL_RE = /https?:\/\/help\.ucg\.ru\/Task\/(?:View|Edit)\/(\d+)/i;
+
+function norm(s) {
+  return (s || "").toLowerCase().replace(/ё/g, "е").replace(/\\/g, "/").replace(/[\s_\-–—]+/g, " ").trim();
+}
+
+function suggestTypical(hint) {
+  if (!hint) return "";
+  const h = norm(hint);
+  for (const [k, v] of Object.entries(CATALOGS.typical_aliases)) {
+    if (h.includes(norm(k)) || norm(k).includes(h)) return v;
+  }
+  return CATALOGS.typical.find((t) => norm(t).includes(h)) || "";
+}
+
+function matchObjects(q) {
+  const nq = norm(q);
+  if (!nq) return [];
+  return MOCK_OBJECTS.filter((o) => norm(o.name).includes(nq) || nq.includes(norm(o.name))).slice(0, 5);
+}
+
+function parseList(raw, enrich) {
+  const rows = [];
+  for (let line of (raw || "").split(/\n/)) {
+    line = line.trim();
+    if (!line) continue;
+    const md = line.match(/^\[([^\]]*)\]\((https?:\/\/[^)]+)\)$/);
+    if (md) line = md[2];
+    line = line.replace(/^<|>$/g, "");
+    const m = line.match(URL_RE);
+    if (m) {
+      const eid = m[1];
+      const url = `https://help.ucg.ru/Task/View/${eid}`;
+      const rest = line.replace(URL_RE, "").trim().replace(/^[\-–—|]+/, "").trim();
+      if (!rest) {
+        rows.push({
+          source_type: "url",
+          title: enrich && DEMO_TITLES[eid] ? DEMO_TITLES[eid] : `UCG #${eid}`,
+          external_url: url,
+          external_id: eid,
+          description: enrich && DEMO_TITLES[eid] ? `Демо-описание для #${eid}` : "",
+        });
+        continue;
+      }
+      const [left, ...rightParts] = rest.split(".");
+      const right = rightParts.join(".").trim();
+      rows.push({
+        source_type: "text",
+        title: rest,
+        external_url: url,
+        external_id: eid,
+        object_hint: right ? left.trim() : null,
+        typical_hint: right || rest,
+      });
+      continue;
+    }
+    if (line.includes(".")) {
+      const [left, ...rightParts] = line.split(".");
+      const right = rightParts.join(".").trim();
+      if (left.trim() && right) {
+        rows.push({
+          source_type: "text",
+          title: line,
+          object_hint: left.trim(),
+          typical_hint: right,
+        });
+        continue;
+      }
+    }
+    rows.push({ source_type: "text", title: line, typical_hint: line });
+  }
+  return rows;
+}
+
+const state = { rows: [], filterMissing: false };
+
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "className") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k === "value") node.value = v;
+    else if (typeof v === "function") node.addEventListener(k.replace(/^on/, "").toLowerCase(), v);
+    else if (v !== null && v !== undefined) node.setAttribute(k, v);
+  }
+  for (const c of children) node.append(c);
+  return node;
+}
+
+function fillSelect(select, options, selected) {
+  select.innerHTML = "";
+  select.append(el("option", { value: "", text: "— выбрать —" }));
+  for (const opt of options) {
+    const o = el("option", { value: opt, text: opt.length > 70 ? opt.slice(0, 68) + "…" : opt });
+    o.title = opt;
+    if (opt === selected) o.selected = true;
+    select.append(o);
+  }
+}
+
+function complicationOk(r) {
+  const level = (r.complication_level || "").trim();
+  const text = (r.complication || "").trim();
+  if (!level && !text) return true;
+  return !!(level && text);
+}
+
+function visibleRows() {
+  if (!state.filterMissing) return state.rows;
+  return state.rows.filter((r) => !r.object_id);
+}
+
+function updateStats() {
+  const visible = visibleRows();
+  const selected = visible.filter((r) => r.selected);
+  const ready = selected.filter((r) => r.object_id && r.typical && r.solution && complicationOk(r));
+  document.getElementById("stats").textContent =
+    `Строк: ${state.rows.length} · видимых: ${visible.length} · отмечено: ${selected.length} · готово: ${ready.length}`;
+}
+
+function renderTable() {
+  const tbody = document.querySelector("#grid tbody");
+  tbody.innerHTML = "";
+  for (const row of visibleRows()) {
+    const tr = el("tr", { className: row.object_id ? "" : "missing" });
+    const cb = el("input", { type: "checkbox" });
+    cb.checked = row.selected;
+    cb.addEventListener("change", () => { row.selected = cb.checked; updateStats(); });
+
+    const objWrap = el("div", { className: "obj-wrap" });
+    const objSearch = el("input", {
+      type: "text",
+      className: "obj-search",
+      placeholder: "поиск…",
+      value: row.object_query || row.object_hint || "",
+    });
+    const objSelect = el("select");
+    const cand = el("div", { className: "candidates" });
+    function setObject(id, name) {
+      row.object_id = id;
+      row.object_name = name;
+      objSelect.innerHTML = "";
+      objSelect.append(el("option", { value: String(id), text: name }));
+      objSelect.value = String(id);
+      tr.classList.toggle("missing", false);
+      updateStats();
+    }
+    function refreshCands(q) {
+      cand.innerHTML = "";
+      objSelect.innerHTML = "";
+      objSelect.append(el("option", { value: "", text: "— объект —" }));
+      for (const o of matchObjects(q)) {
+        objSelect.append(el("option", { value: String(o.id), text: o.name }));
+        cand.append(el("button", { type: "button", text: o.name, onClick: () => setObject(o.id, o.name) }));
+      }
+      if (row.object_id) {
+        if (![...objSelect.options].some((o) => o.value === String(row.object_id))) {
+          objSelect.append(el("option", { value: String(row.object_id), text: row.object_name }));
+        }
+        objSelect.value = String(row.object_id);
+      }
+    }
+    objSearch.addEventListener("input", () => {
+      row.object_query = objSearch.value;
+      refreshCands(objSearch.value);
+    });
+    objSelect.addEventListener("change", () => {
+      const opt = objSelect.selectedOptions[0];
+      row.object_id = opt && opt.value ? Number(opt.value) : null;
+      row.object_name = opt && opt.value ? opt.textContent : null;
+      tr.classList.toggle("missing", !row.object_id);
+      updateStats();
+    });
+    if (row.object_hint) {
+      const hits = matchObjects(row.object_hint);
+      if (hits[0] && !row.object_id) setObject(hits[0].id, hits[0].name);
+      else refreshCands(row.object_hint);
+    } else refreshCands("");
+
+    const typ = el("select");
+    fillSelect(typ, CATALOGS.typical, row.typical || "");
+    typ.addEventListener("change", () => { row.typical = typ.value; updateStats(); });
+    row.typical = typ.value;
+
+    const sol = el("select");
+    fillSelect(sol, CATALOGS.solution_method, row.solution || "");
+    sol.addEventListener("change", () => { row.solution = sol.value; updateStats(); });
+    row.solution = sol.value;
+
+    const nInput = el("input", { type: "text", className: "n-input", placeholder: "1", value: row.object_count || "" });
+    nInput.addEventListener("input", () => { row.object_count = nInput.value.trim(); });
+
+    const level = el("select");
+    fillSelect(level, CATALOGS.complication_levels, row.complication_level || "");
+    level.addEventListener("change", () => { row.complication_level = level.value; updateStats(); });
+
+    const compDesc = el("textarea", { className: "comp-desc", placeholder: "почему +15/+30" });
+    compDesc.value = row.complication || "";
+    compDesc.addEventListener("input", () => { row.complication = compDesc.value; updateStats(); });
+
+    const desc = el("textarea", { className: "desc", placeholder: "описание; при N>1 — список объектов" });
+    desc.value = row.description || "";
+    desc.addEventListener("input", () => { row.description = desc.value; });
+
+    const link = row.external_url
+      ? el("td", {}, [el("a", { className: "ext", href: row.external_url, target: "_blank", rel: "noopener", text: row.external_id || "ссылка" })])
+      : el("td", { text: "—" });
+
+    tr.append(
+      el("td", {}, [cb]),
+      el("td", { className: "theme", text: row.title }),
+      el("td", {}, [objWrap]),
+      el("td", {}, [typ]),
+      el("td", {}, [sol]),
+      el("td", {}, [nInput]),
+      el("td", {}, [level]),
+      el("td", {}, [compDesc]),
+      el("td", {}, [desc]),
+      link
+    );
+    objWrap.append(objSearch, objSelect, cand);
+    tbody.append(tr);
+  }
+  updateStats();
+}
+
+fillSelect(document.getElementById("bulk-solution"), CATALOGS.solution_method, "");
+
+document.getElementById("btn-parse").addEventListener("click", () => {
+  const enrich = document.getElementById("enrich").checked;
+  state.rows = parseList(document.getElementById("paste").value, enrich).map((r, i) => ({
+    ...r,
+    _idx: i,
+    selected: true,
+    object_id: null,
+    object_name: null,
+    typical: suggestTypical(r.typical_hint),
+    solution: "",
+    object_count: "",
+    complication_level: "",
+    complication: "",
+    description: r.description || "",
+  }));
+  state.filterMissing = false;
+  document.getElementById("btn-filter-missing").textContent = "Только без объекта";
+  document.getElementById("bulk-panel").hidden = false;
+  document.getElementById("table-panel").hidden = false;
+  document.getElementById("results-panel").hidden = true;
+  renderTable();
+});
+
+document.getElementById("btn-apply-n").addEventListener("click", () => {
+  const v = document.getElementById("bulk-n").value.trim();
+  if (!v) return;
+  for (const r of visibleRows()) if (r.selected) r.object_count = v;
+  renderTable();
+});
+
+document.getElementById("btn-apply-solution").addEventListener("click", () => {
+  const v = document.getElementById("bulk-solution").value;
+  if (!v) return;
+  for (const r of visibleRows()) if (r.selected) r.solution = v;
+  renderTable();
+});
+
+document.getElementById("btn-filter-missing").addEventListener("click", () => {
+  state.filterMissing = !state.filterMissing;
+  document.getElementById("btn-filter-missing").textContent = state.filterMissing ? "Показать все" : "Только без объекта";
+  renderTable();
+});
+
+document.getElementById("btn-select-all").addEventListener("click", () => {
+  const allOn = visibleRows().every((r) => r.selected);
+  for (const r of visibleRows()) r.selected = !allOn;
+  renderTable();
+});
+
+document.getElementById("btn-submit").addEventListener("click", () => {
+  const items = state.rows.filter((r) => r.selected).map((r) => ({
+    title: r.title,
+    object_id: r.object_id,
+    object_name: r.object_name,
+    typical: r.typical,
+    solution: r.solution,
+    object_count: r.object_count || null,
+    complication_level: r.complication_level || null,
+    complication: r.complication || null,
+    description: r.description || null,
+    external_url: r.external_url || null,
+    custom_parameters: {
+      typical: r.typical,
+      solution_method: r.solution ? [r.solution] : [],
+      ...(r.object_count ? { object_count: r.object_count } : {}),
+      ...(r.complication_level ? { complication_level: r.complication_level, complication: r.complication } : {}),
+    },
+  }));
+  const bad = items.filter((i) => !i.object_id || !i.typical || !i.solution);
+  if (bad.length) {
+    alert(`Не заполнено: ${bad.length} строк (нужны объект, typical, способ)`);
+    return;
+  }
+  const badComp = items.filter((i) => (i.complication_level && !i.complication) || (!i.complication_level && i.complication));
+  if (badComp.length) {
+    alert("Осложнение: нужен и уровень, и описание");
+    return;
+  }
+  document.getElementById("results-panel").hidden = false;
+  document.getElementById("results").textContent = JSON.stringify({
+    dry_run: true,
+    mock: true,
+    batch_comment: document.getElementById("batch-comment").value || null,
+    ok: items.length,
+    items,
+  }, null, 2);
+});
+
+// auto-parse sample on open
+document.getElementById("btn-parse").click();
+  </script>
+</body>
+</html>

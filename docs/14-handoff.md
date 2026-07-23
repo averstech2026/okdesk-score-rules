@@ -69,6 +69,7 @@
 Отдельный операционный трек (не баллы): веб-страница для Артёма — вставка дневного списка (ссылки `help.ucg.ru` + короткие заголовки) → объект MFC + typical + solution → одной кнопкой создать и техзакрыть в Okdesk. Менеджера из цепочки убираем.
 
 Полное ТЗ и контекст договорённостей: **[docs/23-mfc-fast-create.md](23-mfc-fast-create.md)**.  
+Код MVP: **[`tools/mfc-fast-create/`](../tools/mfc-fast-create/)** — `uvicorn app:app --port 8787` (см. README). Следующее: тестовая пачка 5–10 заявок, статус `completed`/`closed`, отдать Артёму.  
 В Cursor: «продолжи MFC fast create по docs/23».
 
 ## Ограничения тарифа Okdesk

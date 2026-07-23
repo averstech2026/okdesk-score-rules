@@ -15,3 +15,5 @@ __pycache__/
 data-okdesk-*.tar.gz
 ._data
 ._*
+
+.pytest_cache/

@@ -39,6 +39,7 @@
 | [docs/21-okdesk-new-fields.md](docs/21-okdesk-new-fields.md) | **Финал:** новые поля Okdesk |
 | [docs/22-typical-base-weights.md](docs/22-typical-base-weights.md) | **Typical → база баллов** (+ статьи БЗ) |
 | [docs/23-mfc-fast-create.md](docs/23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём; объекты; парсер URL/текста) |
+| [tools/mfc-fast-create/](tools/mfc-fast-create/) | **MVP:** FastAPI + UI для пачки MFC |
 | [analysis/phase0-revision.html](analysis/phase0-revision.html) | **HTML:** фаза 0 было → станет (для согласования) |
 | [docs/open-questions.md](docs/open-questions.md) | Открытые вопросы для согласования |
 | [analysis/report.md](analysis/report.md) | Сводный отчёт по последней выгрузке |
@@ -46,6 +47,7 @@
 | [analysis/bonus-comparison.html](analysis/bonus-comparison.html) | **HTML:** помесячное сравнение текущий / новый по каждому инженеру |
 | [analysis/mass-update-auto.html](analysis/mass-update-auto.html) | **Массовые обновления ПО:** объём, премия, сценарии автообновления |
 | [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |
+| [analysis/mfc-fast-create.html](analysis/mfc-fast-create.html) | **Превью UI** MFC fast create (без Okdesk) |
 
 ## Статус
 
