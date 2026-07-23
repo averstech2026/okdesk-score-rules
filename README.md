@@ -30,6 +30,7 @@
 | [docs/12-nonstandard-issue-type.md](docs/12-nonstandard-issue-type.md) | Тип «Нестандарт» вместо «Другое» (без Expert) |
 | [docs/13-solution-catalog-proposal.md](docs/13-solution-catalog-proposal.md) | Ревизия справочника способов решения |
 | [docs/14-handoff.md](docs/14-handoff.md) | Как продолжить без истории чата |
+| [docs/15-balance-conveyor-vs-investigations.md](docs/15-balance-conveyor-vs-investigations.md) | Баланс конвейер vs расследования, анти-перехват |
 | [docs/open-questions.md](docs/open-questions.md) | Открытые вопросы для согласования |
 | [analysis/report.md](analysis/report.md) | Сводный отчёт по последней выгрузке |
 | [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |

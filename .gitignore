@@ -11,3 +11,5 @@ analysis/summary.json
 __pycache__/
 .venv/
 *.pyc
+
+data-okdesk-*.tar.gz
