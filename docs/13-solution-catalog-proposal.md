@@ -1,7 +1,10 @@
 # Ревизия справочника «Способ решения»
 
-Поле Okdesk: `solution_method` (multiselect, обязательное на многих типах).  
-Выборка: 23.01–22.07.2026, 19 640 заявок.
+**Актуальный целевой список (выровнен с typical):** [25-solution-final.md](25-solution-final.md) · HTML: [../analysis/solution-final.html](../analysis/solution-final.html).
+
+Ниже — исходный диагноз и черновик (история). Для внедрения в Okdesk использовать **docs/25**.
+
+---
 
 ## Диагноз
 

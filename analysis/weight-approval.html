@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Согласование весов — второй проход</title>
+  <style>
+    :root {
+      --bg: #f4f5f7; --surface: #fff; --text: #1a1d23; --muted: #5c6570; --faint: #8b939e;
+      --line: #e2e5ea; --accent: #1f4b7a;
+      --warn-bg: #fff6e8; --warn-border: #e6b35c;
+      --info-bg: #eef5fb; --info-border: #7aa7d0;
+      --ok-bg: #eef8f1; --ok-border: #9bc9a8;
+      --pend-bg: #fef3f2; --pend-border: #f0b4ae;
+      --t5: #2a5f8f; --c15: #8a5a00; --s30: #1f6b3a; --h60: #6b21a8;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 110px; }
+    h1 { font-size: 1.5rem; font-weight: 700; margin: 0 0 8px; }
+    h2 { font-size: 1.12rem; font-weight: 650; margin: 0 0 10px; }
+    .lead { color: var(--muted); margin: 0 0 14px; max-width: 80ch; }
+    .banner {
+      background: #1f4b7a; color: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+    }
+    .banner a { color: #cfe3ff; }
+    .banner code { background: rgba(255,255,255,.15); padding: 1px 6px; border-radius: 4px; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+    .nav a {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line);
+      background: var(--surface); padding: 6px 10px; border-radius: 8px;
+    }
+    .nav a:hover { border-color: var(--accent); }
+    .nav a.pend { border-color: var(--pend-border); background: var(--pend-bg); color: #9b2c2c; }
+    section { margin-top: 26px; }
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 12px 0; border: 1px solid var(--line); background: var(--surface); }
+    .callout.warn { background: var(--warn-bg); border-color: var(--warn-border); }
+    .callout.info { background: var(--info-bg); border-color: var(--info-border); }
+    .callout.ok { background: var(--ok-bg); border-color: var(--ok-border); }
+    .callout.pend { background: var(--pend-bg); border-color: var(--pend-border); }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .codes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0; }
+    @media (max-width: 900px) { .codes { grid-template-columns: 1fr 1fr; } }
+    .code { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .code .k { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .code .v { font-size: 1.3rem; font-weight: 700; margin: 2px 0; }
+    .code .d { font-size: 0.78rem; color: var(--muted); }
+    .code.t5 .k, .code.t5 .v { color: var(--t5); }
+    .code.c15 .k, .code.c15 .v { color: var(--c15); }
+    .code.s30 .k, .code.s30 .v { color: var(--s30); }
+    .code.h60 .k, .code.h60 .v { color: var(--h60); }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 12px 0; overflow: hidden; }
+    .card.needs-review { border-color: var(--pend-border); box-shadow: 0 0 0 1px rgba(240,180,174,.35); }
+    .card-h {
+      padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 650;
+      display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap;
+    }
+    .card.needs-review .card-h { background: #fff8f7; }
+    .card-h .sub { font-weight: 500; font-size: 0.82rem; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { padding: 9px 11px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); font-weight: 600; background: #fafbfc; }
+    tr:last-child td { border-bottom: 0; }
+    tr.pending { background: #fff9f8; }
+    tr.done { background: #f7fbf8; }
+    td.num { width: 2.4rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+    td.prop { width: 4.2rem; text-align: center; }
+    td.ncol { width: 4.2rem; color: var(--muted); font-size: 0.82rem; white-space: nowrap; }
+    td.decide { width: 7.2rem; }
+    td.st { width: 6.5rem; }
+    .badge {
+      display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+    }
+    .badge.t5 { background: #e8f0f8; color: var(--t5); }
+    .badge.c15 { background: var(--warn-bg); color: var(--c15); }
+    .badge.s30 { background: var(--ok-bg); color: var(--s30); }
+    .badge.h60 { background: #f3e8ff; color: var(--h60); }
+    .badge.kill { background: #fdeceb; color: #9b2c2c; }
+    .pill {
+      display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+      background: #eef2f6; color: var(--muted);
+    }
+    .pill.ok { background: var(--ok-bg); color: #1f6b3a; }
+    .pill.pend { background: var(--pend-bg); color: #9b2c2c; }
+    pre.formula {
+      background: #1a1d23; color: #e8eaed; border-radius: 10px; padding: 16px 18px;
+      font-size: 0.84rem; line-height: 1.55; overflow-x: auto; margin: 12px 0;
+    }
+    code { font-size: 0.88em; background: #eef1f4; padding: 1px 5px; border-radius: 4px; }
+    .weight-sel, .status-sel {
+      font: inherit; font-size: 0.85rem; padding: 6px 8px; border-radius: 6px;
+      border: 1px solid var(--line); background: #fff; width: 100%;
+    }
+    .weight-sel.ok, .status-sel.ok { background: var(--ok-bg); border-color: var(--ok-border); }
+    .weight-sel.fix, .status-sel.fix { background: var(--warn-bg); border-color: var(--warn-border); }
+    .weight-sel.empty { border-color: var(--pend-border); background: #fff; }
+    .row-comment, .approve-comment, #c-general {
+      width: 100%; min-height: 38px; resize: vertical; font: inherit; font-size: 0.84rem;
+      border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: #fff;
+    }
+    .approve-comment { min-height: 48px; }
+    #c-general { min-height: 64px; }
+    .hint-cell { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .progress {
+      display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.88rem; color: var(--muted);
+      margin: 10px 0 0; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    }
+    .progress b { color: var(--text); }
+    .progress .need b { color: #9b2c2c; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; align-items: center; }
+    .meta-row label { font-size: 0.85rem; color: var(--muted); }
+    .meta-row input[type="text"], .meta-row input[type="date"] {
+      font: inherit; font-size: 0.9rem; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px;
+    }
+    .comment-box {
+      margin: 10px 0 0; padding: 10px 12px; background: #fffdf6; border: 1px dashed #e6b35c; border-radius: 8px;
+    }
+    .comment-box label {
+      display: block; font-size: 0.75rem; font-weight: 650; color: #8a5a00;
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+    }
+    ul.keep { margin: 8px 0; padding-left: 20px; color: var(--muted); }
+    footer { margin-top: 40px; color: var(--faint); font-size: 0.8rem; border-top: 1px solid var(--line); padding-top: 14px; }
+    .toolbar {
+      position: sticky; bottom: 0; z-index: 20; margin: 24px -20px 0; padding: 12px 20px;
+      background: rgba(255,255,255,.94); border-top: 1px solid var(--line);
+      backdrop-filter: blur(8px); display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .toolbar button {
+      font: inherit; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px;
+      border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer;
+    }
+    .toolbar button.secondary { background: #fff; color: var(--accent); }
+    .toolbar .hint { font-size: 0.8rem; color: var(--muted); flex: 1; min-width: 160px; }
+    .toolbar .saved { font-size: 0.8rem; color: #1f6b3a; }
+    #importFile { display: none; }
+    .links a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <strong style="display:block;font-size:1.05rem;margin-bottom:8px">Согласование весов — второй проход</strong>
+      Утверждено: четыре кода <code>T5 / C15 / S30 / H60</code>. Выезд = всегда только 60, без осложнений.
+      Красным отмечены <b>непройденные</b> строки. Источник: <code>docs/22</code> ·
+      <a href="phase0-revision.html">ревизия фазы 0</a>.
+    </div>
+
+    <h1>Typical → база баллов</h1>
+    <p class="lead">
+      Принятые веса уже выбраны. Пройдите блоки с меткой «не пройдено» (A и D): подтвердите «= предл.» или поправьте.
+    </p>
+
+    <nav class="nav">
+      <a href="#formula">Формула</a>
+      <a href="#block-a" class="pend">A · не пройдено</a>
+      <a href="#block-b">B · принято</a>
+      <a href="#block-c">C · принято</a>
+      <a href="#block-d" class="pend">D · не пройдено</a>
+      <a href="#block-e">E · ок</a>
+      <a href="#forks">Развилки</a>
+      <a href="#signoff">Подпись</a>
+    </nav>
+
+    <div class="progress" id="progress">
+      <span>Всего строк: <b id="p-rows">—</b></span>
+      <span>Заполнено: <b id="p-done">—</b></span>
+      <span class="need">Ещё пусто: <b id="p-empty">—</b></span>
+      <span>Правим: <b id="p-fix">—</b></span>
+    </div>
+
+    <section id="formula">
+      <h2>1. Формула и коды</h2>
+      <pre class="formula">если выезд (departure):
+  баллы = 60 × (1|2 дежурство)
+  // typical / N / осложнение НЕ суммируются — всегда только 60
+
+иначе:
+  баллы = (база × N + осложнение*) × (1|2)
+
+* осложнение +15|+30 только если уровень И непустое описание</pre>
+      <div class="codes">
+        <div class="code t5"><div class="k">T5</div><div class="v">5</div><div class="d">типовой инцидент</div></div>
+        <div class="code c15"><div class="k">C15</div><div class="v">15</div><div class="d">среднее / Нестандарт</div></div>
+        <div class="code s30"><div class="k">S30</div><div class="v">30</div><div class="d">разбор / статья БЗ</div></div>
+        <div class="code h60"><div class="k">H60</div><div class="v">60</div><div class="d">тяжёлый typical</div></div>
+        <div class="code"><div class="k">Выезд</div><div class="v" style="font-size:1.1rem">только 60</div><div class="d">без осложнений</div></div>
+      </div>
+      <div class="callout ok">
+        <strong>H60 утверждён</strong>
+        Оборудование и запуск — база 60 без выезда. При выезде чекбокс всё равно даёт ровно 60 (не 120 от H60+выезд).
+      </div>
+      <div class="callout info">
+        <strong>Обновления</strong>
+        №21 / №22 — без слова «массовое»; N≥1 (одна точка тоже). Отдельный «сбой авто» не заводим → снова №21.
+      </div>
+    </section>
+
+    <div id="tables"></div>
+
+    <section id="dont-mix">
+      <h2>Не смешивать</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Этот</th><th>Не путать с</th></tr></thead>
+          <tbody>
+            <tr><td>ЧЗ оперативный (10)</td><td>Расследование (24)</td></tr>
+            <tr><td>Оплата не проходит (6)</td><td>Банк / модуль (18)</td></tr>
+            <tr><td>Расхождение смены (15a)</td><td>Расследование (24)</td></tr>
+            <tr><td>НДС точечный (17)</td><td>Раскатка НДС (22)</td></tr>
+            <tr><td>Раскатка ПО (21)</td><td>Авто: сбой (23)</td></tr>
+            <tr><td>Статья БЗ (25)</td><td>Консультация (14)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="forks">
+      <h2>Развилки</h2>
+      <div class="card" id="forks-card"></div>
+    </section>
+
+    <section id="signoff">
+      <h2>Подпись</h2>
+      <div class="callout pend">
+        <strong>Сейчас нужно</strong>
+        Пройти красные блоки A и D → «Всё пустое = предл.» или правки по строкам → экспорт JSON.
+      </div>
+      <div class="card" style="padding:14px 16px">
+        <div class="meta-row">
+          <label>Таблица целиком
+            <select class="status-sel" data-key="signoff.status" style="width:auto;display:inline-block;margin-left:8px">
+              <option value="">—</option>
+              <option value="да">да</option>
+              <option value="частично">частично (A/D ещё)</option>
+              <option value="нет">нет</option>
+            </select>
+          </label>
+          <label>Дата <input type="date" data-key="signoff.date" /></label>
+          <label>Кто <input type="text" data-key="signoff.who" placeholder="ФИО" style="min-width:12rem" /></label>
+        </div>
+        <div class="comment-box">
+          <label for="c-general">Общий комментарий</label>
+          <textarea id="c-general" data-key="general" placeholder="…"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Ссылки</h2>
+      <div class="card links">
+        <table>
+          <tbody>
+            <tr><td>Markdown</td><td><code>docs/22-typical-base-weights.md</code></td></tr>
+            <tr><td>Ответы</td><td><code>docs/24-weight-approval-answers.md</code></td></tr>
+            <tr><td>Базы</td><td><code>docs/01-base-catalog.md</code></td></tr>
+            <tr><td>JSON</td><td><code>analysis/weight-approval-comments.json</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>okdesk-score-rules · analysis/weight-approval.html · H60 утверждён 2026-07-24</footer>
+
+    <div class="toolbar">
+      <button type="button" id="btnFillPending" class="secondary">Пустые → «= предл.»</button>
+      <button type="button" id="btnExportJson">Скачать JSON</button>
+      <button type="button" id="btnExportMd" class="secondary">Скачать .md</button>
+      <button type="button" id="btnCopy" class="secondary">Копировать</button>
+      <label for="importFile" style="display:inline-block;background:#fff;color:var(--accent);border:1px solid var(--accent);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem">Загрузить JSON</label>
+      <input type="file" id="importFile" accept="application/json,.json" />
+      <span class="hint">Сохраните как <code>analysis/weight-approval-comments.json</code></span>
+      <span class="saved" id="saveState"></span>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const STORE = "okdesk-weight-approval-v2";
+
+    /** prop = proposed base string; locked = pre-filled from prior approval; pending = needs review */
+    const BLOCKS = [
+      {
+        id: "block-a",
+        title: "A. Оперативные инциденты",
+        sub: "не пройдено в 1-м проходе — подтвердите",
+        pending: true,
+        rows: [
+          { id: "1", name: "Не печатаются / не закрываются чеки (сбой ФР, сумма оплат…)", prop: "5", n: "1", pending: true },
+          { id: "2", name: "Не закрывается смена", prop: "5", n: "1", pending: true },
+          { id: "3", name: "Нет меню / нет товара на кассе", prop: "5", n: "1", pending: true },
+          { id: "4", name: "Корректировка чека (сторно, возврат, удаление, перенос)", hint: "было «Отменить чек»", prop: "5", n: "1", pending: true },
+          { id: "5", name: "Не работает касса, перезапуск", prop: "5", n: "1", pending: true },
+          { id: "6", name: "Оплата не проходит (банк / процессинг / ДУЭТ)", hint: "≠ №18 банк-модуль", prop: "5", n: "1", pending: true },
+          { id: "7", name: "Не уходят чеки в ОФД", prop: "5", n: "1", pending: true },
+          { id: "8", name: "Не работает сканер, весы", prop: "5", n: "1", pending: true },
+          { id: "9", name: "Ошибка на кассе (лицензия, задним числом…)", prop: "5", n: "1", pending: true },
+          { id: "10", name: "ЧЗ / маркировка (оперативный инцидент)", hint: "≠ расследование ЧЗ", prop: "5", n: "1", pending: true },
+          { id: "11", name: "Карты питания и клиенты", hint: "карта + лимиты + клиенты", prop: "5", n: "1", pending: true },
+          { id: "12", name: "Предоставление доступа / код кассира", prop: "5", n: "1", pending: true },
+          { id: "13", name: "Настройки и доступы (не блокирует)", hint: "сжатый «Доп. настройки»", prop: "5", n: "1", pending: true },
+          { id: "17", name: "НДС: точечная ошибка ставки / режима", hint: "не кампания", prop: "5", n: "1 / ×N", pending: true },
+        ],
+      },
+      {
+        id: "block-b",
+        title: "B. Бывшие «средние» — принято",
+        sub: "правки от 24.07 уже проставлены",
+        pending: false,
+        rows: [
+          { id: "14", name: "Консультация / звонок", hint: "было 15 → 5", prop: "5", n: "1", locked: "5" },
+          { id: "15a", name: "Расхождение смены / принуд. закрытие (оперативное)", hint: "вынести из catch-all", prop: "5", n: "1", locked: "5" },
+          { id: "15b", name: "Отчёты (вопросы / печать отчёта)", hint: "не мешать с №24", prop: "5", n: "1", locked: "5" },
+          { id: "16", name: "Сопутствующий сервис клиента (Work Bright / AllBusiness…)", hint: "широкое → осложнять", prop: "5", n: "1", locked: "5" },
+          { id: "18", name: "Банк / модуль банка (ручная доводка)", hint: "≠ оплата не проходит", prop: "5", n: "1 / ×N", locked: "5" },
+          { id: "25", name: "Статья базы знаний", hint: "один пункт; knowledge_base_issue", prop: "30", n: "1", locked: "30" },
+        ],
+      },
+      {
+        id: "block-c",
+        title: "C. Сложные / H60 / расследования — принято",
+        sub: "H60 = 60 утверждён",
+        pending: false,
+        rows: [
+          { id: "19", name: "Подключение и настройка оборудования", prop: "60", n: "1", locked: "60" },
+          { id: "20", name: "Запуск / подготовка объекта (или партии)", hint: "одно имя; ×N", prop: "60", n: "×N", locked: "60" },
+          { id: "24", name: "Расхождение / расследование (1С, ОФД, ЧЗ-отклонения…)", hint: "кастомный разбор", prop: "30", n: "1", locked: "30" },
+        ],
+      },
+      {
+        id: "block-d",
+        title: "D. Обновления / раскатки",
+        sub: "без «массовое»; №23 не заводим",
+        pending: false,
+        rows: [
+          { id: "21", name: "Обновление / раскатка ПО (не путать с установкой)", hint: "N≥1; сбой авто → тоже сюда; без «массовое»", prop: "5", n: "×N", locked: "5" },
+          { id: "22", name: "Обновление НДС / фиск. параметров", hint: "N≥1; ≠ точечная ошибка ставки №17", prop: "5", n: "×N", locked: "5" },
+          // 23 убран: сбой авто → №21
+        ],
+      },
+      {
+        id: "block-e",
+        title: "E. Вне списка typical",
+        sub: "ок по первому проходу",
+        pending: false,
+        rows: [
+          { id: "other", name: "Другое (пункт typical)", hint: "убрать после параллели → Нестандарт", prop: "убрать", n: "—", locked: "=", special: "kill" },
+          { id: "nonstd", name: "Тип Нестандарт + «Суть»", hint: "не для MFC-bulk", prop: "15", n: "1", locked: "15" },
+        ],
+      },
+    ];
+
+    const FORKS = [
+      { id: "1", q: "Четыре кода T5 / C15 / S30 / H60", locked: "да", note: "H60 утверждён" },
+      { id: "2", q: "Обновление ПО и НДС = T5 × N (N≥1, без «массовое»)", locked: "да", note: "№21–22" },
+      { id: "3", q: "Отдельный «сбой авто» не заводим — берём №21", locked: "да", note: "было №23" },
+      { id: "4", q: "Запуск / подготовка = H60 (×N)", locked: "да", note: "60" },
+      { id: "5", q: "Одно имя «Запуск / подготовка»", locked: "да" },
+      { id: "6", q: "Статья БЗ = один пункт 30", locked: "да" },
+      { id: "7", q: "Нестандарт = C15", locked: "да" },
+      { id: "8", q: "Расследование = S30", locked: "да" },
+      { id: "9", q: "Консультация = T5", locked: "да" },
+      { id: "10", q: "Имена typical в таблице — финальные для Okdesk?", locked: "", pending: true, note: "не веса: «да» или список правок названий" },
+    ];
+
+    function badgeClass(prop) {
+      if (prop === "5") return "t5";
+      if (prop === "15") return "c15";
+      if (prop === "30") return "s30";
+      if (prop === "60") return "h60";
+      if (prop === "убрать") return "kill";
+      return "";
+    }
+
+    function weightOptions(prop, special) {
+      if (special === "kill") {
+        return [
+          ["", "—"],
+          ["=", "= убрать"],
+          ["keep", "оставить пока"],
+          ["fix", "правим"],
+        ];
+      }
+      return [
+        ["", "—"],
+        ["=", "= предл."],
+        ["5", "5"],
+        ["15", "15"],
+        ["30", "30"],
+        ["60", "60"],
+        ["fix", "правим"],
+      ];
+    }
+
+    function renderTables() {
+      const root = document.getElementById("tables");
+      let html = "";
+      BLOCKS.forEach((block) => {
+        html += `<section id="${block.id}">
+          <div class="card${block.pending ? " needs-review" : ""}">
+            <div class="card-h">
+              <span>${block.title} ${block.pending ? '<span class="pill pend">не пройдено</span>' : '<span class="pill ok">принято</span>'}</span>
+              <span class="sub">${block.sub}</span>
+            </div>
+            <table>
+              <thead><tr>
+                <th>#</th><th>Типовая проблема</th><th>Предл.</th><th>Утверждено</th><th>N?</th><th>Статус</th><th>Комментарий</th>
+              </tr></thead><tbody>`;
+        block.rows.forEach((r) => {
+          const opts = weightOptions(r.prop, r.special)
+            .map(([v, lab]) => `<option value="${v}">${lab}</option>`)
+            .join("");
+          const def = r.locked != null ? r.locked : "";
+          const st = r.pending ? '<span class="pill pend">проверить</span>' : '<span class="pill ok">принято</span>';
+          const trClass = r.pending ? "pending" : "done";
+          html += `<tr class="${trClass}" data-row="${r.id}">
+            <td class="num">${r.id}</td>
+            <td>${r.name}${r.hint ? `<div class="hint-cell">${r.hint}</div>` : ""}</td>
+            <td class="prop"><span class="badge ${badgeClass(r.prop)}">${r.prop}</span></td>
+            <td class="decide"><select class="weight-sel" data-key="w.${r.id}" data-prop="${r.prop}" data-default="${def}" aria-label="Вес ${r.id}">${opts}</select></td>
+            <td class="ncol">${r.n}</td>
+            <td class="st">${st}</td>
+            <td><textarea class="row-comment" data-key="w.${r.id}.c" rows="1" placeholder="…"></textarea></td>
+          </tr>`;
+        });
+        html += `</tbody></table></div></section>`;
+      });
+      root.innerHTML = html;
+    }
+
+    function renderForks() {
+      let html = `<table><thead><tr><th>#</th><th>Вопрос</th><th>Статус</th><th>Комментарий</th></tr></thead><tbody>`;
+      FORKS.forEach((f) => {
+        const opts = [
+          ["", "—"],
+          ["да", "да"],
+          ["правим", "правим"],
+          ["позже", "позже"],
+        ].map(([v, lab]) => `<option value="${v}">${lab}</option>`).join("");
+        html += `<tr class="${f.pending ? "pending" : "done"}">
+          <td>${f.id}</td>
+          <td>${f.q}${f.note ? `<div class="hint-cell">${f.note}</div>` : ""}${f.pending ? ' <span class="pill pend">проверить</span>' : ""}</td>
+          <td><select class="status-sel" data-key="f.${f.id}" data-default="${f.locked || ""}">${opts}</select></td>
+          <td><textarea class="approve-comment" data-key="f.${f.id}.c" rows="2" placeholder="…"></textarea></td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+      document.getElementById("forks-card").innerHTML = html;
+    }
+
+    const fields = () => document.querySelectorAll("[data-key]");
+    const weightSels = () => document.querySelectorAll(".weight-sel");
+    const saveState = document.getElementById("saveState");
+
+    function collect() {
+      const data = { saved_at: new Date().toISOString(), version: 2, comments: {} };
+      fields().forEach((el) => { data.comments[el.dataset.key] = el.value; });
+      return data;
+    }
+
+    function paint(el) {
+      if (!el.classList.contains("weight-sel") && !el.classList.contains("status-sel")) return;
+      el.classList.remove("ok", "fix", "empty");
+      const v = el.value;
+      if (!v) el.classList.add("empty");
+      else if (v === "правим" || v === "keep" || v === "нет") el.classList.add("fix");
+      else el.classList.add("ok");
+    }
+
+    function applyDefaults() {
+      document.querySelectorAll("[data-default]").forEach((el) => {
+        const d = el.dataset.default;
+        if (d !== undefined && d !== "" && !el.value) el.value = d;
+      });
+    }
+
+    function apply(data) {
+      const map = (data && data.comments) || data || {};
+      fields().forEach((el) => {
+        if (map[el.dataset.key] != null && map[el.dataset.key] !== "") el.value = map[el.dataset.key];
+      });
+      applyDefaults();
+      fields().forEach(paint);
+      updateProgress();
+    }
+
+    function persist() {
+      localStorage.setItem(STORE, JSON.stringify(collect()));
+      saveState.textContent = "сохранено " + new Date().toLocaleTimeString("ru-RU");
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const sels = weightSels();
+      let done = 0, empty = 0, fix = 0;
+      sels.forEach((s) => {
+        if (!s.value) empty++;
+        else if (s.value === "правим") fix++;
+        else done++;
+      });
+      document.getElementById("p-rows").textContent = String(sels.length);
+      document.getElementById("p-done").textContent = String(done);
+      document.getElementById("p-empty").textContent = String(empty);
+      document.getElementById("p-fix").textContent = String(fix);
+    }
+
+    function toMarkdown(data) {
+      const c = data.comments || {};
+      const lines = ["# Согласование весов (v2)", "", "Сохранено: " + (data.saved_at || ""), "", "## Строки", ""];
+      weightSels().forEach((sel) => {
+        const key = sel.dataset.key;
+        const id = key.replace(/^w\./, "");
+        const st = (c[key] || "").trim();
+        if (!st) return;
+        const cm = (c[key + ".c"] || "").trim();
+        const final = st === "=" ? sel.dataset.prop : st;
+        lines.push("- **" + id + "** → **" + final + "** (выбор: " + st + ")" + (cm ? " — " + cm : ""));
+      });
+      lines.push("", "## Развилки", "");
+      for (let i = 1; i <= 10; i++) {
+        const st = (c["f." + i] || "").trim();
+        const cm = (c["f." + i + ".c"] || "").trim();
+        if (st || cm) lines.push("- **" + i + "** [" + (st || "—") + "]" + (cm ? ": " + cm : ""));
+      }
+      const g = (c.general || "").trim();
+      if (g) lines.push("", "## Общее", "", g, "");
+      return lines.join("\n");
+    }
+
+    function download(filename, text, mime) {
+      const blob = new Blob([text], { type: mime });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    renderTables();
+    renderForks();
+
+    // Prefill from prior decisions; then overlay localStorage / import
+    applyDefaults();
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (raw) apply(JSON.parse(raw));
+      else {
+        fields().forEach(paint);
+        updateProgress();
+      }
+    } catch (e) {
+      fields().forEach(paint);
+      updateProgress();
+    }
+
+    fields().forEach((el) => {
+      const h = () => { paint(el); persist(); };
+      el.addEventListener("input", h);
+      el.addEventListener("change", h);
+    });
+
+    document.getElementById("btnFillPending").onclick = () => {
+      weightSels().forEach((s) => {
+        if (!s.value) {
+          s.value = "=";
+          paint(s);
+        }
+      });
+      document.querySelectorAll(".status-sel[data-key^='f.']").forEach((s) => {
+        if (!s.value && s.dataset.default) {
+          s.value = s.dataset.default;
+          paint(s);
+        } else if (!s.value) {
+          s.value = "да";
+          paint(s);
+        }
+      });
+      persist();
+    };
+
+    document.getElementById("btnExportJson").onclick = () => {
+      download("weight-approval-comments.json", JSON.stringify(collect(), null, 2), "application/json");
+    };
+    document.getElementById("btnExportMd").onclick = () => {
+      download("weight-approval-comments.md", toMarkdown(collect()), "text/markdown");
+    };
+    document.getElementById("btnCopy").onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(toMarkdown(collect()));
+        saveState.textContent = "скопировано";
+      } catch (e) {
+        saveState.textContent = "скачайте .md";
+      }
+    };
+    document.getElementById("importFile").onchange = (ev) => {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          apply(JSON.parse(reader.result));
+          persist();
+          saveState.textContent = "загружено";
+        } catch (e) {
+          saveState.textContent = "ошибка JSON";
+        }
+      };
+      reader.readAsText(file);
+      ev.target.value = "";
+    };
+  })();
+  </script>
+</body>
+</html>

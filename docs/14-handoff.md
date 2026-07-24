@@ -2,76 +2,91 @@
 
 История чата Cursor на другой компьютер **не переносится**.
 
-**Снимок контекста (2026-07-23):** в `main` зафиксированы фаза 0 / план внедрения / симуляции премий / раскатки / ТЗ MFC fast create. После `git pull` этого достаточно, чтобы продолжить без чата.
+**Снимок контекста (2026-07-24):** фаза 0 по каталогам/полям/весам **согласована**. Готовы к **фазе 1** — завести в Okdesk. После `git pull` достаточно открыть этот файл + HTML ниже.
 
 ## С чего начать на новом ПК
 
 1. `git clone` / `git pull` → https://github.com/averstech2026/okdesk-score-rules  
-2. Открыть в браузере **[analysis/typical-catalog.html](../analysis/typical-catalog.html)** — главная сводка.  
-3. При необходимости: `.env` + архив `data/` или `python3 scripts/fetch_issues.py 6`.  
-4. В Cursor открыть папку репо как workspace (не home).
+2. Открыть **[analysis/typical-final.html](../analysis/typical-final.html)** (typical) и **[analysis/solution-final.html](../analysis/solution-final.html)** (способы).  
+3. Поля: [docs/21-okdesk-new-fields.md](21-okdesk-new-fields.md).  
+4. В Cursor: workspace = папка репо.
 
-### Два трека продолжения
+### Два трека
 
-| Трек | С чего | Промпт агенту |
-|------|--------|----------------|
-| Правила баллов / фаза 0 | [18-phase0-decisions.md](18-phase0-decisions.md), [phase0-revision.html](../analysis/phase0-revision.html), [17-implementation-plan.md](17-implementation-plan.md) | «продолжи фазу 0 / внедрение по docs/17–18» |
-| MFC: быстрое оформление | [23-mfc-fast-create.md](23-mfc-fast-create.md) | «продолжи MFC fast create по docs/23» |
+| Трек | С чего | Промпт |
+|------|--------|--------|
+| **Фаза 1 Okdesk** | docs/21, 22, 25 · typical-final / solution-final | «заводим каталоги и поля в Okdesk по docs/21–22–25» |
+| MFC fast create | [docs/23](23-mfc-fast-create.md) · `tools/mfc-fast-create/` | «продолжи MFC fast create по docs/23» |
 
-## Пайплайн / план действий (актуальный)
+---
 
-**Полный пошаговый план внедрения:** [17-implementation-plan.md](17-implementation-plan.md) (фазы 0→6, дата X, риски, спринт на 10 дней).
+## Где мы (2026-07-24)
 
-Краткий порядок из HTML § «План действий» + баланс потоков:
+**Фаза 0** — каталоги и правила **утверждены**. **Фаза 1** — создать в Okdesk (ещё не сделано вручную).
 
-| # | Шаг | Детали |
+### Правила (формула)
+
+```
+выезд → только 60 × (1|2)
+Нестандарт → (15 + осложнение*) × (1|2)   // typical на форме нет
+иначе → (база(typical) × N + осложнение*) × (1|2)
+```
+
+Базы: **T5=5 · C15=15 · S30=30 · H60=60**. Префиксы веса в именах typical **пока не ставим**.
+
+### Typical — 22 пункта
+
+Канон: [docs/22](22-typical-base-weights.md) · HTML: [typical-final.html](../analysis/typical-final.html).  
+Без «Другое»; сопутствующие сервисы → Нестандарт + Суть.
+
+### Способы — 19 пунктов
+
+Канон: [docs/25](25-solution-final.md) · HTML: [solution-final.html](../analysis/solution-final.html).  
+Без «Другое»/«Бумага»; матрица typical→способ; +№19 «Статья БЗ».
+
+### Свойства Okdesk
+
+[docs/21](21-okdesk-new-fields.md): осложнение (+15/+30) + описание; N; тип Нестандарт + Суть.  
+На Нестандарте: **typical скрыть**, обязательны Суть + способ. Причина выезда — **не** заводим.
+
+### Отложено
+
+§0.5–0.6 (сегменты / целевые на расследования) — не блокируют фазу 1.  
+Коммуникация команде — перед/вместе с фазой 1.
+
+---
+
+## Пайплайн (кратко)
+
+Полный план: [17](17-implementation-plan.md). Лист фазы 0: [18](18-phase0-decisions.md).
+
+| # | Шаг | Статус |
 |---|-----|--------|
-| 1 | Контуры данных | Натив / MFC-перенос / почта·чаты. KPI каталога — **без MFC**. `docs/11` |
-| 2 | Каталог типовых проблем | Сжать дубли; блок **раскатки + ручной хвост** (НДС точечный / банк-модуль / запуск / фейл авто) с правилом **база × N**; сузить «Доп. настройки»; убрать «Другое». `docs/10` · `analysis/mass-update-auto.html` |
-| 3 | Тип «Нестандарт» | Только для **проблемы**; способ — из списка. Без Expert. `docs/12` |
-| 4 | Каталог способов решения | Сжать, добавить дыры «Другое», катить вместе с проблемами. `docs/13` |
-| 5 | **Баланс: конвейер vs расследования** | Отдельный трек разбора (расхождения, ЧЗ-расследования, транзакции). Маршрут на целевых. Полный «сложный» вес — только целевым / после передачи; иначе перехват с конвейера невыгоден + флаги аудита. `docs/15` · HTML `#balance` |
-| 6 | Нормы баллов | Без выезда: база + осложнение +15/+30. С выездом: **только 60**. Дежурство ×2 по табелю. `docs/00–04` |
-| 7 | Сегменты премии | Конвейер ≠ пул ≠ трек расследований. `docs/05`, `07` |
-| 8 | SLA | Группа ≠ человек; лично — после взятия. `docs/06` |
-| 9 | Аналитика / аудит | Скрипты + флаги (в т.ч. перехват расследований). `docs/08` |
+| 1 | Контуры / KPI без MFC | ок |
+| 2 | Typical 22 | **утв.** |
+| 3 | Нестандарт (без typical на форме) | **утв.** |
+| 4 | Solution 19 + матрица | **утв.** |
+| 5 | Баланс конвейер vs расследования | отложено (docs/15) |
+| 6 | Нормы / формула | **утв.** |
+| → | **Фаза 1:** завести в Okdesk | **следующее** |
 
-### Суть шага 5 (не потерять)
-
-- Оперативный «Не работает ЧЗ» ≠ **расследование отклонений ЧЗ**.  
-- Риск: конвейер штампует расхождения/расследования пачками ради баллов, не отдавая целевому.  
-- MVP: 2–3 typical для разбора → список целевых → полный вес только им/после передачи → еженедельный отчёт «кто с конвейера закрыл сложное».
+---
 
 ## Карта файлов
 
 | Файл | Зачем |
 |------|--------|
-| [analysis/typical-catalog.html](../analysis/typical-catalog.html) | **Главный файл продолжения** (план, данные, каталоги, `#balance`) |
-| [analysis/phase0-revision.html](../analysis/phase0-revision.html) | **Фаза 0:** HTML «было → станет» |
-| [analysis/bonus-comparison.md](../analysis/bonus-comparison.md) | Сравнение премий факт vs новый подход (помесячно, по сотрудникам) |
-| [analysis/bonus-comparison.html](../analysis/bonus-comparison.html) | HTML: текущий / новый по каждому инженеру × месяц |
-| [analysis/mass-update-auto.html](../analysis/mass-update-auto.html) | Массовые обновления ПО → сценарии автообновления |
-| `docs/00`…`08` | Принципы, баллы, выезды, дежурство, потоки, SLA, премия, аудит |
-| `docs/09`…`13` | Выгрузка, **typical (в т.ч. раскатки/хвост)**, контуры, Нестандарт, solution |
-| `docs/15-balance-conveyor-vs-investigations.md` | Баланс конвейер vs расследования |
-| [docs/17-implementation-plan.md](17-implementation-plan.md) | **План внедрения** (фазы, дата X, риски) |
-| [docs/18-phase0-decisions.md](18-phase0-decisions.md) | **Фаза 0:** лист утверждения решений |
-| [docs/21-okdesk-new-fields.md](21-okdesk-new-fields.md) | **Финал:** какие поля добавить в Okdesk |
-| [docs/22-typical-base-weights.md](22-typical-base-weights.md) | Typical → база баллов |
-| [docs/16-handoff-internal-app.md](16-handoff-internal-app.md) | Передача во внутреннее приложение (премия/дежурства) |
-| [docs/19-phase0-revision.md](19-phase0-revision.md) · [20-phase0-comment-answers.md](20-phase0-comment-answers.md) | Фаза 0: было→станет, ответы на комментарии |
-| [docs/23-mfc-fast-create.md](23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём, объекты, парсер URL/текста) |
-| `scripts/fetch_issues.py` / `analyze_scores.py` / `compare_bonus_models.py` / `analyze_mass_updates.py` | Выгрузка и отчёты |
-| `.env` + `data/` | Локально (не в git); архив `data-okdesk-*.tar.gz` при переносе вручную |
-
-## Продолжить: MFC fast create
-
-Отдельный операционный трек (не баллы): веб-страница для Артёма — вставка дневного списка (ссылки `help.ucg.ru` + короткие заголовки) → объект MFC + typical + solution → одной кнопкой создать и техзакрыть в Okdesk. Менеджера из цепочки убираем.
-
-Полное ТЗ и контекст договорённостей: **[docs/23-mfc-fast-create.md](23-mfc-fast-create.md)**.  
-Код MVP: **[`tools/mfc-fast-create/`](../tools/mfc-fast-create/)** — `uvicorn app:app --port 8787` (см. README). Следующее: тестовая пачка 5–10 заявок, статус `completed`/`closed`, отдать Артёму.  
-В Cursor: «продолжи MFC fast create по docs/23».
+| [typical-final.html](../analysis/typical-final.html) | Имена typical + покрытие |
+| [solution-final.html](../analysis/solution-final.html) | Способы + матрица |
+| [docs/21](21-okdesk-new-fields.md) | Новые поля / Нестандарт |
+| [docs/22](22-typical-base-weights.md) | Typical → база |
+| [docs/25](25-solution-final.md) | Способы |
+| [docs/12](12-nonstandard-issue-type.md) | Нестандарт: typical off |
+| [docs/00](00-principles.md) · [01](01-base-catalog.md) | Принципы / коды баз |
+| [docs/17](17-implementation-plan.md) · [18](18-phase0-decisions.md) | План / чеклист фазы 0 |
+| [docs/23](23-mfc-fast-create.md) · `tools/mfc-fast-create/` | MFC-трек |
+| `scripts/*` | Выгрузка / симуляции / coverage |
 
 ## Ограничения тарифа Okdesk
 
-Ниже Expert 50+: поддержка **не делает автоправила**. Условное «чекбокс → обязательное поле» недоступно → тип «Нестандарт» + маршрутизация/регламент/отчёты.
+Ниже Expert 50+: без автоправил. Нестандарт = тип + привязка атрибутов к типу; typical снять с типа вручную в настройках атрибута.

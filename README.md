@@ -28,7 +28,7 @@
 | [docs/10-typical-catalog-proposal.md](docs/10-typical-catalog-proposal.md) | Ревизия справочника типовых проблем |
 | [docs/11-ticket-contours.md](docs/11-ticket-contours.md) | Контуры заявок: нативные / MFC-перенос / почта-чаты |
 | [docs/12-nonstandard-issue-type.md](docs/12-nonstandard-issue-type.md) | Тип «Нестандарт» вместо «Другое» (без Expert) |
-| [docs/13-solution-catalog-proposal.md](docs/13-solution-catalog-proposal.md) | Ревизия справочника способов решения |
+| [docs/13](docs/13-solution-catalog-proposal.md) · [docs/25](docs/25-solution-final.md) · [solution-final.html](analysis/solution-final.html) | Способы решения: диагноз + **целевой список** |
 | [docs/14-handoff.md](docs/14-handoff.md) | Как продолжить без истории чата |
 | [docs/15-balance-conveyor-vs-investigations.md](docs/15-balance-conveyor-vs-investigations.md) | Баланс конвейер vs расследования, анти-перехват |
 | [docs/16-handoff-internal-app.md](docs/16-handoff-internal-app.md) | **Передача в соседний проект:** личные отчёты премии/дежурств, массовые заявки, accept |
@@ -36,8 +36,10 @@
 | [docs/18-phase0-decisions.md](docs/18-phase0-decisions.md) | **Фаза 0:** лист решений (в т.ч. текст «Осложнение») |
 | [docs/19-phase0-revision.md](docs/19-phase0-revision.md) | **Фаза 0:** было → станет (markdown) |
 | [docs/20-phase0-comment-answers.md](docs/20-phase0-comment-answers.md) | Ответы на комментарии к HTML фазы 0 |
-| [docs/21-okdesk-new-fields.md](docs/21-okdesk-new-fields.md) | **Финал:** новые поля Okdesk |
-| [docs/22-typical-base-weights.md](docs/22-typical-base-weights.md) | **Typical → база баллов** (+ статьи БЗ) |
+| [docs/21-okdesk-new-fields.md](docs/21-okdesk-new-fields.md) | **Финал:** новые поля Okdesk + Нестандарт (typical off) |
+| [docs/22](docs/22-typical-base-weights.md) · [typical-final.html](analysis/typical-final.html) | **Typical:** 22 пункта → база (без префиксов веса) |
+| [docs/24-weight-approval-answers.md](docs/24-weight-approval-answers.md) | Ответы по согласованию весов |
+| [docs/25](docs/25-solution-final.md) · [solution-final.html](analysis/solution-final.html) | **Способы:** 19 пунктов + матрица typical→способ |
 | [docs/23-mfc-fast-create.md](docs/23-mfc-fast-create.md) | **MFC:** быстрая форма create+close (Артём; объекты; парсер URL/текста) |
 | [tools/mfc-fast-create/](tools/mfc-fast-create/) | **MVP:** FastAPI + UI для пачки MFC |
 | [analysis/phase0-revision.html](analysis/phase0-revision.html) | **HTML:** фаза 0 было → станет (для согласования) |
@@ -46,12 +48,13 @@
 | [analysis/bonus-comparison.md](analysis/bonus-comparison.md) | **Сравнение премий:** факт vs новый подход (по сотрудникам и месяцам, 1 балл = 15 ₽) |
 | [analysis/bonus-comparison.html](analysis/bonus-comparison.html) | **HTML:** помесячное сравнение текущий / новый по каждому инженеру |
 | [analysis/mass-update-auto.html](analysis/mass-update-auto.html) | **Массовые обновления ПО:** объём, премия, сценарии автообновления |
-| [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка для передачи:** план, данные, каталоги |
+| [analysis/typical-catalog.html](analysis/typical-catalog.html) | **HTML-сводка (старая):** план, данные |
+| [analysis/typical-final.html](analysis/typical-final.html) | **Итоговый typical + покрытие** |
 | [analysis/mfc-fast-create.html](analysis/mfc-fast-create.html) | **Превью UI** MFC fast create (без Okdesk) |
 
 ## Статус
 
-Черновик v0 — зафиксированы договорённости из обсуждения. Числа в каталоге и формула премии требуют наполнения/утверждения.
+**Фаза 0 (каталоги / поля / веса) — согласована 2026-07-24.** Следующее: фаза 1 — завести typical (22), solution (19) и поля из `docs/21` в Okdesk. Снимок для продолжения: [docs/14-handoff.md](docs/14-handoff.md).
 
 ## Репозиторий
 

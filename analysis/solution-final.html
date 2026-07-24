@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Способы решения — целевой список</title>
+  <style>
+    :root {
+      --bg: #f4f5f7; --surface: #fff; --text: #1a1d23; --muted: #5c6570; --faint: #8b939e;
+      --line: #e2e5ea; --accent: #1f4b7a; --ok-bg: #eef8f1; --warn-bg: #fff6e8; --info-bg: #eef5fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 28px 20px 72px; }
+    h1 { font-size: 1.4rem; margin: 0 0 8px; }
+    h2 { font-size: 1.1rem; margin: 26px 0 10px; }
+    .lead { color: var(--muted); max-width: 72ch; margin: 0 0 14px; }
+    .banner { background: #1f4b7a; color: #fff; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+    .banner a { color: #cfe3ff; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+    .nav a { font-size: 0.82rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line); background: var(--surface); padding: 6px 10px; border-radius: 8px; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; }
+    @media (max-width: 800px) { .stats { grid-template-columns: 1fr 1fr; } }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .stat .v { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+    .stat .l { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+    .stat.warn .v { color: #8a5a00; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+    .card-h { padding: 11px 16px; border-bottom: 1px solid var(--line); font-weight: 650; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .card-h .n { font-weight: 500; font-size: 0.82rem; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: #fafbfc; }
+    tr:last-child td { border-bottom: 0; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    td.id { width: 2.2rem; color: var(--faint); }
+    code { font-size: 0.86em; background: #eef1f4; padding: 1px 5px; border-radius: 4px; }
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 12px 0; border: 1px solid var(--line); font-size: 0.9rem; }
+    .callout.info { background: var(--info-bg); border-color: #7aa7d0; }
+    .callout.warn { background: var(--warn-bg); border-color: #e6b35c; }
+    .callout.ok { background: var(--ok-bg); border-color: #9bc9a8; }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: #eef2f6; color: var(--muted); }
+    .pill.ok { background: var(--ok-bg); color: #1f6b3a; }
+    .pill.warn { background: var(--warn-bg); color: #8a5a00; }
+    .hint { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    footer { margin-top: 28px; color: var(--faint); font-size: 0.8rem; border-top: 1px solid var(--line); padding-top: 14px; }
+    .status-sel { font: inherit; font-size: 0.85rem; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--line); }
+    .status-sel.ok { background: var(--ok-bg); }
+    .status-sel.fix { background: var(--warn-bg); }
+    .row-c { width: 100%; min-height: 36px; font: inherit; font-size: 0.84rem; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+    .toolbar {
+      position: sticky; bottom: 0; z-index: 10; margin: 20px -20px 0; padding: 12px 20px;
+      background: rgba(255,255,255,.94); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .toolbar button { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+    .toolbar button.secondary { background: #fff; color: var(--accent); }
+    .toolbar .saved { font-size: 0.8rem; color: #1f6b3a; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <strong style="display:block;margin-bottom:6px">Способы решения — согласование списка</strong>
+      Выровнено с typical (22 пункта) · 19 способов · без «Другое». Баллы не из способа. <code>docs/25-solution-final.md</code> ·
+      <a href="typical-final.html">typical-final.html</a>
+    </div>
+
+    <nav class="nav">
+      <a href="#diag">Диагноз</a>
+      <a href="#list">Целевой список</a>
+      <a href="#map">Было → станет</a>
+      <a href="#pair">Стык с typical</a>
+      <a href="#approve">Утверждение</a>
+    </nav>
+
+    <h1>Каталог `solution_method`</h1>
+    <p class="lead">Сжать дубли · без «Другое» и «Бумаги» · каждый typical имеет выход. Катить вместе с typical.</p>
+
+    <section id="diag">
+      <div class="stats">
+        <div class="stat warn"><div class="v">4 658</div><div class="l">Только «Другое» без MFC</div></div>
+        <div class="stat warn"><div class="v">~36%</div><div class="l">Доля «только Другое»</div></div>
+        <div class="stat"><div class="v">2 346</div><div class="l">Способ пуст (без MFC)</div></div>
+        <div class="stat"><div class="v">18→16?</div><div class="l">Целевой список ниже · правьте</div></div>
+      </div>
+      <div class="callout info">
+        <strong>Смысл поля</strong>
+        Способ = <b>что сделали</b> (глагол). Typical = <b>что сломалось</b>. Нестандарт закрывает дыру проблемы; способ всё равно из списка.
+      </div>
+    </section>
+
+    <section id="list">
+      <h2>Целевой список (имена для Okdesk)</h2>
+      <div class="card">
+        <div class="card-h"><span>Копировать в админку</span><span class="n">19 пунктов · без «Другое»</span></div>
+        <table>
+          <thead><tr><th>#</th><th>Имя</th><th>Заметка</th></tr></thead>
+          <tbody>
+            <tr><td class="id">1</td><td><code>Рестарт ПО / сервиса (фронт, спулер, IIS, GriServ…)</code></td><td>слияние двух рестартов</td></tr>
+            <tr><td class="id">2</td><td><code>Обмен / перевыгрузка данных (в т.ч. SALES3)</code></td><td>обмен + SALES3; выгрузки</td></tr>
+            <tr><td class="id">3</td><td><code>Железо / периферия: питание, кабели, переподключение</code></td><td>стык с «Периферия»</td></tr>
+            <tr><td class="id">4</td><td><code>Сеть / недоступность внешнего сервиса (ЧЗ, FTP, процессинг, интернет)</code></td><td>оплата, ОФД, ЧЗ опер.</td></tr>
+            <tr><td class="id">5</td><td><code>Проблема 1С / источника меню</code></td><td></td></tr>
+            <tr><td class="id">6</td><td><code>БД / ручная корректировка данных</code></td><td></td></tr>
+            <tr><td class="id">7</td><td><code>Отмена чека / сторно / возврат / перенос</code></td><td>«Корректировка чека»</td></tr>
+            <tr><td class="id">8</td><td><code>Закрытие смены / устранение расхождения смены</code></td><td></td></tr>
+            <tr><td class="id">9</td><td><code>Восстановление настроек кассы</code></td><td>лицензия / ошибка на кассе</td></tr>
+            <tr><td class="id">10</td><td><code>Доступ / права / код кассира / портал</code></td><td></td></tr>
+            <tr><td class="id">11</td><td><code>Точечная настройка ПО / конфига (не раскатка)</code></td><td>≠ №12</td></tr>
+            <tr><td class="id">12</td><td><code>Обновление / раскатка ПО</code></td><td>сбой авто → сюда</td></tr>
+            <tr><td class="id">13</td><td><code>НДС / фиск. параметры (точечно или обновление)</code></td><td>оба typical НДС</td></tr>
+            <tr><td class="id">14</td><td><code>Карты / лимиты / начисления</code></td><td></td></tr>
+            <tr><td class="id">15</td><td><code>Консультация / ответ без изменений в системе</code></td><td>≠ самовосстановление</td></tr>
+            <tr><td class="id">16</td><td><code>Самовосстановление</code></td><td>запасной для любого</td></tr>
+            <tr><td class="id">17</td><td><code>Разбор / сверка / расследование</code></td><td></td></tr>
+            <tr><td class="id">18</td><td><code>Подключение / настройка / запуск объекта</code></td><td></td></tr>
+            <tr><td class="id">19</td><td><code>Статья базы знаний (публикация / правка)</code></td><td>+ после ревизии покрытия</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout warn">
+        <strong>Не заводим / убираем</strong>
+        «Другое», «Проверить наличие бумаги». Отдельный «фейл авто» не заводим.
+      </div>
+    </section>
+
+    <section id="map">
+      <h2>Было → станет</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Сейчас</th><th class="num">N без MFC</th><th>Куда</th></tr></thead>
+          <tbody>
+            <tr><td>Другое</td><td class="num">4 934</td><td>разнести по новым пунктам; убрать</td></tr>
+            <tr><td>Рестарт ПО…</td><td class="num">1 155</td><td>→ №1 (+ GriServ 243)</td></tr>
+            <tr><td>Рестарт GriServ</td><td class="num">243</td><td>→ №1</td></tr>
+            <tr><td>Выполнить обмен</td><td class="num">796</td><td>→ №2 (+ SALES3 77)</td></tr>
+            <tr><td>Настройка ПО и доступы</td><td class="num">725</td><td>→ №10 и №11</td></tr>
+            <tr><td>Отменить чек…</td><td class="num">584</td><td>→ №7</td></tr>
+            <tr><td>Сеть / внешний сервис</td><td class="num">503</td><td>→ №4</td></tr>
+            <tr><td>Расхождение смены…</td><td class="num">454</td><td>→ №8</td></tr>
+            <tr><td>Проблема БД…</td><td class="num">448</td><td>→ №6</td></tr>
+            <tr><td>Питание оборудования</td><td class="num">367</td><td>→ №3</td></tr>
+            <tr><td>Провода / переподключение</td><td class="num">206</td><td>→ №3</td></tr>
+            <tr><td>Самовосстановление</td><td class="num">353</td><td>→ №16</td></tr>
+            <tr><td>Восстановление настроек кассы</td><td class="num">199</td><td>→ №9</td></tr>
+            <tr><td>Проблема 1С / меню</td><td class="num">117</td><td>→ №5</td></tr>
+            <tr><td>Бумага</td><td class="num">16</td><td>убрать</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="pair">
+      <h2>Ревизия: каждый typical → способ</h2>
+      <p class="lead">Основной выход жирным. №16 самовосстановление — запасной для любого (не дублируем в каждой строке).</p>
+      <div class="card">
+        <table>
+          <thead><tr><th class="num">#</th><th>Typical</th><th>Основной</th><th>Ещё ок</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Не печатаются / не закрываются чеки…</td><td><b>1</b></td><td>3, 6, 9</td></tr>
+            <tr><td class="num">2</td><td>Не закрывается смена</td><td><b>8</b></td><td>1, 9</td></tr>
+            <tr><td class="num">3</td><td>Нет меню / нет товара</td><td><b>2</b></td><td>5</td></tr>
+            <tr><td class="num">4</td><td>Корректировка чека</td><td><b>7</b></td><td>6</td></tr>
+            <tr><td class="num">5</td><td>Не работает касса, перезапуск</td><td><b>1</b></td><td>3</td></tr>
+            <tr><td class="num">6</td><td>Оплата не проходит</td><td><b>4</b></td><td>1, 11, 3</td></tr>
+            <tr><td class="num">7</td><td>Не уходят чеки в ОФД</td><td><b>4</b></td><td>1, 9</td></tr>
+            <tr><td class="num">8</td><td>Периферия</td><td><b>3</b></td><td>1</td></tr>
+            <tr><td class="num">9</td><td>Ошибка на кассе (лицензия…)</td><td><b>9 / 11</b></td><td>12</td></tr>
+            <tr><td class="num">10</td><td>ЧЗ / маркировка (опер.)</td><td><b>4</b></td><td>1, 11</td></tr>
+            <tr><td class="num">11</td><td>Карты питания и клиенты</td><td><b>14</b></td><td>10, 6</td></tr>
+            <tr><td class="num">12</td><td>Доступы и настройки</td><td><b>10 / 11</b></td><td>—</td></tr>
+            <tr><td class="num">13</td><td>Консультация / звонок</td><td><b>15</b></td><td>—</td></tr>
+            <tr><td class="num">14</td><td>Расхождение смены / принуд.</td><td><b>8</b></td><td>6</td></tr>
+            <tr><td class="num">15</td><td>Отчёты</td><td><b>15</b> (вопрос)</td><td>2, 1/9</td></tr>
+            <tr><td class="num">16</td><td>НДС точечный</td><td><b>13</b></td><td>11</td></tr>
+            <tr><td class="num">17</td><td>Банк / модуль банка</td><td><b>11 / 12</b></td><td>1</td></tr>
+            <tr><td class="num">18</td><td>Обновление / раскатка ПО</td><td><b>12</b></td><td>11</td></tr>
+            <tr><td class="num">19</td><td>Обновление НДС / фиск.</td><td><b>13</b></td><td>12</td></tr>
+            <tr><td class="num">20</td><td>Расхождение / расследование</td><td><b>17</b></td><td>6, 2</td></tr>
+            <tr><td class="num">21</td><td>Статья базы знаний</td><td><b>19</b></td><td>—</td></tr>
+            <tr><td class="num">22</td><td>Подключение / запуск</td><td><b>18</b></td><td>3, 11</td></tr>
+            <tr><td class="num">—</td><td>Нестандарт + Суть</td><td>любой из 19</td><td>typical на форме <b>нет</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout ok">
+        <strong>Итог ревизии</strong>
+        Дыра «Статья БЗ» закрыта пунктом способа №19. Оплата / ОФД / ЧЗ опер. явно на №4. «Другое» в списке нет.
+      </div>
+    </section>
+
+    <section id="approve">
+      <h2>Утверждение</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>#</th><th>Вопрос</th><th>Статус</th><th>Комментарий</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>1</td><td>Слияния OK? Рестарт+GriServ→№1; питание+провода→№3; обмен+SALES3→№2</td>
+              <td><select class="status-sel" data-key="s.1"><option value="">—</option><option value="да">да</option><option value="правим">правим</option></select></td>
+              <td><textarea class="row-c" data-key="s.1.c" rows="1"></textarea></td>
+            </tr>
+            <tr>
+              <td>2</td><td>Список принимаем (сейчас 19 после +статьи БЗ)</td>
+              <td><select class="status-sel" data-key="s.2"><option value="">—</option><option value="да">да</option><option value="правим">правим</option></select></td>
+              <td><textarea class="row-c" data-key="s.2.c" rows="1" placeholder="что выкинуть/слить"></textarea></td>
+            </tr>
+            <tr>
+              <td>3</td><td>НДС в способах: один пункт №13 (не два отдельных)</td>
+              <td><select class="status-sel" data-key="s.3"><option value="">—</option><option value="да">да</option><option value="два">оставить два</option></select></td>
+              <td><textarea class="row-c" data-key="s.3.c" rows="1"></textarea></td>
+            </tr>
+            <tr>
+              <td>4</td><td>Убрать «Другое» и «Бумагу» после параллели с typical</td>
+              <td><select class="status-sel" data-key="s.4"><option value="">—</option><option value="да">да</option><option value="правим">правим</option></select></td>
+              <td><textarea class="row-c" data-key="s.4.c" rows="1"></textarea></td>
+            </tr>
+            <tr>
+              <td>5</td><td>Имена as-is для Okdesk</td>
+              <td><select class="status-sel" data-key="s.5"><option value="">—</option><option value="да">да</option><option value="правим">правим</option></select></td>
+              <td><textarea class="row-c" data-key="s.5.c" rows="2" placeholder="правки формулировок"></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout ok">
+        <strong>Статус 2026-07-24</strong>
+        s.2 / s.4 / s.5 = да. Ревизия покрытия: +№19 «Статья БЗ»; матрица на все 22 typical. «Другое» не заводим.
+      </div>
+    </section>
+
+    <footer>okdesk-score-rules · analysis/solution-final.html · docs/25-solution-final.md</footer>
+
+    <div class="toolbar">
+      <button type="button" id="btnAll">Всё «да»</button>
+      <button type="button" id="btnJson" class="secondary">Скачать JSON</button>
+      <span class="saved" id="saveState"></span>
+    </div>
+  </div>
+  <script>
+  (function () {
+    const STORE = "okdesk-solution-approval-v1";
+    const fields = () => document.querySelectorAll("[data-key]");
+    function paint(el) {
+      if (!el.classList.contains("status-sel")) return;
+      el.classList.remove("ok", "fix");
+      if (el.value === "да") el.classList.add("ok");
+      if (el.value === "правим" || el.value === "два") el.classList.add("fix");
+    }
+    function collect() {
+      const c = {};
+      fields().forEach((el) => { c[el.dataset.key] = el.value; });
+      return { saved_at: new Date().toISOString(), comments: c };
+    }
+    function persist() {
+      localStorage.setItem(STORE, JSON.stringify(collect()));
+      document.getElementById("saveState").textContent = "сохранено " + new Date().toLocaleTimeString("ru-RU");
+    }
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (raw) {
+        const map = JSON.parse(raw).comments || {};
+        fields().forEach((el) => { if (map[el.dataset.key] != null) el.value = map[el.dataset.key]; paint(el); });
+      }
+    } catch (e) {}
+    fields().forEach((el) => {
+      el.addEventListener("change", () => { paint(el); persist(); });
+      el.addEventListener("input", persist);
+    });
+    document.getElementById("btnAll").onclick = () => {
+      document.querySelectorAll(".status-sel").forEach((s) => { s.value = "да"; paint(s); });
+      persist();
+    };
+    document.getElementById("btnJson").onclick = () => {
+      const blob = new Blob([JSON.stringify(collect(), null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "solution-approval-comments.json";
+      a.click();
+    };
+  })();
+  </script>
+</body>
+</html>

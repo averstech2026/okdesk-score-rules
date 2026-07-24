@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Итоговый typical + покрытие / Нестандарт</title>
+  <style>
+    :root {
+      --bg: #f4f5f7; --surface: #fff; --text: #1a1d23; --muted: #5c6570; --faint: #8b939e;
+      --line: #e2e5ea; --accent: #1f4b7a;
+      --t5: #2a5f8f; --c15: #8a5a00; --s30: #1f6b3a; --h60: #6b21a8;
+      --ok-bg: #eef8f1; --warn-bg: #fff6e8; --info-bg: #eef5fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.45; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 28px 20px 72px; }
+    h1 { font-size: 1.45rem; font-weight: 700; margin: 0 0 8px; }
+    h2 { font-size: 1.15rem; font-weight: 650; margin: 28px 0 10px; }
+    .lead { color: var(--muted); margin: 0 0 16px; max-width: 72ch; }
+    .banner {
+      background: #1f4b7a; color: #fff; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px;
+    }
+    .banner a { color: #cfe3ff; }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+    .nav a {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none; border: 1px solid var(--line);
+      background: var(--surface); padding: 6px 10px; border-radius: 8px;
+    }
+    .codes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+    .codes span {
+      font-size: 0.82rem; font-weight: 650; padding: 5px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line);
+    }
+    .codes .t5 { color: var(--t5); }
+    .codes .c15 { color: var(--c15); }
+    .codes .s30 { color: var(--s30); }
+    .codes .h60 { color: var(--h60); }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0 16px; }
+    @media (max-width: 800px) { .stats { grid-template-columns: 1fr 1fr; } }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+    .stat .v { font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+    .stat .l { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+    .stat.ok .v { color: var(--s30); }
+    .stat.warn .v { color: var(--c15); }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+    .card-h { padding: 11px 16px; border-bottom: 1px solid var(--line); font-weight: 650; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .card-h .n { font-weight: 500; font-size: 0.82rem; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: #fafbfc; }
+    tr:last-child td { border-bottom: 0; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.id { width: 2.4rem; color: var(--faint); }
+    td.base { width: 3.8rem; text-align: center; }
+    td.ncol { width: 4.2rem; color: var(--muted); font-size: 0.82rem; }
+    .badge {
+      display: inline-block; font-size: 0.8rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+    }
+    .badge.t5 { background: #e8f0f8; color: var(--t5); }
+    .badge.c15 { background: var(--warn-bg); color: var(--c15); }
+    .badge.s30 { background: var(--ok-bg); color: var(--s30); }
+    .badge.h60 { background: #f3e8ff; color: var(--h60); }
+    .badge.kill { background: #fdeceb; color: #9b2c2c; }
+    .name { font-weight: 550; }
+    .hint { display: block; font-size: 0.78rem; color: var(--muted); font-weight: 400; margin-top: 2px; }
+    .callout { border-radius: 10px; padding: 14px 16px; margin: 12px 0; border: 1px solid var(--line); background: var(--surface); font-size: 0.9rem; }
+    .callout.info { background: var(--info-bg); border-color: #7aa7d0; }
+    .callout.warn { background: var(--warn-bg); border-color: #e6b35c; }
+    .callout.ok { background: var(--ok-bg); border-color: #9bc9a8; }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .bar { height: 10px; background: #e8ecf0; border-radius: 6px; overflow: hidden; margin: 8px 0 4px; }
+    .bar > i { display: block; height: 100%; background: #1f6b3a; }
+    .bar > i.mid { background: #c9831a; }
+    .bar > i.hi { background: #9b2c2c; }
+    .muted { color: var(--muted); font-size: 0.85rem; }
+    footer { margin-top: 28px; color: var(--faint); font-size: 0.8rem; border-top: 1px solid var(--line); padding-top: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <strong style="display:block;margin-bottom:6px">Итоговый typical + ревизия покрытия</strong>
+      Период выгрузки 23.01–22.07.2026 · 19 640 заявок · KPI каталога <b>без MFC</b> (13 066).
+      Данные: <code>typical-coverage.json</code> ·
+      <a href="weight-approval.html">согласование весов</a> ·
+      <a href="typical-catalog.html">старая сводка</a>
+    </div>
+
+    <nav class="nav">
+      <a href="#okdesk-names">Имена для Okdesk</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#coverage">Покрытие</a>
+      <a href="#map">Было → станет</a>
+      <a href="#baskets">Другое / Доп.</a>
+      <a href="#nonstd">Нестандарт</a>
+    </nav>
+
+    <section id="okdesk-names">
+      <h2>Имена для Okdesk</h2>
+      <p class="lead">22 пункта · один список · <b>без префиксов веса</b> ([5]/[30]/…). База — в таблице маппинга / скриптах; в UI пока не светим, чтобы не влиять на выбор. Порядок в админке — как ниже (сначала частые оперативные).</p>
+      <div class="callout info">
+        <strong>Решение 2026-07-24</strong>
+        Префиксы баллов отложены на несколько недель / месяц. Смотрим, как выбирают «как есть», потом вернём подсказки в UI при необходимости.
+      </div>
+      <div class="card">
+        <div class="card-h"><span>Оперативные</span><span class="n">база 5 · 16 пунктов</span></div>
+        <table>
+          <thead><tr><th class="num">#</th><th>Значение списка (копировать)</th><th class="num">База</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><code>Не печатаются / не закрываются чеки (сбой ФР, сумма оплат…)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">2</td><td><code>Не закрывается смена</code></td><td class="num">5</td></tr>
+            <tr><td class="num">3</td><td><code>Нет меню / нет товара на кассе</code></td><td class="num">5</td></tr>
+            <tr><td class="num">4</td><td><code>Корректировка чека (сторно, возврат, удаление, перенос)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">5</td><td><code>Не работает касса, перезапуск</code></td><td class="num">5</td></tr>
+            <tr><td class="num">6</td><td><code>Оплата не проходит (банк / процессинг / ДУЭТ)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">7</td><td><code>Не уходят чеки в ОФД</code></td><td class="num">5</td></tr>
+            <tr><td class="num">8</td><td><code>Периферия (сканер, весы, экран покупателя, считыватель карт…)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">9</td><td><code>Ошибка на кассе (лицензия, задним числом…)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">10</td><td><code>ЧЗ / маркировка (оперативный инцидент)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">11</td><td><code>Карты питания и клиенты</code></td><td class="num">5</td></tr>
+            <tr><td class="num">12</td><td><code>Доступы и настройки (код кассира, портал, не блокирует)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">13</td><td><code>Консультация / звонок</code></td><td class="num">5</td></tr>
+            <tr><td class="num">14</td><td><code>Расхождение смены / принуд. закрытие (оперативное)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">15</td><td><code>Отчёты (вопросы / печать отчёта)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">16</td><td><code>НДС: точечная ошибка ставки / режима</code></td><td class="num">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-h"><span>Пакеты / обновления</span><span class="n">база 5 · N в поле object_count</span></div>
+        <table>
+          <thead><tr><th class="num">#</th><th>Значение списка</th><th class="num">База</th></tr></thead>
+          <tbody>
+            <tr><td class="num">17</td><td><code>Банк / модуль банка (ручная доводка)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">18</td><td><code>Обновление / раскатка ПО (не путать с установкой)</code></td><td class="num">5</td></tr>
+            <tr><td class="num">19</td><td><code>Обновление НДС / фиск. параметров</code></td><td class="num">5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-h"><span>Сложные</span><span class="n">30 / 60 · в маппинге, не в имени</span></div>
+        <table>
+          <thead><tr><th class="num">#</th><th>Значение списка</th><th class="num">База</th></tr></thead>
+          <tbody>
+            <tr><td class="num">20</td><td><code>Расхождение / расследование (1С, ОФД, ЧЗ-отклонения…)</code></td><td class="num">30</td></tr>
+            <tr><td class="num">21</td><td><code>Статья базы знаний</code></td><td class="num">30</td></tr>
+            <tr><td class="num">22</td><td><code>Подключение / настройка / запуск объекта (или партии)</code><span class="hint">при партии — N в object_count</span></td><td class="num">60</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout warn">
+        <strong>Убрано из typical</strong>
+        «Сопутствующий сервис клиента» → тип <b>Нестандарт</b> + в Сути Work Bright / AllBusiness / что было.
+        «Другое» не заводим. Позже по текстам Сути решим, какие пункты добавить в typical.
+      </div>
+    </section>
+
+    <h1 id="catalog">Справка по блокам</h1>
+    <p class="lead">25→22 пункта после слияний. Коды T5/C15/S30/H60 — только маппинг баллов.</p>
+
+    <div class="codes">
+      <span class="t5">T5 = 5</span>
+      <span class="c15">C15 = 15 · Нестандарт</span>
+      <span class="s30">S30 = 30</span>
+      <span class="h60">H60 = 60</span>
+      <span>× N в поле object_count (регламент)</span>
+      <span>выезд = только 60</span>
+    </div>
+
+    <section id="catalog">
+      <div class="callout info">
+        <strong>Актуальный список — блок «Имена для Okdesk» выше</strong>
+        22 пункта. Слияния: доступы+настройки → №12 · оборудование+запуск → №22.
+        Сопутствующий сервис убран → Нестандарт + Суть.
+      </div>
+    </section>
+
+    <!-- ========== COVERAGE ========== -->
+    <section id="coverage">
+      <h2>Покрытие существующих проблем (без MFC)</h2>
+      <p class="lead">
+        Сопоставили текущий typical и заголовки из «Другое» / «Доп. настройки…» с каталогом
+        (эвристика по title). MFC (6 574) в KPI не входит. После уборки «сопутствующий сервис»
+        хвост WB/AllBusiness (~80 без MFC) уходит в Нестандарт — доля чуть выше нижней оценки.
+      </p>
+
+      <div class="stats">
+        <div class="stat"><div class="v">13 066</div><div class="l">Заявок без MFC</div></div>
+        <div class="stat ok"><div class="v">~79%</div><div class="l">Мапится на typical<br>(без учёта WB→Нестандарт)</div></div>
+        <div class="stat warn"><div class="v">~9–13%</div><div class="l">Ориентир Нестандарт<br>(+ сервисы клиента)</div></div>
+        <div class="stat"><div class="v">≤21%</div><div class="l">Верхняя оценка + пусто</div></div>
+      </div>
+
+      <div class="callout ok">
+        <strong>Вывод</strong>
+        Именованные typical + узнаваемые корзины ≈ 79%. Нераспознанный хвост ~8% + бывший «сопутствующий сервис»
+        и часть «Доп.» → Нестандарт / сжатый №12. Цель после параллели: <b>9–13%</b> Нестандарт на нативе.
+      </div>
+    </section>
+
+    <section id="map">
+      <h2>Текущий typical → куда (без MFC)</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Сейчас в Okdesk</th><th class="num">N</th><th>Куда в новом каталоге</th></tr></thead>
+          <tbody>
+            <tr><td>Доп. настройки, сопутствующий сервис…</td><td class="num">2 061</td><td>Разнести: карты, доступы, раскатки, запуски…; остаток → <b>№13</b> сжатый</td></tr>
+            <tr><td>(пусто)</td><td class="num">1 624</td><td>Заполнять из каталога; не считать KPI «Нестандарт»</td></tr>
+            <tr><td>Не печатаются / не закрываются чеки…</td><td class="num">1 263</td><td>→ №1</td></tr>
+            <tr><td>Другое</td><td class="num">1 248</td><td>Разнести по каталогу; хвост → Нестандарт</td></tr>
+            <tr><td>Не закрывается смена</td><td class="num">946</td><td>→ №2 (+ часть в №15a при расхождении смены)</td></tr>
+            <tr><td>Не проходит карта клиента</td><td class="num">897</td><td>→ №11 Карты питания и клиенты</td></tr>
+            <tr><td>Нет меню / нет товара</td><td class="num">881</td><td>→ №3</td></tr>
+            <tr><td>Консультация</td><td class="num">815</td><td>→ №14</td></tr>
+            <tr><td>Отменить чек…</td><td class="num">598</td><td>→ №4 Корректировка чека</td></tr>
+            <tr><td>Не работает касса, перезапуск</td><td class="num">516</td><td>→ №5</td></tr>
+            <tr><td>Оплата (банк/процессинг) + ДУЭТ</td><td class="num">475+220</td><td>→ №6 слиты</td></tr>
+            <tr><td>Не работает ЧЗ</td><td class="num">296</td><td>→ №10</td></tr>
+            <tr><td>Вопросы по отчётам + не печатается отчёт</td><td class="num">224+92</td><td>→ №15b Отчёты</td></tr>
+            <tr><td>Предоставление доступа</td><td class="num">183</td><td>→ №12</td></tr>
+            <tr><td>ОФД / сканер / ошибка кассы / оборудование</td><td class="num">~600</td><td>→ №7 / 8 / 9 / 19</td></tr>
+            <tr><td>Расхождение данных в отчётах…</td><td class="num">104</td><td>→ №24 (глубокое) или №15a/15b</td></tr>
+            <tr><td>Не обновились лимиты</td><td class="num">18</td><td>→ №11</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="baskets">
+      <h2>Что спрятано в «Другое» и «Доп.» (без MFC, по title)</h2>
+      <div class="callout info">
+        <strong>Метод</strong>
+        Заявки с typical = «Другое» (1 248) или «Доп. настройки…» (2 061). Классификация по ключевым словам в заголовке → целевой №.
+        Не идеально, но совпадает с прошлой ручной разметкой корзин.
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span>«Другое» → каталог</span><span class="n">1 248 · узнано ~59% · хвост 517</span></div>
+        <table>
+          <thead><tr><th>→ Новый пункт</th><th class="num">N≈</th></tr></thead>
+          <tbody>
+            <tr><td>№11 Карты питания и клиенты</td><td class="num">190</td></tr>
+            <tr><td>№12 Доступ / код кассира</td><td class="num">91</td></tr>
+            <tr><td>№14 Консультация / звонок</td><td class="num">78</td></tr>
+            <tr><td>№3 Меню / товар</td><td class="num">77</td></tr>
+            <tr><td>№1 Чеки / ФР</td><td class="num">72</td></tr>
+            <tr><td>№15b Отчёты</td><td class="num">58</td></tr>
+            <tr><td>№10 ЧЗ оперативный</td><td class="num">41</td></tr>
+            <tr><td>Прочее узнанное (оплата, расследование, оборудование…)</td><td class="num">~124</td></tr>
+            <tr><td><b>Не распознано → Нестандарт</b></td><td class="num"><b>517</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span>«Доп. настройки, сопутствующий сервис…» → каталог</span><span class="n">2 061 · узнано ~69% · хвост 644</span></div>
+        <table>
+          <thead><tr><th>→ Новый пункт</th><th class="num">N≈</th></tr></thead>
+          <tbody>
+            <tr><td>№12 Доступ / код кассира</td><td class="num">298</td></tr>
+            <tr><td>№11 Карты питания и клиенты</td><td class="num">291</td></tr>
+            <tr><td>№3 Меню / товар</td><td class="num">194</td></tr>
+            <tr><td>№1 Чеки / ФР</td><td class="num">170</td></tr>
+            <tr><td>№21 Обновление / раскатка ПО</td><td class="num">127</td></tr>
+            <tr><td>№19 Оборудование</td><td class="num">69</td></tr>
+            <tr><td>№6 Оплата / №15b Отчёты / №10 ЧЗ / №20 Запуск…</td><td class="num">~268</td></tr>
+            <tr><td>№13 Настройки (узкий остаток catch-all)</td><td class="num">~35+</td></tr>
+            <tr><td><b>Не распознано → Нестандарт или №13</b></td><td class="num"><b>644</b></td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="padding:10px 14px">
+          «Сопутствующий сервис» в старом имени пункта — почти всегда не Work Bright: реальные WB/AllBusiness чаще сидят в «Другое» (~80) → отдельный №16.
+        </p>
+      </div>
+    </section>
+
+    <section id="nonstd">
+      <h2>Сколько останется на Нестандарт</h2>
+
+      <div class="callout warn">
+        <strong>Ориентир (без MFC)</strong>
+        <div style="margin-top:8px">Низкий (только нераспознанный хвост корзин): <b>~8%</b> ≈ <b>1 050</b> из 13 066</div>
+        <div class="bar"><i style="width:8%"></i></div>
+        <div>Средний (хвост + четверть пустых как «не нашли пункт»): <b>~11%</b></div>
+        <div class="bar"><i class="mid" style="width:11%"></i></div>
+        <div>Верхний (весь хвост + всё пусто — пессимизм): <b>~20%</b></div>
+        <div class="bar"><i class="hi" style="width:20%"></i></div>
+      </div>
+
+      <div class="callout ok">
+        <strong>Практическая цель после 1–2 недель параллели</strong>
+        Держать долю типа «Нестандарт» на нативных заявках в районе <b>9–13%</b>
+        (включая бывший «сопутствующий сервис»).
+        Если &gt;15–18% — разбирать «Суть» и добавлять пункты в typical.
+        MFC-bulk через Нестандарт <b>не</b> оформляем.
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span>Примеры «не распознано» в корзинах (без MFC)</span><span class="n">часто всё же №12/5 после обучения</span></div>
+        <table>
+          <thead><tr><th>Заголовок</th><th class="num">N</th></tr></thead>
+          <tbody>
+            <tr><td>вопрос по кассе / проблема с кассой / заявка</td><td class="num">~50</td></tr>
+            <tr><td>изъятие средств</td><td class="num">13</td></tr>
+            <tr><td>Нет данных</td><td class="num">8</td></tr>
+            <tr><td>мониторинг / менеджер / ЕЛС / категории…</td><td class="num">хвост</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      okdesk-score-rules · analysis/typical-final.html ·
+      пересчёт: <code>python3 scripts/analyze_typical_coverage.py</code> → typical-coverage.json ·
+      docs/22
+    </footer>
+  </div>
+</body>
+</html>
