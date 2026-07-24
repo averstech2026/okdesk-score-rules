@@ -327,6 +327,41 @@ code {
 }
 .context-combo .combo__input {
   width: 100%;
+  padding-right: 56px;
+  cursor: text;
+}
+.context-combo .combo__clear {
+  right: 28px;
+}
+.context-combo .combo__chevron {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.context-combo .combo__chevron::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #64748b;
+  border-bottom: 2px solid #64748b;
+  transform: rotate(45deg);
+  transition: transform 0.15s ease;
+}
+.context-combo .combo.is-open .combo__chevron::before {
+  top: 8px;
+  transform: rotate(-135deg);
+}
+.context-combo .combo:hover .combo__input {
+  border-color: #9ca3af;
 }
 .context-bar__hint {
   margin: 0;

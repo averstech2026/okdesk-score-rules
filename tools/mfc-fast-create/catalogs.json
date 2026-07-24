@@ -3,6 +3,7 @@
   "assignee_id": 5,
   "company_name": "ООО эМэФСи (МФС, MFC)",
   "assignee_name": "Петров Артём Евгеньевич",
+  "engineer_group_id": 7,
   "issue_type": "service",
   "complication_levels": ["+15", "+30"],
   "companies": [

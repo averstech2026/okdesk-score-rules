@@ -262,6 +262,11 @@ function mountSearchCombo(root, opts) {
     hidden: true,
   });
 
+  const chevron = el("span", {
+    className: "combo__chevron",
+    "aria-hidden": "true",
+  });
+
   const list = el("div", { className: "combo__list", hidden: true });
   document.body.appendChild(list);
 
@@ -286,12 +291,14 @@ function mountSearchCombo(root, opts) {
 
   function closeList() {
     list.hidden = true;
+    root.classList.remove("is-open");
   }
 
   function pick(item) {
     selected = { id: item.id, name: item.name };
     input.value = item.name;
     clearBtn.hidden = true;
+    root.classList.remove("is-open");
     closeList();
     opts.onSelect(selected);
   }
@@ -324,14 +331,15 @@ function mountSearchCombo(root, opts) {
   }
 
   async function openSearch(q) {
-    let items = filterNamedItems(opts.getItems(), q, 40);
+    root.classList.add("is-open");
+    let items = filterNamedItems(opts.getItems(), q, 80);
     if (opts.searchRemote && (q.trim().length >= 1 || !items.length)) {
       try {
         const remote = await opts.searchRemote(q.trim());
         if (remote?.length) {
           const byId = new Map();
           for (const x of [...items, ...remote]) byId.set(String(x.id), x);
-          items = filterNamedItems([...byId.values()], q, 40);
+          items = filterNamedItems([...byId.values()], q, 80);
         }
       } catch (_) {}
     }
@@ -376,8 +384,12 @@ function mountSearchCombo(root, opts) {
     input.focus();
     openSearch("");
   });
+  chevron.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    input.focus();
+  });
 
-  root.append(input, clearBtn);
+  root.append(input, clearBtn, chevron);
 }
 
 function isMfcCompany() {
@@ -501,7 +513,7 @@ async function initContextBar() {
   });
 
   mountSearchCombo(assigneeRoot, {
-    placeholder: "Поиск сотрудника…",
+    placeholder: "Поиск инженера…",
     getItems: () => state.employeesCache,
     searchRemote: async (q) => {
       const data = await api(`/api/mfc/employees?q=${encodeURIComponent(q)}`);

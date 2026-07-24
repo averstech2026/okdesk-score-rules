@@ -30,6 +30,10 @@ load_dotenv(REPO_ROOT / ".env")
 CATALOGS = json.loads((ROOT / "catalogs.json").read_text(encoding="utf-8"))
 COMPANY_ID = int(os.getenv("MFC_COMPANY_ID", CATALOGS.get("company_id", 9)))
 ASSIGNEE_ID = int(os.getenv("MFC_ASSIGNEE_ID", CATALOGS.get("assignee_id", 5)))
+# Группа «инженеры» / Support в Okdesk (как в ShiftPlanner assigneeGroupId)
+ENGINEER_GROUP_ID = int(
+    os.getenv("MFC_ENGINEER_GROUP_ID", CATALOGS.get("engineer_group_id", 7))
+)
 ISSUE_TYPE = os.getenv("MFC_ISSUE_TYPE", CATALOGS.get("issue_type", "service"))
 # Comma-separated status codes applied in order after create (comment on first)
 STATUS_CODES = [
@@ -95,7 +99,30 @@ def _normalize_employee(raw: dict) -> dict | None:
         ).strip()
         or f"Сотрудник #{eid}"
     )
-    return {"id": int(eid), "name": str(name)}
+    active = raw.get("active")
+    if active is None:
+        active = raw.get("is_active")
+    group_ids: list[int] = []
+    for g in raw.get("groups") or []:
+        if isinstance(g, dict) and g.get("id") is not None:
+            group_ids.append(int(g["id"]))
+    for key in ("default_assignee_group", "group"):
+        g = raw.get(key)
+        if isinstance(g, dict) and g.get("id") is not None:
+            group_ids.append(int(g["id"]))
+    return {
+        "id": int(eid),
+        "name": str(name),
+        "active": False if active is False else True,
+        "group_ids": sorted(set(group_ids)),
+    }
+
+
+def _employee_in_engineer_group(emp: dict, group_id: int) -> bool:
+    if not emp or emp.get("active") is False:
+        return False
+    gid = int(group_id)
+    return any(int(x) == gid for x in (emp.get("group_ids") or []))
 
 
 def _catalog_companies() -> list[dict]:
@@ -110,14 +137,15 @@ def _catalog_companies() -> list[dict]:
 
 
 def _catalog_employees() -> list[dict]:
-    items = list(CATALOGS.get("employees") or [])
-    default = {
-        "id": ASSIGNEE_ID,
-        "name": CATALOGS.get("assignee_name") or f"Сотрудник #{ASSIGNEE_ID}",
-    }
-    if not any(int(x.get("id", -1)) == ASSIGNEE_ID for x in items):
-        items = [default, *items]
-    return [{"id": int(x["id"]), "name": str(x.get("name") or x["id"])} for x in items]
+    """Локальный пресет — только дефолтный ответственный (полный список из Okdesk)."""
+    return [
+        {
+            "id": ASSIGNEE_ID,
+            "name": CATALOGS.get("assignee_name") or f"Сотрудник #{ASSIGNEE_ID}",
+            "active": True,
+            "group_ids": [ENGINEER_GROUP_ID],
+        }
+    ]
 
 
 def _merge_named(primary: list[dict], extra: list[dict]) -> list[dict]:
@@ -127,8 +155,57 @@ def _merge_named(primary: list[dict], extra: list[dict]) -> list[dict]:
             iid = int(item["id"])
         except (KeyError, TypeError, ValueError):
             continue
-        by_id[iid] = {"id": iid, "name": str(item.get("name") or iid)}
+        by_id[iid] = {
+            "id": iid,
+            "name": str(item.get("name") or iid),
+            "active": item.get("active", True),
+            "group_ids": list(item.get("group_ids") or []),
+        }
     return sorted(by_id.values(), key=lambda x: str(x["name"]).casefold())
+
+
+_employees_lock = threading.Lock()
+_employees_cache: tuple[float, list[dict]] | None = None
+EMPLOYEES_TTL_SEC = 300.0
+
+
+def _load_engineer_employees(force: bool = False) -> list[dict]:
+    """Активные сотрудники группы инженеров (Support)."""
+    global _employees_cache
+    now = time.time()
+    with _employees_lock:
+        if (
+            not force
+            and _employees_cache
+            and now - _employees_cache[0] < EMPLOYEES_TTL_SEC
+        ):
+            return list(_employees_cache[1])
+
+    remote: list[dict] = []
+    try:
+        client = _require_client()
+        try:
+            for raw in client.list_employees():
+                item = _normalize_employee(raw if isinstance(raw, dict) else {})
+                if item and _employee_in_engineer_group(item, ENGINEER_GROUP_ID):
+                    remote.append(item)
+        finally:
+            client.close()
+    except HTTPException:
+        remote = []
+    except Exception:
+        remote = []
+
+    # если API пуст — хотя бы дефолтный Артём из каталога
+    items = _merge_named(_catalog_employees() if not remote else [], remote)
+    items = [
+        {"id": x["id"], "name": x["name"]}
+        for x in items
+        if x.get("active") is not False
+    ]
+    with _employees_lock:
+        _employees_cache = (time.time(), items)
+        return list(items)
 
 
 def _load_objects(company_id: int, force: bool = False) -> list[dict]:
@@ -280,6 +357,7 @@ def health() -> dict[str, Any]:
 @app.get("/api/mfc/catalogs")
 def catalogs() -> dict[str, Any]:
     domain = os.getenv("OKDESK_DOMAIN", "https://avers.okdesk.ru").rstrip("/")
+    engineers = _load_engineer_employees()
     return {
         "company_id": COMPANY_ID,
         "assignee_id": ASSIGNEE_ID,
@@ -287,8 +365,9 @@ def catalogs() -> dict[str, Any]:
         or f"Компания #{COMPANY_ID}",
         "assignee_name": CATALOGS.get("assignee_name")
         or f"Сотрудник #{ASSIGNEE_ID}",
+        "engineer_group_id": ENGINEER_GROUP_ID,
         "companies": _catalog_companies(),
-        "employees": _catalog_employees(),
+        "employees": engineers,
         "issue_type": ISSUE_TYPE,
         "status_codes": STATUS_CODES,
         "typical": CATALOGS["typical"],
@@ -330,23 +409,11 @@ def companies(q: str = Query("", min_length=0)) -> dict[str, Any]:
 
 
 @app.get("/api/mfc/employees")
-def employees(q: str = Query("", min_length=0)) -> dict[str, Any]:
-    base = _catalog_employees()
-    remote: list[dict] = []
-    try:
-        client = _require_client()
-        try:
-            for raw in client.search_employees(q, limit=50):
-                item = _normalize_employee(raw if isinstance(raw, dict) else {})
-                if item:
-                    remote.append(item)
-        finally:
-            client.close()
-    except HTTPException:
-        pass
-    except Exception:
-        pass
-    items = _merge_named(base, remote)
+def employees(
+    q: str = Query("", min_length=0),
+    refresh: bool = False,
+) -> dict[str, Any]:
+    items = _load_engineer_employees(force=refresh)
     qn = (q or "").strip().casefold().replace("ё", "е")
     if qn:
         items = [
@@ -355,7 +422,12 @@ def employees(q: str = Query("", min_length=0)) -> dict[str, Any]:
             if qn in str(x["name"]).casefold().replace("ё", "е")
             or qn == str(x["id"])
         ]
-    return {"items": items, "count": len(items)}
+    return {
+        "items": items,
+        "count": len(items),
+        "engineer_group_id": ENGINEER_GROUP_ID,
+        "active_only": True,
+    }
 
 
 @app.get("/api/mfc/intraservice/tasks")

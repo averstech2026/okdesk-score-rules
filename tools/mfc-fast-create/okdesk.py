@@ -139,6 +139,47 @@ class OkdeskClient:
         data = self.request("GET", f"/api/v1/companies/{company_id}")
         return data if isinstance(data, dict) else None
 
+    def list_employees(self, *, page_size: int = 100, max_pages: int = 50) -> list[dict]:
+        """Paginate /employees/list (active+inactive; filter locally)."""
+        items: list[dict] = []
+        for page in range(1, max_pages + 1):
+            try:
+                batch = self.request(
+                    "GET",
+                    "/api/v1/employees/list",
+                    params={
+                        "page[number]": page,
+                        "page[size]": page_size,
+                    },
+                )
+            except OkdeskError:
+                # fallback: some аккаунты отдают только /employees/
+                if page == 1:
+                    try:
+                        batch = self.request(
+                            "GET",
+                            "/api/v1/employees/",
+                            params={"page[size]": page_size},
+                        )
+                    except OkdeskError:
+                        return items
+                else:
+                    break
+            if isinstance(batch, dict):
+                batch = (
+                    batch.get("employees")
+                    or batch.get("items")
+                    or batch.get("users")
+                    or []
+                )
+            if not isinstance(batch, list) or not batch:
+                break
+            items.extend(batch)
+            if len(batch) < page_size:
+                break
+            time.sleep(0.05)
+        return items
+
     def search_employees(self, q: str = "", *, limit: int = 40) -> list[dict]:
         """Best-effort employee search (endpoint availability varies by plan)."""
         q = (q or "").strip()
