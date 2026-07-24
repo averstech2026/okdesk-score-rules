@@ -11,6 +11,7 @@ from typing import Any, Optional
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -44,6 +45,24 @@ STATUS_CODES = [
 DRY_RUN_DEFAULT = os.getenv("MFC_DRY_RUN", "").lower() in ("1", "true", "yes")
 
 app = FastAPI(title="MFC Fast Create", version="0.1.0")
+
+# ShiftPlanner UI на GitHub Pages ходит сюда кросс-доменом
+_cors = [
+    o.strip()
+    for o in os.getenv(
+        "MFC_CORS_ORIGINS",
+        "https://averstech2026.github.io,http://127.0.0.1:5500,http://localhost:5500,http://127.0.0.1:8787,http://localhost:8787",
+    ).split(",")
+    if o.strip()
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_cors,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 _objects_lock = threading.Lock()

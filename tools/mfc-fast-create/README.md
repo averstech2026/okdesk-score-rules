@@ -50,3 +50,11 @@ pytest tests/ -q
 ```
 
 Поля N / осложнение: коды `object_count`, `complication_level` (`+15`/`+30`), `complication` (описание). Без пары уровень+текст batch отклоняет строку. `ticket_weight` по-прежнему не ставим.
+
+
+## Prod (git.averstech.ru)
+
+Деплой контейнера — в репо `gitlab-avers` (`mfc-fast-create` + location `/mfc/` в GitLab nginx).
+
+API: `https://git.averstech.ru/mfc/`  
+UI: ShiftPlanner GitHub Pages `mfc-tool.html`.
